@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:vote_ready/constants.dart';
 import 'package:vote_ready/pages/home_page.dart';
 
+import 'components/dialogue.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Flame.device.setLandscape();
@@ -17,12 +19,12 @@ class VoteReadyGame extends StatelessWidget {
   Widget build(BuildContext context) {
     const Constants().build(context);
     return const MaterialApp(
-      home: HomePage(),
-      // home: DialogueWidget(
-      //   playerName: "Press Agent",
-      //   dialogueText: "Hello, Can I come inside and shoot some visuals?",
-      //   playerIconPath: 'assets/images/press.png',
-      // ),
+      // home: HomePage(),
+      home: DialogueWidget(
+        playerName: "Press Agent",
+        dialogueText: "Hello, Can I come inside and shoot some visuals?",
+        playerIconPath: 'assets/images/press.png',
+      ),
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vote_ready/constants.dart' as constants;
-import 'package:vote_ready/main.dart';
-import 'package:vote_ready/vote_ready.dart';
+import 'package:vote_ready/levels/level_01.dart';
 
 class LevelSelector extends StatefulWidget {
   const LevelSelector({super.key});
@@ -35,7 +34,7 @@ class _LevelSelectorState extends State<LevelSelector> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: ((context) => const VoteGame()),
+              builder: ((context) => const Level01()),
             ),
           );
         }),
