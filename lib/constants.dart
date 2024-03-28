@@ -5,11 +5,11 @@ class Constants extends StatelessWidget {
   static late double screenWidth;
   static late double screenHeight;
   static late Size gameWorldSize;
-  static double bigFontSize = 0.25 * screenHeight;
-  static double smallFontSize = 0.09 * screenHeight;
+  static double bigFontSize = 0.15 * screenHeight;
+  static double smallFontSize = 0.045 * screenHeight;
   static TextStyle headerStyle = TextStyle(
     fontSize: bigFontSize,
-    fontFamily: 'Fugaz One',
+    // fontFamily: 'Fugaz One',
   );
 
   static void setGameWorldSize(Size worldSize) {
