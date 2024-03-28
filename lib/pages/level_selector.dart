@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vote_ready/constants.dart' as constants;
-import 'package:vote_ready/main.dart';
-import 'package:vote_ready/vote_ready.dart';
+import 'package:vote_ready/levels/level_01.dart';
 
 class LevelSelector extends StatefulWidget {
   const LevelSelector({super.key});
@@ -16,18 +15,19 @@ class _LevelSelectorState extends State<LevelSelector> {
     double smallFontSize = constants.Constants.smallFontSize;
     TextStyle levelStyle = TextStyle(
       fontSize: smallFontSize,
-      fontFamily: 'Fugaz One',
+      // fontFamily: 'Fugaz One',
       color: Colors.black,
     );
     Widget level = Container(
-      width: 0.17 * constants.Constants.screenWidth,
+      height: 0.10 * constants.Constants.screenWidth,
+      width: 0.2 * constants.Constants.screenWidth,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.white,
         border: Border.all(
           color: Colors.black,
-          width: 0.1 * smallFontSize,
+          width: 0.2 * smallFontSize,
         ),
       ),
       child: InkWell(
@@ -35,7 +35,7 @@ class _LevelSelectorState extends State<LevelSelector> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: ((context) => const VoteGame()),
+              builder: ((context) => const Level01()),
             ),
           );
         }),

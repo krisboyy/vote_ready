@@ -13,6 +13,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   flame: ^1.16.0
   flame_isometric: ^0.4.2
+  flutter_animate: ^4.5.0
+  video_player: ^2.8.3
 
 dev_dependencies:
   flutter_test:
@@ -24,6 +26,7 @@ flutter:
   assets:
     - assets/images/
     - assets/tiles/
+    - assets/videos/
 
 
   fonts:

@@ -19,13 +19,13 @@ class DialogueWidget extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Row(
         children: [
-          // Player Icon
-          CircleAvatar(
-            backgroundImage: AssetImage(playerIconPath),
-            radius: 25.0, // Adjust the radius as needed
-          ),
-          const SizedBox(width: 16.0),
-          // Dialogue Text Container
+          // // Player Icon
+          // CircleAvatar(
+          //   backgroundImage: AssetImage(playerIconPath),
+          //   radius: 25.0, // Adjust the radius as needed
+          // ),
+          // const SizedBox(width: 16.0),
+          // // Dialogue Text Container
           Container(
             width: 0.7 * Constants.screenWidth,
             height: 0.2 * Constants.screenHeight,
@@ -55,9 +55,7 @@ class DialogueWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
-                      onPressed: () {
-                        
-                      },
+                      onPressed: () {},
                       child: Text(
                         "Next",
                         style: Constants.headerStyle.copyWith(

@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     TextStyle headerStyle = TextStyle(
       fontSize: bigFontSize,
-      fontFamily: 'Fugaz One',
+      //fontFamily: 'Fugaz One',
     );
     return Scaffold(
       backgroundColor: const Color(0xFFF2F3ED),

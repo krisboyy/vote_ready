@@ -7,6 +7,7 @@ import 'package:flame_isometric/flame_isometric.dart';
 import 'package:flutter/material.dart';
 import 'package:vote_ready/constants.dart';
 import 'dart:math' as math;
+import 'actors/press_agent.dart';
 
 class VoteGame extends StatefulWidget {
   const VoteGame({super.key});
@@ -23,6 +24,7 @@ class _VoteGameState extends State<VoteGame> {
       body: Stack(
         clipBehavior: Clip.none,
         children: [
+          // const GameWidget<VoteReady>.controlled(gameFactory: VoteReady.new)
           GameWidget(game: VoteReady()),
         ],
       ),
@@ -37,28 +39,37 @@ class VoteReady extends FlameGame with HasGameRef, ScaleDetector, TapDetector {
   double _startZoom = _minZoom;
   late FlameIsometric l;
 
-  @override
-  void onScaleStart(ScaleStartInfo info) {
-    _startZoom = camera.viewfinder.zoom;
-  }
+  // @override
+  // void onScaleStart(ScaleStartInfo info) {
+  //   _startZoom = camera.viewfinder.zoom;
+  // }
 
-  @override
-  void onScaleUpdate(ScaleUpdateInfo info) {
-    final currentScale = info.scale.global;
-    if (currentScale.isIdentity()) {
-      _processDrag(info);
-    }
-  }
+  // @override
+  // void onScaleUpdate(ScaleUpdateInfo info) {
+  //   final currentScale = info.scale.global;
+  //   if (currentScale.isIdentity()) {
+  //     _processDrag(info);
+  //   }
+  // }
 
-  void _processDrag(ScaleUpdateInfo info) {
-    final delta = info.delta.global;
-    final zoomDragFactor = 1.0 / _startZoom;
-    final currentPosition = camera.viewfinder.position;
+  // void _processDrag(ScaleUpdateInfo info) {
+  //   final delta = info.delta.global;
+  //   final zoomDragFactor = 1.0 / _startZoom;
+  //   final currentPosition = camera.viewfinder.position;
 
-    camera.viewfinder.position = currentPosition.translated(
-      -delta.x * zoomDragFactor,
-      -delta.y * zoomDragFactor,
-    );
+  //   camera.viewfinder.position = currentPosition.translated(
+  //     -delta.x * zoomDragFactor,
+  //     -delta.y * zoomDragFactor,
+  //   );
+  // }
+
+  Vector2 getIsometricPosition(int x, int y) {
+    // Convert grid coordinates to isometric coordinates
+    const tileWidth = 256.0; // The width of your isometric tiles
+    const tileHeight = 128.0; // The height of your isometric tiles
+    final isoX = (x - y) * tileWidth / 2;
+    final isoY = (x + y) * tileHeight / 2;
+    return Vector2(isoX, isoY);
   }
 
   @override
@@ -94,28 +105,27 @@ class VoteReady extends FlameGame with HasGameRef, ScaleDetector, TapDetector {
         ),
       );
     }
+    final _pa = SpriteComponent()
+      ..sprite = await loadSprite('press_agent.png')
+      ..size = Vector2(256, 128)
+      ..position = getIsometricPosition(1, 0);
+
+    add(_pa);
     camera.viewfinder.visibleGameSize = Vector2(
       Constants.gameWorldSize.width,
       Constants.gameWorldSize.height,
     );
+    camera.viewfinder.anchor = Anchor.center; 
     camera.viewfinder.position = Vector2(
-      0.17 * Constants.gameWorldSize.width,
-      0.5 * Constants.gameWorldSize.height,
+      0.5 * Constants.screenWidth,
+      0.5 * Constants.screenHeight,
     );
-    camera.viewfinder.anchor = Anchor.center;
   }
 
   @override
   Future<void> onTapUp(TapUpInfo info) async {
     final tappedCel = _getTappedCell(info);
     print("${tappedCel.row}, ${tappedCel.col}");
-
-    // final tappedCel = estimateCallTime<TileInfo>(() {
-    //     return _getTappedCell(info);
-    //   },
-    // );
-
-    // developer.log('cell: ${tappedCel.row}; ${tappedCel.col}');
   }
 
   TileInfo _getTappedCell(TapUpInfo info) {
