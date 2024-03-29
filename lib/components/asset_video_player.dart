@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:vote_ready/components/alert_dialog.dart';
+import 'package:vote_ready/components/show_question.dart';
 import 'video_player_widget.dart';
 
 class AssetVideoPlayer extends StatefulWidget {
   final String asset;
-  const AssetVideoPlayer({required this.asset, super.key});
+  final String question;
+  final String crt_ans;
+  final String wrg_ans1;
+  final String wrg_ans2;
+
+  final String reason;
+  final String details;
+  final int level;
+  const AssetVideoPlayer({required this.asset,  super.key, required this.question, required this.crt_ans, required this.wrg_ans1, required this.wrg_ans2, required this.reason, required this.details, required this.level,});
 
   @override
   State<AssetVideoPlayer> createState() => _AssetVideoPlayerState();
@@ -20,7 +28,16 @@ class _AssetVideoPlayerState extends State<AssetVideoPlayer> {
     controller = VideoPlayerController.asset(widget.asset)
       ..addListener(() => setState(() {
             if (controller.value.isCompleted) {
-              showQuestionPopup(context);
+              showQuestionPopup(
+                context,
+                widget.question,
+                widget.crt_ans,
+                widget.wrg_ans1,
+                widget.wrg_ans2,
+                widget.reason,
+                widget.details,
+                widget.level,
+              );
             }
           }))
       ..setLooping(false)

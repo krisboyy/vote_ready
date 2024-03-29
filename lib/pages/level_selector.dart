@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:vote_ready/constants.dart' as constants;
 import 'package:vote_ready/levels/level_01.dart';
-
+import 'package:vote_ready/levels/level_02.dart';
+import 'package:vote_ready/levels/level_03.dart';
+import 'package:vote_ready/levels/level_04.dart';
+import 'package:vote_ready/levels/level_05.dart';
+import 'package:vote_ready/levels/level_06.dart';
+import 'package:vote_ready/levels/level_07.dart';
+import 'package:vote_ready/levels/level_08.dart';
+import 'package:vote_ready/levels/level_09.dart';
+import 'package:vote_ready/levels/level_10.dart';
 class LevelSelector extends StatefulWidget {
-  const LevelSelector({super.key});
+  const LevelSelector({Key? key});
 
   @override
   State<LevelSelector> createState() => _LevelSelectorState();
@@ -11,11 +19,10 @@ class LevelSelector extends StatefulWidget {
 
 class _LevelSelectorState extends State<LevelSelector> {
   Widget levelSelectorBuilder(int i, BuildContext context) {
-    i++;
+    int levelNumber = i + 1;
     double smallFontSize = constants.Constants.smallFontSize;
     TextStyle levelStyle = TextStyle(
       fontSize: smallFontSize,
-      // fontFamily: 'Fugaz One',
       color: Colors.black,
     );
     Widget level = Container(
@@ -31,21 +38,16 @@ class _LevelSelectorState extends State<LevelSelector> {
         ),
       ),
       child: InkWell(
-        onTap: (() async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: ((context) => const Level01()),
-            ),
-          );
-        }),
+        onTap: () {
+          navigateToLevel(levelNumber, context); // Pass context here
+        },
         child: Text(
-          '$i',
+          '$levelNumber',
           style: levelStyle,
         ),
       ),
     );
-    if (i % 2 != 0) {
+    if (levelNumber % 2 != 0) {
       return Column(
         children: [
           SizedBox(
@@ -94,5 +96,73 @@ class _LevelSelectorState extends State<LevelSelector> {
         ],
       ),
     );
+  }
+}
+
+void navigateToLevel(int levelNumber, BuildContext context) {
+  switch (levelNumber) {
+    case 1:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Level01()),
+      );
+      break;
+    case 2:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Level02()),
+      );
+      break;
+    case 3:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Level03()),
+      );
+      break;
+    case 4:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Level04()),
+      );
+      break;
+    case 5:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Level05()),
+      );
+      break;
+    case 6:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Level06()),
+      );
+      break;
+    case 7:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Level07()),
+      );
+      break;
+    case 8:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Level08()),
+      );
+      break;
+    case 9:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Level09()),
+      );
+      break;
+    case 10:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Level10()),
+      );
+      break;
+  // Add cases for other levels as needed
+    default:
+      print('Level $levelNumber not implemented yet');
   }
 }

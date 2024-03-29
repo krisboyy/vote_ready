@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../pages/level_selector.dart';
+
 class RightAnswerPage extends StatelessWidget {
   final String correctAnswer;
+  final String reason;
+  final String details;
+  final int level;
 
-  const RightAnswerPage({super.key, required this.correctAnswer});
+  const RightAnswerPage({super.key, required this.correctAnswer, required this.reason, required this.details, required this.level});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,8 @@ class RightAnswerPage extends StatelessWidget {
         return false;
       },
       child: Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
+      child: Container(
           color: Colors.greenAccent, // Set background color
           padding: const EdgeInsets.all(12.0),
           child: Center(
@@ -48,9 +54,9 @@ class RightAnswerPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12.0),
-                const Text(
-                  'Ensuring Electoral Integrity',
-                  style: TextStyle(
+                Text(
+                  reason,
+                  style: const TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.black, // Set text color
@@ -58,9 +64,9 @@ class RightAnswerPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 12.0),
-                const Text(
-                  'A test vote ensures the validity of the voter\'s complaint. If they are right, the VVPAT, the Control Unit, and the Ballot Unit should be replaced for a new one.',
-                  style: TextStyle(
+                Text(
+                  details,
+                  style: const TextStyle(
                     fontSize: 18.0,
                     color: Colors.white, // Set text color
                   ),
@@ -69,7 +75,7 @@ class RightAnswerPage extends StatelessWidget {
                 const SizedBox(height: 24.0),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    navigateToLevel(level+1, context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green, // Set button background color
@@ -80,7 +86,7 @@ class RightAnswerPage extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'Go Back Home',
+                    'Go To Next Level',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18.0,
@@ -92,14 +98,18 @@ class RightAnswerPage extends StatelessWidget {
           ),
         ),
       ),
+      )
     );
   }
 }
 
 class WrongAnswerPage extends StatelessWidget {
   final String correctAnswer;
+  final String reason;
+  final String details;
+  final int level;
 
-  const WrongAnswerPage({super.key, required this.correctAnswer});
+  const WrongAnswerPage({super.key, required this.correctAnswer, required this.reason, required this.details, required this.level});
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +120,8 @@ class WrongAnswerPage extends StatelessWidget {
         return false;
       },
       child: Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
+      child: Container(
           color: Colors.redAccent, // Set background color to redAccent
           padding: const EdgeInsets.all(24.0),
           child: Center(
@@ -141,9 +152,9 @@ class WrongAnswerPage extends StatelessWidget {
                     fontSize: 50.0,
                   ),
                 ),
-                const Text(
-                  'Ensuring Electoral Integrity',
-                  style: TextStyle(
+                Text(
+                  reason,
+                  style: const TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.black, // Set text color
@@ -151,9 +162,9 @@ class WrongAnswerPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24.0),
-                const Text(
-                  'The presiding officer should ensure that the election process is not tampered with and should ensure the integrity of the machines used in the election.',
-                  style: TextStyle(
+                Text(
+                  details,
+                  style: const TextStyle(
                     fontSize: 18.0,
                     color: Colors.white, // Set text color
                   ),
@@ -162,7 +173,7 @@ class WrongAnswerPage extends StatelessWidget {
                 const SizedBox(height: 24.0),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    navigateToLevel(level, context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueGrey, // Set button background color
@@ -173,7 +184,7 @@ class WrongAnswerPage extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'Go Back Home',
+                    'Try Again',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18.0,
@@ -185,6 +196,7 @@ class WrongAnswerPage extends StatelessWidget {
           ),
         ),
       ),
+      )
     );
   }
 }

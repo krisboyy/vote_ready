@@ -15,6 +15,14 @@ class _Level01State extends State<Level01> {
         body: Center(
       child: AssetVideoPlayer(
         asset: 'assets/videos/scenario_1_final.mp4',
+        question: 'The voter complaints that the print from VVPAT is wrong',
+        crt_ans: 'Perform Test Vote',
+        wrg_ans1: 'Ignore him',
+        wrg_ans2: 'Stop polling',
+        reason: '',
+        details: '',
+        level: 1,
+
       ),
     ));
   }
