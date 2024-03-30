@@ -19,8 +19,10 @@ class _Level01State extends State<Level01> {
         crt_ans: 'Perform Test Vote',
         wrg_ans1: 'Ignore him',
         wrg_ans2: 'Stop polling',
-        reason: '',
-        details: '',
+        reason: 'Upholding Electoral Integrity',
+        details: 'Conducting a test vote addresses the voter"'"s concern "
+            "regarding the accuracy of the VVPAT, ensuring adherence to "
+            "established electoral protocols" ,
         level: 1,
 
       ),

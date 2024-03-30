@@ -19,8 +19,10 @@ class _Level05State extends State<Level05> {
             crt_ans: 'Three separate queues (for men, women and one for person with disabilities and senior citizens )',
             wrg_ans1: 'Two separate queues (for men and women)',
             wrg_ans2: 'A single queue (for all men and women)',
-            reason: '',
-            details: '',
+            reason: 'Ensuring Efficient Queue Management at Polling Stations',
+            details: 'Opting for three separate queues designated for men, women, and individuals with disabilities/senior '
+                'citizens streamlines the voting process, adhering to inclusivity principles and facilitating smoother '
+                'operations at the polling station, as per electoral guidelines.',
             level: 5,
           ),
         ));

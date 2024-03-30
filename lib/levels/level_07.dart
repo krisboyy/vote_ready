@@ -15,12 +15,17 @@ class _Level07State extends State<Level07> {
         body: Center(
           child: AssetVideoPlayer(
             asset: 'assets/videos/scenario_7_final.mp4',
-            question: '',
-            crt_ans: '',
-            wrg_ans1: '',
-            wrg_ans2: '',
-            reason: '',
-            details: '',
+            question: 'A person claims that he/she is blind and needs a companion to vote',
+            crt_ans: 'The presiding officer permits a same-constituency citizen'
+                'to assist the voter after collecting required affidavits',
+            wrg_ans1: 'The presiding officer casts vote on his / her behalf or allows a '
+                'polling agent to cast a vote on his/her behalf',
+            wrg_ans2: 'The presiding officer asks a child to cast vote on his behalf',
+            reason: 'Ensuring Accessibility for Voters with Disabilities',
+            details: 'By allowing a same-constituency citizen to provide assistance upon '
+                'collecting necessary affidavits, the presiding officer ensures that individuals '
+                'with disabilities, such as blindness, can exercise their voting rights effectively '
+                'and independently, aligning with electoral guidelines',
             level: 7,
           ),
         ));

@@ -15,12 +15,16 @@ class _Level10State extends State<Level10> {
         body: Center(
           child: AssetVideoPlayer(
             asset: 'assets/videos/scenario_10_final.mp4',
-            question: '',
-            crt_ans: '',
-            wrg_ans1: '',
-            wrg_ans2: '',
-            reason: '',
-            details: '',
+            question: 'The second and third polling officers should '
+                'remain with the presiding officer and the first polling officer till',
+            crt_ans: 'The materials and forms are returned at the collection center ',
+            wrg_ans1: 'The end of voting',
+            wrg_ans2: 'The materials and forms are packed',
+            reason: 'Responsibilities of Polling Officers',
+            details: 'The second and third polling officers should stay with the presiding '
+                'officer and the first polling officer until the materials and forms are '
+                'returned at the collection center, ensuring accountability and adherence to '
+                'procedural requirements in accordance with election protocols',
             level: 10,
           ),
         ));

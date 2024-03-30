@@ -19,8 +19,11 @@ class _Level03State extends State<Level03> {
             crt_ans: 'Allow the voter to cast vote in tendered ballot paper',
             wrg_ans1: 'Allow the voter to cast vote',
             wrg_ans2: 'Hand over the voter to police',
-            reason: '',
-            details: '',
+            reason: 'Addressing Unauthorized Voting Incidents',
+            details: ' In case a voter discovers that another person has already cast their vote, '
+                'the correct action is to allow the voter to cast their vote using a tendered ballot '
+                'paper, ensuring their voting rights are upheld while maintaining the integrity of the '
+                'electoral process, as per established procedures',
             level: 3,
           ),
         ));

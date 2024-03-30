@@ -1,8 +1,8 @@
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
-import 'package:vote_ready/components/asset_video_player.dart';
 import 'package:vote_ready/constants.dart';
 import 'package:vote_ready/pages/home_page.dart';
+import 'package:vote_ready/pages/login_page.dart';
 
 import 'components/dialogue.dart';
 
@@ -10,7 +10,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Flame.device.setLandscape();
   Flame.device.fullScreen();
-  runApp(const VoteReadyGame());
+  runApp(VoteReadyGame());
 }
 
 class VoteReadyGame extends StatelessWidget {

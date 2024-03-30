@@ -19,8 +19,10 @@ class _Level06State extends State<Level06> {
             crt_ans: 'Only outside the polling station',
             wrg_ans1: 'Both outside and inside the polling station except the voting compartment',
             wrg_ans2: 'Anywhere',
-            reason: '',
-            details: '',
+            reason: 'Guidelines for Photography/Videography at Polling Stations',
+            details: ' Photography/videography is permitted only outside the polling station, '
+                'maintaining the sanctity of the voting process while ensuring transparency and '
+                'compliance with electoral regulations',
             level: 6,
           ),
         ));

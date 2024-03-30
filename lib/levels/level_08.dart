@@ -15,12 +15,14 @@ class _Level08State extends State<Level08> {
         body: Center(
           child: AssetVideoPlayer(
             asset: 'assets/videos/scenario_8_final.mp4',
-            question: '',
-            crt_ans: '',
-            wrg_ans1: '',
-            wrg_ans2: '',
-            reason: '',
-            details: '',
+            question: 'The custodian of the marked copy of electoral roll is',
+            crt_ans: 'First Polling officer ',
+            wrg_ans1: 'Presiding officer',
+            wrg_ans2: 'Second Polling officer',
+            reason: 'Custody of Marked Copy of Electoral Roll',
+            details: 'The first polling officer is responsible for the custody of the marked copy of the '
+                'electoral roll, ensuring the integrity and security of voter records throughout the '
+                'polling process, as mandated by electoral regulations',
             level: 8,
           ),
         ));

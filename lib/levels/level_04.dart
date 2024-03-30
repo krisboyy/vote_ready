@@ -19,8 +19,10 @@ class _Level04State extends State<Level04> {
             crt_ans: 'To the left side of the first ballot unit ',
             wrg_ans1: 'To the right side of the first ballot unit',
             wrg_ans2: 'Near the presiding officer',
-            reason: '',
-            details: '',
+            reason: 'Placement of VVPAT in Polling Booth',
+            details: 'The VVPAT should be positioned to the left side of the first ballot unit, '
+                'ensuring visibility and accessibility for voters while maintaining the integrity '
+                'and transparency of the voting process, in accordance with electoral guidelines',
             level: 4,
           ),
         ));

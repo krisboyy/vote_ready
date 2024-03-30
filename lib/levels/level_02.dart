@@ -16,14 +16,16 @@ class _Level02State extends State<Level02> {
           child: AssetVideoPlayer(
             asset: 'assets/videos/scenario_2_final.mp4',
             question: 'Polling agents challenge the identity of a voter, alleging that he is not the correct voter',
-            crt_ans: 'Collect 2 rupees from the polling agent. Presiding officer conducts an enquiry '
-                'and allows the voter to cast vote if the challenge is not established and if the challenge'
-                ' is established, debar the voter from voting',
+            crt_ans: 'Collect 2 rupees from the polling agent. The presiding officer conducts an inquiry and permits '
+                'voting if challenge unproven; otherwise, hand over to police',
             wrg_ans1: 'Presiding officer directly debar the voter from voting',
             wrg_ans2: 'Collect 2 rupees from the polling agent. Presiding officer conducts an enquiry and if the '
                 'challenge is established, allow the voter to cast vote',
-            reason: '',
-            details: '',
+            reason: 'Ensuring Voter Identity Integrity',
+            details: 'The presiding officer collects 2 rupees from the polling agent and conducts an enquiry; '
+                'if the challenge is not established, the voter is allowed to cast their vote, but if validated, '
+                'the voter is debarred from voting, and will be hand over to the police ensuring the integrity of '
+                'the electoral process.',
             level: 2,
           ),
         ));
