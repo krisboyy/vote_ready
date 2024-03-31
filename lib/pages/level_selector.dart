@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vote_ready/constants.dart' as constants;
+
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vote_ready/levels/level_01.dart';
 import 'package:vote_ready/levels/level_02.dart';
 import 'package:vote_ready/levels/level_03.dart';
@@ -10,24 +11,21 @@ import 'package:vote_ready/levels/level_07.dart';
 import 'package:vote_ready/levels/level_08.dart';
 import 'package:vote_ready/levels/level_09.dart';
 import 'package:vote_ready/levels/level_10.dart';
-class LevelSelector extends StatefulWidget {
-  const LevelSelector({Key? key});
+import 'package:vote_ready/pages/final_page.dart';
 
-  @override
-  State<LevelSelector> createState() => _LevelSelectorState();
-}
-
-class _LevelSelectorState extends State<LevelSelector> {
+class LevelSelector extends StatelessWidget {
+  const LevelSelector({super.key});
   Widget levelSelectorBuilder(int i, BuildContext context) {
     int levelNumber = i + 1;
-    double smallFontSize = constants.Constants.smallFontSize;
+    i++;
+    double smallFontSize = 40.0.spMin;
     TextStyle levelStyle = TextStyle(
       fontSize: smallFontSize,
       color: Colors.black,
     );
     Widget level = Container(
-      height: 0.10 * constants.Constants.screenWidth,
-      width: 0.2 * constants.Constants.screenWidth,
+      height: 100.0.spMin,
+      width: 100.spMin,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -49,20 +47,16 @@ class _LevelSelectorState extends State<LevelSelector> {
     );
     if (levelNumber % 2 != 0) {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
-            height: constants.Constants.screenHeight * 0.4,
-          ),
           level,
         ],
       );
     } else {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           level,
-          SizedBox(
-            height: constants.Constants.screenHeight * 0.4,
-          ),
         ],
       );
     }
@@ -75,24 +69,27 @@ class _LevelSelectorState extends State<LevelSelector> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          SizedBox(
-            width: 5 * constants.Constants.screenWidth,
+          Transform.scale(
+            scale: 0.5.spMax,
             child: Image.asset(
               'assets/images/bg_image.png',
               fit: BoxFit.contain,
-              height: constants.Constants.screenWidth,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 0.2 * constants.Constants.screenHeight),
-            child: ListView.builder(
-              itemBuilder: (context, i) {
-                return levelSelectorBuilder(i, context);
-              },
-              itemCount: 10,
-              scrollDirection: Axis.horizontal,
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(
+                10,
+                (index) => Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: 60.0.spMin, horizontal: 10.0.spMin),
+                  child: levelSelectorBuilder(index, context),
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -159,6 +156,12 @@ void navigateToLevel(int levelNumber, BuildContext context) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Level10()),
+      );
+      break;
+    case 11:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const FinalPage()),
       );
       break;
   // Add cases for other levels as needed

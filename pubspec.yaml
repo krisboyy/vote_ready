@@ -16,6 +16,7 @@ dependencies:
   flutter_animate: ^4.5.0
   video_player: ^2.8.3
   google_fonts: ^6.1.0
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:
@@ -26,6 +27,10 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+#<<<<<<< HEAD
+#=======
+#    - assets/fonts/
+#>>>>>>> 6f7d3af735f9aa3ed5e9735f49c5d4773ebdfd35
     - assets/videos/
 
 #  fonts:

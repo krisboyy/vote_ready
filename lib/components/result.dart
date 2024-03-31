@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:vote_ready/pages/final_page.dart';
 import '../pages/level_selector.dart';
 
 class RightAnswerPage extends StatelessWidget {
@@ -74,13 +74,18 @@ class RightAnswerPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 24.0),
                 ElevatedButton(
-                  onPressed: () {
-                    navigateToLevel(level+1, context);
+                  onPressed: () async {
+
+                      navigateToLevel(level + 1, context);
+
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green, // Set button background color
-                    foregroundColor: Colors.greenAccent, // Set button text color
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                    backgroundColor:
+                        Colors.green, // Set button background color
+                    foregroundColor:
+                        Colors.greenAccent, // Set button text color
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 32.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -176,9 +181,12 @@ class WrongAnswerPage extends StatelessWidget {
                     navigateToLevel(level, context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueGrey, // Set button background color
-                    foregroundColor: Colors.redAccent, // Set button text color to redAccent
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                    backgroundColor:
+                        Colors.blueGrey, // Set button background color
+                    foregroundColor:
+                        Colors.redAccent, // Set button text color to redAccent
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 32.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
