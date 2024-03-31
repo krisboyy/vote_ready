@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vote_ready/pages/level_selector.dart';
 
 //Add more params if required like stroke width, button size
 class CustomButton extends StatelessWidget {
@@ -41,6 +42,29 @@ class CustomButton extends StatelessWidget {
           fontSize: buttonSize.spMax,
         ),
       ),
+    );
+  }
+}
+
+class CustomFAB extends StatelessWidget {
+  const CustomFAB({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 2.spMax,
+      right: 2.spMax,
+        child: IconButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LevelSelector(),
+              ),
+            );
+          },
+          icon: const Icon(Icons.disabled_by_default, color: Colors.black),
+        ),
     );
   }
 }

@@ -10,10 +10,24 @@ import 'package:vote_ready/levels/level_07.dart';
 import 'package:vote_ready/levels/level_08.dart';
 import 'package:vote_ready/levels/level_09.dart';
 import 'package:vote_ready/levels/level_10.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vote_ready/pages/final_page.dart';
 
+class DataReader {
+  static Future<String?> getData(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
+  }
+}
+
+Future<bool> isLevelCompleted(String levelKey) async {
+  String? value = await DataReader.getData(levelKey);
+  return value == 'Yes';
+}
+
 class LevelSelector extends StatelessWidget {
-  const LevelSelector({super.key});
+  const LevelSelector({Key? key}) : super(key: key);
+
   Widget levelSelectorBuilder(int i, BuildContext context) {
     int levelNumber = i + 1;
     i++;
@@ -22,43 +36,56 @@ class LevelSelector extends StatelessWidget {
       fontSize: smallFontSize,
       color: Colors.black,
     );
-    Widget level = Container(
-      height: 100.0.spMin,
-      width: 100.spMin,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        border: Border.all(
-          color: Colors.black,
-          width: 0.2 * smallFontSize,
-        ),
-      ),
-      child: InkWell(
-        onTap: () {
-          navigateToLevel(levelNumber, context); // Pass context here
-        },
-        child: Text(
-          '$levelNumber',
-          style: levelStyle,
-        ),
-      ),
+    Color borderColor = Colors.black; // Default border color
+
+    return FutureBuilder<bool>(
+      future: isLevelCompleted('level$levelNumber'),
+      builder: (context, snapshot) {
+        bool isCompleted = snapshot.data ?? false; // Default to false if data is null
+        borderColor = isCompleted ? Colors.green : Colors.black; // Set border color
+
+        Widget level = Container(
+          height: 100.0.spMin,
+          width: 100.spMin,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            border: Border.all(
+              color: borderColor, // Use dynamic border color
+              width: 0.2 * smallFontSize,
+            ),
+          ),
+          child: InkWell(
+            onTap: () {
+              navigateToLevel(levelNumber, context); // Pass context here
+            },
+            child: Text(
+              '$levelNumber',
+              style: levelStyle.copyWith(
+                color: isCompleted ? Colors.green : Colors.black, // Set text color
+              ),
+            ),
+          ),
+        );
+
+        if (levelNumber % 2 == 0) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              level,
+            ],
+          );
+        } else {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              level,
+            ],
+          );
+        }
+      },
     );
-    if (levelNumber % 2 != 0) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          level,
-        ],
-      );
-    } else {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          level,
-        ],
-      );
-    }
   }
 
   @override
@@ -81,7 +108,7 @@ class LevelSelector extends StatelessWidget {
             child: Row(
               children: List.generate(
                 10,
-                (index) => Padding(
+                    (index) => Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: 60.0.spMin, horizontal: 10.0.spMin),
                   child: levelSelectorBuilder(index, context),
@@ -89,13 +116,78 @@ class LevelSelector extends StatelessWidget {
               ),
             ),
           ),
+          Positioned(
+            bottom: 10.spMax,
+            right: 10.spMax,
+            child: FutureBuilder<bool>(
+              future: areAllLevelsCompleted(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data!) {
+                  return CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const FinalPage()),
+                        );
+                      },
+                      icon: const Icon(Icons.exit_to_app, color: Colors.red),
+                    ),
+                  );
+                } else {
+                  return SizedBox(); // Return an empty SizedBox if not all levels are completed
+                }
+              },
+            ),
+          ),
         ],
       ),
     );
   }
+
+  Future<bool> areAllLevelsCompleted() async {
+    bool allLevelsCompleted = true;
+    for (int i = 1; i <= 10; i++) {
+      bool completed = await isLevelCompleted('level$i');
+      if (!completed) {
+        allLevelsCompleted = false;
+        break;
+      }
+    }
+    return allLevelsCompleted;
+  }
 }
 
-void navigateToLevel(int levelNumber, BuildContext context) {
+Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
+
+  Future<bool> isLevelCompleted(String levelKey) async {
+    String? value = await DataReader.getData(levelKey);
+    return value == 'Yes';
+  }
+
+
+  // Check if all levels are completed
+  bool allLevelsCompleted = true;
+  for (int i = 1; i <= 10; i++) {
+    bool completed = await isLevelCompleted('level$i');
+    if (!completed) {
+      allLevelsCompleted = false;
+      break;
+    }
+  }
+
+  // If all levels are completed, go to the final page
+  if (allLevelsCompleted) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const FinalPage()),
+    );
+    return;
+  }
+
+  // If not, navigate to the corresponding level
   switch (levelNumber) {
     case 1:
       Navigator.push(
@@ -160,10 +252,9 @@ void navigateToLevel(int levelNumber, BuildContext context) {
     case 11:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const FinalPage()),
+        MaterialPageRoute(builder: (context) => const LevelSelector()),
       );
       break;
-  // Add cases for other levels as needed
     default:
       print('Level $levelNumber not implemented yet');
   }
