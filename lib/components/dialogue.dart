@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vote_ready/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class DialogueWidget extends StatelessWidget {
   final String playerName;
@@ -7,14 +8,17 @@ class DialogueWidget extends StatelessWidget {
   final String playerIconPath; // Path to your player icon image
 
   const DialogueWidget({
-    Key? key,
+    super.key,
     required this.playerName,
     required this.dialogueText,
     required this.playerIconPath,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
+    TextStyle headerStyle = TextStyle(fontSize: 24.0.spMin
+        // fontFamily: 'Fugaz One',
+        );
     return Container(
       padding: const EdgeInsets.all(12.0),
       child: Row(
@@ -27,9 +31,9 @@ class DialogueWidget extends StatelessWidget {
           // const SizedBox(width: 16.0),
           // // Dialogue Text Container
           Container(
-            width: 0.7 * Constants.screenWidth,
-            height: 0.2 * Constants.screenHeight,
-            padding: const EdgeInsets.all(12.0),
+            width: 17.spMin,
+            height: 12.spMin,
+            padding: EdgeInsets.all(12.0.spMin),
             decoration: BoxDecoration(
               color: Color(0xFFF8EFAC), // Customize the background color
               borderRadius: BorderRadius.circular(10.0),
@@ -39,16 +43,16 @@ class DialogueWidget extends StatelessWidget {
               children: [
                 Text(
                   playerName,
-                  style: Constants.headerStyle.copyWith(
-                    fontSize: Constants.smallFontSize * 0.5,
+                  style: headerStyle.copyWith(
+                    fontSize: 10.spMax,
                     color: Colors.black,
                   ),
                 ),
                 const SizedBox(height: 4.0),
                 Text(
                   dialogueText,
-                  style: Constants.headerStyle.copyWith(
-                    fontSize: Constants.smallFontSize * 0.25,
+                  style: headerStyle.copyWith(
+                    fontSize: 10.0.spMin,
                     color: Color(0xFFA4303F),
                   ),
                 ),
@@ -58,8 +62,8 @@ class DialogueWidget extends StatelessWidget {
                       onPressed: () {},
                       child: Text(
                         "Next",
-                        style: Constants.headerStyle.copyWith(
-                          fontSize: 0.25 * Constants.smallFontSize,
+                        style: headerStyle.copyWith(
+                          fontSize: 10.0.spMin,
                         ),
                       )),
                 )

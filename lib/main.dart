@@ -1,10 +1,8 @@
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
-import 'package:vote_ready/components/asset_video_player.dart';
-import 'package:vote_ready/constants.dart';
-import 'package:vote_ready/pages/home_page.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'components/dialogue.dart';
+import 'package:vote_ready/pages/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,9 +16,9 @@ class VoteReadyGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      const Constants().build(context);
-      return const MaterialApp(
+    return const ScreenUtilInit(
+      minTextAdapt: true,
+      child: MaterialApp(
         // home: AssetVideoPlayer(),
         home: HomePage(),
         // home: DialogueWidget(
@@ -28,7 +26,7 @@ class VoteReadyGame extends StatelessWidget {
         //   dialogueText: "Hello, Can I come inside and shoot some visuals?",
         //   playerIconPath: 'assets/images/press.png',
         // ),
-      );
-    });
+      ),
+    );
   }
 }

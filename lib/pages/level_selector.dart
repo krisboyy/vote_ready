@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:vote_ready/constants.dart' as constants;
+
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vote_ready/levels/level_01.dart';
 
-class LevelSelector extends StatefulWidget {
+class LevelSelector extends StatelessWidget {
   const LevelSelector({super.key});
 
-  @override
-  State<LevelSelector> createState() => _LevelSelectorState();
-}
-
-class _LevelSelectorState extends State<LevelSelector> {
   Widget levelSelectorBuilder(int i, BuildContext context) {
     i++;
-    double smallFontSize = constants.Constants.smallFontSize;
+    double smallFontSize = 20.0.spMin;
     TextStyle levelStyle = TextStyle(
       fontSize: smallFontSize,
-      // fontFamily: 'Fugaz One',
       color: Colors.black,
     );
     Widget level = Container(
-      height: 0.10 * constants.Constants.screenWidth,
-      width: 0.2 * constants.Constants.screenWidth,
+      height: 100.0.spMin,
+      width: 100.spMin,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -47,20 +42,16 @@ class _LevelSelectorState extends State<LevelSelector> {
     );
     if (i % 2 != 0) {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
-            height: constants.Constants.screenHeight * 0.4,
-          ),
           level,
         ],
       );
     } else {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           level,
-          SizedBox(
-            height: constants.Constants.screenHeight * 0.4,
-          ),
         ],
       );
     }
@@ -73,24 +64,27 @@ class _LevelSelectorState extends State<LevelSelector> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          SizedBox(
-            width: 5 * constants.Constants.screenWidth,
+          Transform.scale(
+            scale: 0.5.spMax,
             child: Image.asset(
               'assets/images/bg_image.png',
               fit: BoxFit.contain,
-              height: constants.Constants.screenWidth,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 0.2 * constants.Constants.screenHeight),
-            child: ListView.builder(
-              itemBuilder: (context, i) {
-                return levelSelectorBuilder(i, context);
-              },
-              itemCount: 10,
-              scrollDirection: Axis.horizontal,
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(
+                10,
+                (index) => Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: 60.0.spMin, horizontal: 10.0.spMin),
+                  child: levelSelectorBuilder(index, context),
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

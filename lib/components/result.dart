@@ -72,9 +72,12 @@ class RightAnswerPage extends StatelessWidget {
                     Navigator.of(context).popUntil((route) => route.isFirst);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green, // Set button background color
-                    foregroundColor: Colors.greenAccent, // Set button text color
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                    backgroundColor:
+                        Colors.green, // Set button background color
+                    foregroundColor:
+                        Colors.greenAccent, // Set button text color
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 32.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -165,9 +168,12 @@ class WrongAnswerPage extends StatelessWidget {
                     Navigator.of(context).popUntil((route) => route.isFirst);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueGrey, // Set button background color
-                    foregroundColor: Colors.redAccent, // Set button text color to redAccent
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                    backgroundColor:
+                        Colors.blueGrey, // Set button background color
+                    foregroundColor:
+                        Colors.redAccent, // Set button text color to redAccent
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 32.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
