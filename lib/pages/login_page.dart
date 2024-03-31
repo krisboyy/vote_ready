@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vote_ready/pages/verify_otp.dart';
 
 import 'home_page.dart';
 
@@ -34,8 +35,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _userNameController = TextEditingController();
-    TextEditingController _passkeyController = TextEditingController();
+    TextEditingController userNameController = TextEditingController();
+    TextEditingController passkeyController = TextEditingController();
 
     return Scaffold(
       body: Center(
@@ -63,15 +64,15 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        controller: _userNameController,
+                        controller: userNameController,
                         decoration: const InputDecoration(
-                          labelText: 'User Name',
+                          labelText: 'Enter your user name',
                         ),
                       ),
                       TextFormField(
-                        controller: _passkeyController,
+                        controller: passkeyController,
                         decoration: const InputDecoration(
-                          labelText: 'Passkey',
+                          labelText: 'Enter your mobile number',
                         ),
                         obscureText: true,
                       ),
@@ -85,16 +86,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: () {
-                      String username = _userNameController.text;
-                      String password = _passkeyController.text;
-
-                      if (username == "user" && password == "password") {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => HomePage()),
+                          MaterialPageRoute(builder: (context) => VerifyOTP()),
                         );
-                      } else {
-                        print('error');
-                      }
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
@@ -106,7 +100,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       elevation: 3.0,
                     ),
                     child: const Text(
-                      'LOGIN',
+                      'Generate OTP',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
@@ -131,3 +125,4 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     super.dispose();
   }
 }
+

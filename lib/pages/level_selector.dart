@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vote_ready/levels/level_01.dart';
 import 'package:vote_ready/levels/level_02.dart';
@@ -101,61 +100,61 @@ void navigateToLevel(int levelNumber, BuildContext context) {
     case 1:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Level01()),
+        MaterialPageRoute(builder: (context) => const Level01()),
       );
       break;
     case 2:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Level02()),
+        MaterialPageRoute(builder: (context) => const Level02()),
       );
       break;
     case 3:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Level03()),
+        MaterialPageRoute(builder: (context) => const Level03()),
       );
       break;
     case 4:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Level04()),
+        MaterialPageRoute(builder: (context) => const Level04()),
       );
       break;
     case 5:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Level05()),
+        MaterialPageRoute(builder: (context) => const Level05()),
       );
       break;
     case 6:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Level06()),
+        MaterialPageRoute(builder: (context) => const Level06()),
       );
       break;
     case 7:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Level07()),
+        MaterialPageRoute(builder: (context) => const Level07()),
       );
       break;
     case 8:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Level08()),
+        MaterialPageRoute(builder: (context) => const Level08()),
       );
       break;
     case 9:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Level09()),
+        MaterialPageRoute(builder: (context) => const Level09()),
       );
       break;
     case 10:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Level10()),
+        MaterialPageRoute(builder: (context) => const Level10()),
       );
       break;
     case 11:

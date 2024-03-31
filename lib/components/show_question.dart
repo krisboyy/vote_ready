@@ -38,8 +38,8 @@ void showQuestionPopup(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  '$question',
-                  style: TextStyle(
+                  question,
+                  style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
