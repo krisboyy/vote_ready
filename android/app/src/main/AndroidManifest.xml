@@ -2,7 +2,7 @@
 
     <application
         android:label="Vote Ready"
-        android:name="${applicationName}"
+        android:name="${VoteReadyGame}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
