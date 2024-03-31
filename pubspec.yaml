@@ -16,6 +16,7 @@ dependencies:
   flame_isometric: ^0.4.2
   flutter_animate: ^4.5.0
   video_player: ^2.8.3
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:
@@ -26,7 +27,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/tiles/
+    - assets/fonts/
     - assets/videos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
