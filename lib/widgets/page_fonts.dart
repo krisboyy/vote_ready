@@ -22,7 +22,7 @@ class StrokeFont extends StatelessWidget {
           style: headerStyle.copyWith(
             foreground: Paint()
               ..style = PaintingStyle.stroke
-              ..strokeWidth = 1.6.spMax
+              ..strokeWidth = 3.spMax
               ..color = Colors.black,
           ),
           textAlign: TextAlign.center,

@@ -1,14 +1,24 @@
-import 'package:flame/flame.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:vote_ready/pages/home_page.dart';
 import 'package:vote_ready/pages/login_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vote_ready/pages/home_page.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Flame.device.setLandscape();
-  Flame.device.fullScreen();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(const VoteReadyGame());
 }
 
@@ -17,16 +27,17 @@ class VoteReadyGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ScreenUtilInit(
+    return ScreenUtilInit(
       minTextAdapt: true,
       child: MaterialApp(
-        // home: AssetVideoPlayer(),
-        home: HomePage(),
-        // home: DialogueWidget(
-        //   playerName: "Press Agent",
-        //   dialogueText: "Hello, Can I come inside and shoot some visuals?",
-        //   playerIconPath: 'assets/images/press.png',
-        // ),
+        home: StreamBuilder(
+          stream: AuthService.userStream,
+          builder: (context, snapshot) {
+            return snapshot.hasData && AuthService.isEmailVerified
+                ? const HomePage()
+                : const LoginPage();
+          },
+        ),
       ),
     );
   }

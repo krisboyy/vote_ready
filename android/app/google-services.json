@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "748795669195",
+    "project_id": "vote-ready-93a5f",
+    "storage_bucket": "vote-ready-93a5f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748795669195:android:ec2e80d42063cb4de7494e",
+        "android_client_info": {
+          "package_name": "com.RIT.Kottayam.vote_ready"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "748795669195-vn8tqt90b6o4ov6rfmqlmv6vr1rd6nr5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.RIT.Kottayam.vote_ready",
+            "certificate_hash": "e80f2fbbf8f5b1c892c2484f6847b616f45634d2"
+          }
+        },
+        {
+          "client_id": "748795669195-9ilvrsf6pgplqprn5nvbu9mu86u4s3ji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMZ3Ya0hcxKeObCR9HSNYEvV-Je-zYekw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748795669195-9ilvrsf6pgplqprn5nvbu9mu86u4s3ji.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
