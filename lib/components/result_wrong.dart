@@ -50,12 +50,23 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
   }
 
   void _scrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
+    if (_scrollController.offset <= _scrollController.position.minScrollExtent) {
+      // If already at the top, scroll downwards
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // If not at the top, scroll to the top
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +85,7 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
                   children: [
                     SizedBox(height: 10.h),
                     Text(
-                      'Oops! The answer was wrong',
+                      'Oops! The answer is wrong',
                       style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
@@ -158,7 +169,7 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
                             ),
                           ),
                           child: Text(
-                            'Skip This Level',
+                            'Home',
                             style: TextStyle(
                               fontSize: 10.sp,
                               color: Colors.black,

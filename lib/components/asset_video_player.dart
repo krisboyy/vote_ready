@@ -28,7 +28,7 @@ class _AssetVideoPlayerState extends State<AssetVideoPlayer> {
     controller = VideoPlayerController.asset(widget.asset)
       ..addListener(() => setState(() {
             if (controller.value.isCompleted) {
-              showQuestionPopup(
+              QuestionPopup.show(
                 context,
                 widget.question,
                 widget.crt_ans,

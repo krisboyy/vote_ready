@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
                 right: 10.spMax,
                 child: CircleAvatar(
                   radius: 20,
-                  backgroundColor: Colors.blueAccent,
+                  backgroundColor: Colors.deepOrangeAccent,
                   child: IconButton(
                     onPressed: () {
                       Navigator.of(context).push(

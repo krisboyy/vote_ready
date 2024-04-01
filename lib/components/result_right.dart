@@ -59,12 +59,23 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
   }
 
   void _scrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
+    if (_scrollController.offset <= _scrollController.position.minScrollExtent) {
+      // If already at the top, scroll downwards
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // If not at the top, scroll to the top
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
   }
+
 
   Future<bool> isLevelCompleted(String levelKey) async {
     String? value = await DataReader.getData(levelKey);
@@ -97,7 +108,7 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                     ),
                     SizedBox(height: 12.h),
                     Text(
-                      'The answer was correct',
+                      'The answer is correct',
                       style: TextStyle(
                         fontSize: 18.sp,
                         color: Colors.white,
@@ -166,7 +177,7 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                             ),
                           ),
                           child: Text(
-                            'Next Level',
+                            'Next',
                             style: TextStyle(
                               fontSize: 10.sp,
                               color: Colors.black,
@@ -191,7 +202,7 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                             ),
                           ),
                           child: Text(
-                            'Select Level',
+                            'Home',
                             style: TextStyle(
                               fontSize: 10.sp,
                               color: Colors.black,
