@@ -1,6 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vote_ready/pages/verify_otp.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
+import '../widgets/dialogs.dart';
+import '../widgets/page_fonts.dart';
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,7 +17,8 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeInAnimation;
 
@@ -38,83 +46,96 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     TextEditingController userNameController = TextEditingController();
     TextEditingController passkeyController = TextEditingController();
 
+    TextStyle headerStyle = GoogleFonts.fugazOne(
+      fontWeight: FontWeight.bold,
+      fontSize: 100.spMin,
+    );
+    TextStyle bodyStyle = GoogleFonts.inter(
+      fontWeight: FontWeight.bold,
+      fontSize: 24.spMin,
+    );
+
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-        child: FadeTransition(
-          opacity: _fadeInAnimation,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: FadeTransition(
+        opacity: _fadeInAnimation,
+        child: Container(
+          height: 1.sh,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const Text(
-                'Vote Ready',
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2.0,
-                  color: Colors.black,
+              SizedBox(
+                height: 1.sh,
+                width: 0.5.sw,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      top: 40.sp,
+                      child: StrokeFont(
+                        text: 'Vote',
+                        headerStyle: headerStyle,
+                        fontColor: const Color(0xFFFF9933),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 40.sp,
+                      child: StrokeFont(
+                        text: 'Ready',
+                        headerStyle: headerStyle,
+                        fontColor: const Color(0xFF128807),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 100.0,
-                  vertical: 25.0,
-                ),
-                child: Form(
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        controller: userNameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Enter your user name',
-                        ),
-                      ),
-                      TextFormField(
-                        controller: passkeyController,
-                        decoration: const InputDecoration(
-                          labelText: 'Enter your mobile number',
-                        ),
-                        obscureText: true,
-                      ),
-                    ],
+              Container(
+                width: 5,
+                height: 200,
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(1.sh)),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      width: 0.35.sw,
+                      child: Text(
+                        "To continue, login with your Google account",
+                        style: bodyStyle,
+                        textAlign: TextAlign.center,
+                      )),
+                  SizedBox(
+                    height: 0.05.sh,
                   ),
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
                   ElevatedButton(
-                    onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => VerifyOTP()),
-                        );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.cyanAccent,
-                      minimumSize: const Size(120, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      elevation: 3.0,
-                    ),
-                    child: const Text(
-                      'Generate OTP',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 2.0,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
+                      onPressed: () async {
+                        await authenticateWithGoogle(context: context);
+                      },
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/google_icon.png',
+                            height: 0.1.sh,
+                          ),
+                          SizedBox(
+                            width: 0.025.sh,
+                          ),
+                          Text(
+                            "Login with Google",
+                            style: bodyStyle.copyWith(
+                              fontSize: 14.spMin,
+                            ),
+                          ),
+                        ],
+                      )),
                 ],
-              ),
+              )
             ],
           ),
         ),
-      ),
       ),
     );
   }
@@ -126,3 +147,50 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   }
 }
 
+Future<void> authenticateWithGoogle({required BuildContext context}) async {
+  try {
+    await AuthService.signInWithGoogle();
+  } on NoGoogleAccountChosenException {
+    return;
+  } catch (e) {
+    showMessageDialog(
+      message: "An unknown error has occurred. Please try again.",
+      context: context,
+    );
+  }
+}
+
+class NoGoogleAccountChosenException implements Exception {
+  const NoGoogleAccountChosenException();
+}
+
+class AuthService {
+  AuthService._();
+
+  static final _auth = FirebaseAuth.instance;
+  static User? get user => _auth.currentUser;
+  static Stream<User?> get userStream => _auth.userChanges();
+  static bool get isEmailVerified => user?.emailVerified ?? false;
+
+  static Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    if (googleUser == null) {
+      throw const NoGoogleAccountChosenException();
+    }
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+}
