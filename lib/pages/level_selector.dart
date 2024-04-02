@@ -10,6 +10,7 @@ import 'package:vote_ready/levels/level_07.dart';
 import 'package:vote_ready/levels/level_08.dart';
 import 'package:vote_ready/levels/level_09.dart';
 import 'package:vote_ready/levels/level_10.dart';
+import 'package:vote_ready/levels/level_11.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vote_ready/pages/final_page.dart';
 
@@ -250,6 +251,12 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
       );
       break;
     case 11:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Level11()),
+      );
+      break;
+    case 12:
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LevelSelector()),

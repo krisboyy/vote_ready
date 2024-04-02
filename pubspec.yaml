@@ -1,7 +1,7 @@
 name: vote_ready
 description: "A new Flutter project."
 
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+publish_to: "none" 
 version: 1.0.0+1
 
 environment:
@@ -28,14 +28,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-#<<<<<<< HEAD
-#=======
-#    - assets/fonts/
-#>>>>>>> 6f7d3af735f9aa3ed5e9735f49c5d4773ebdfd35
     - assets/videos/
-
-#  fonts:
-#    - family: Fugaz One
-#      fonts:
-#        - asset: assets/fonts/FugazOne.ttf
-#
