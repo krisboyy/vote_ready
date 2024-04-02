@@ -11,6 +11,7 @@ class VideoPlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.value.isInitialized;
     return AspectRatio(
       aspectRatio: controller.value.aspectRatio,
       child: Stack(

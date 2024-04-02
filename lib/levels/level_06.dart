@@ -20,8 +20,9 @@ class _Level06State extends State<Level06> {
               asset: 'assets/videos/scenario_6_final.mp4',
               question: 'Photography / videography is allowed ',
               crt_ans: 'Only outside the polling station',
-              wrg_ans1: 'Both outside and inside the polling station except the voting compartment',
-              wrg_ans2: 'Anywhere',
+              option1: 'Both outside and inside the polling station except the voting compartment',
+              option3: 'Anywhere',
+              option2: 'Only outside the polling station',
               reason: 'Guidelines for Photography/Videography at Polling Stations',
               details: ' Photography/videography is permitted only outside the polling station, '
                   'maintaining the sanctity of the voting process while ensuring transparency and '

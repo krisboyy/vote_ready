@@ -68,3 +68,27 @@ class CustomFAB extends StatelessWidget {
     );
   }
 }
+// class Score extends StatelessWidget {
+//   int score;
+//
+//   Score(int score,{
+//     super.key,
+//     required this.score,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Positioned(
+//       top: 1.spMax,
+//       right: 30.spMax,
+//       child: Text(
+//         'Score = ${score}',
+//         style: TextStyle(
+//           fontSize: 10.sp,
+//           fontWeight: FontWeight.w900,
+//           color: Colors.black,
+//         ),
+//       ),
+//     );
+//   }
+// }

@@ -20,8 +20,9 @@ class _Level05State extends State<Level05> {
               asset: 'assets/videos/scenario_5_final.mp4',
               question: 'Which among the following queue system at the polling station is correct?',
               crt_ans: 'Three separate queues (for men, women and one for person with disabilities and senior citizens )',
-              wrg_ans1: 'Two separate queues (for men and women)',
-              wrg_ans2: 'A single queue (for all men and women)',
+              option3: 'Two separate queues (for men and women)',
+              option2: 'A single queue (for all men and women)',
+              option1: 'Three separate queues (for men, women and one for person with disabilities and senior citizens )',
               reason: 'Ensuring Efficient Queue Management at Polling Stations',
               details: 'Opting for three separate queues designated for men, women, and individuals with disabilities/senior '
                   'citizens streamlines the voting process, adhering to inclusivity principles and facilitating smoother '

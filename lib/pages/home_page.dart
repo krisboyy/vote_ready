@@ -55,6 +55,7 @@ class HomePage extends StatelessWidget {
                 ),
                 CustomButton(
                   onPressed: () async {
+                    score = (await DataReader.getScoreSP('ScoreSP')) ?? 0;
                     await Navigator.push(
                       context,
                       MaterialPageRoute(

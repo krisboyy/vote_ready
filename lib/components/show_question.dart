@@ -6,7 +6,15 @@ import 'package:vote_ready/components/result_right.dart';
 import 'package:vote_ready/components/result_wrong.dart';
 import 'package:vote_ready/pages/login_page.dart';
 
+import '../pages/level_selector.dart';
 import '../widgets/custom_button.dart';
+
+class DataReader {
+  static Future<String?> getData(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
+  }
+}
 
 class QuestionPopup {
   static void pushLevelStatus() async {
@@ -32,22 +40,23 @@ class QuestionPopup {
   }
 
   static void show(
-    BuildContext context,
-    String question,
-    String crt_ans,
-    String wrg_ans1,
-    String wrg_ans2,
-    String reason,
-    String details,
-    dynamic level,
-  ) {
+      BuildContext context,
+      String question,
+      String crt_ans,
+      String option1,
+      String option2,
+      String option3,
+      String reason,
+      String details,
+      dynamic level,
+      ) {
     List<String> options = [
-      crt_ans,
-      wrg_ans1,
-      wrg_ans2,
+      option1,
+      option2,
+      option3,
     ];
 
-    options.shuffle();
+    // options.shuffle();
 
     showDialog(
       context: context,
@@ -86,9 +95,14 @@ class QuestionPopup {
                           onPressed: () async {
                             Navigator.of(context).pop();
                             if (options[0] == crt_ans) {
+                              bool completed = await isLevelCompleted('level$level');
+                              if(!completed) {
+                                score += 10;
+                              }
                               await DataWriter.addData('level$level', 'Yes');
                               pushLevelStatus();
-                              Navigator.push(
+                              await DataWriter.addDataScore('ScoreSP', score);
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RightAnswerPage(
@@ -100,8 +114,9 @@ class QuestionPopup {
                                 ),
                               );
                             } else {
+
                               pushLevelStatus();
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => WrongAnswerPage(
@@ -135,9 +150,14 @@ class QuestionPopup {
                           onPressed: () async {
                             Navigator.of(context).pop();
                             if (options[1] == crt_ans) {
+                              bool completed = await isLevelCompleted('level$level');
+                              if(!completed) {
+                                score += 10;
+                              }
                               await DataWriter.addData('level$level', 'Yes');
                               pushLevelStatus();
-                              Navigator.push(
+                              await DataWriter.addDataScore('ScoreSP', score);
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RightAnswerPage(
@@ -150,7 +170,7 @@ class QuestionPopup {
                               );
                             } else {
                               pushLevelStatus();
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => WrongAnswerPage(
@@ -184,9 +204,14 @@ class QuestionPopup {
                           onPressed: () async {
                             Navigator.of(context).pop();
                             if (options[2] == crt_ans) {
+                              bool completed = await isLevelCompleted('level$level');
+                              if(!completed) {
+                                score += 10;
+                              }
                               await DataWriter.addData('level$level', 'Yes');
                               pushLevelStatus();
-                              Navigator.push(
+                              await DataWriter.addDataScore('ScoreSP', score);
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RightAnswerPage(
@@ -199,7 +224,7 @@ class QuestionPopup {
                               );
                             } else {
                               pushLevelStatus();
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => WrongAnswerPage(

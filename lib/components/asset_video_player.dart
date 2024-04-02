@@ -7,13 +7,14 @@ class AssetVideoPlayer extends StatefulWidget {
   final String asset;
   final String question;
   final String crt_ans;
-  final String wrg_ans1;
-  final String wrg_ans2;
+  final String option1;
+  final String option2;
+  final String option3;
 
   final String reason;
   final String details;
   final int level;
-  const AssetVideoPlayer({required this.asset,  super.key, required this.question, required this.crt_ans, required this.wrg_ans1, required this.wrg_ans2, required this.reason, required this.details, required this.level,});
+  const AssetVideoPlayer({required this.asset,  super.key, required this.question, required this.crt_ans, required this.reason, required this.details, required this.level, required this.option1, required this.option2, required this.option3,});
 
   @override
   State<AssetVideoPlayer> createState() => _AssetVideoPlayerState();
@@ -32,8 +33,9 @@ class _AssetVideoPlayerState extends State<AssetVideoPlayer> {
                 context,
                 widget.question,
                 widget.crt_ans,
-                widget.wrg_ans1,
-                widget.wrg_ans2,
+                widget.option1,
+                widget.option2,
+                widget.option3,
                 widget.reason,
                 widget.details,
                 widget.level,
@@ -44,25 +46,6 @@ class _AssetVideoPlayerState extends State<AssetVideoPlayer> {
       ..initialize().then((value) => controller.play());
   }
 
-  // void _onVideoComplete() {
-  //   // Remove listener from current controller
-  //   controllers[currentIndex].removeListener(_onVideoComplete);
-
-  //   // Move to the next video
-  //   if (controllers[currentIndex].value.isCompleted) {
-  //     if (currentIndex < controllers.length - 1) {
-  //       currentIndex++;
-  //       controllers[currentIndex]
-  //         ..setLooping(false)
-  //         ..addListener(_onVideoComplete)
-  //         ..initialize().then((_) {
-  //           controllers[currentIndex].play();
-  //           setState(() {});
-  //         });
-  //     }
-  //   }
-  // }
-
   @override
   void dispose() {
     controller.dispose();
@@ -71,6 +54,8 @@ class _AssetVideoPlayerState extends State<AssetVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return VideoPlayerWidget(controller: controller);
+    Widget object;
+    controller.value.isInitialized ? object = VideoPlayerWidget(controller: controller) : object = CircularProgressIndicator();
+    return object;
   }
 }

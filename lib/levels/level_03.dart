@@ -20,10 +20,11 @@ class _Level03State extends State<Level03> {
               asset: 'assets/videos/scenario_3_final.mp4',
               question: 'A voter finds that another person has already casted his vote',
               crt_ans: 'Allow the voter to cast vote in tendered ballot paper',
-              wrg_ans1: 'Allow the voter to cast vote',
-              wrg_ans2: 'Hand over the voter to police',
+              option1: 'Allow the voter to cast vote',
+              option3: 'Hand over the voter to police',
+              option2: 'Allow the voter to cast vote in tendered ballot paper',
               reason: 'Addressing Unauthorized Voting Incidents',
-              details: ' In case a voter discovers that another person has already cast their vote, '
+              details: 'As per Rule 49P of the Conduct Of Election Rules,1961, in case a voter discovers that another person has already cast their vote, '
                   'the correct action is to allow the voter to cast their vote using a tendered ballot '
                   'paper, ensuring their voting rights are upheld while maintaining the integrity of the '
                   'electoral process, as per established procedures',

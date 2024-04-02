@@ -150,6 +150,7 @@ Future<void> authenticateWithGoogle({required BuildContext context}) async {
   } on NoGoogleAccountChosenException {
     return;
   } catch (e) {
+    print(e);
     showMessageDialog(
       message: "An unknown error has occurred. Please try again.",
       context: context,

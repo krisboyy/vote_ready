@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,10 +15,18 @@ import 'package:vote_ready/levels/level_10.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vote_ready/pages/final_page.dart';
 
+import '../widgets/custom_button.dart';
+
+int score=0;
 class DataReader {
   static Future<String?> getData(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
+  }
+
+  static Future<int?> getScoreSP(key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(key);
   }
 }
 
@@ -45,7 +54,7 @@ class LevelSelector extends StatelessWidget {
         bool isCompleted =
             snapshot.data ?? false; // Default to false if data is null
         borderColor =
-            isCompleted ? Colors.green : Colors.black; // Set border color
+        isCompleted ? Colors.green : Colors.black; // Set border color
 
         Widget level = Container(
           height: 100.0.spMin,
@@ -67,7 +76,7 @@ class LevelSelector extends StatelessWidget {
               '$levelNumber',
               style: levelStyle.copyWith(
                 color:
-                    isCompleted ? Colors.green : Colors.black, // Set text color
+                isCompleted ? Colors.green : Colors.black, // Set text color
               ),
             ),
           ),
@@ -112,14 +121,54 @@ class LevelSelector extends StatelessWidget {
             child: Row(
               children: List.generate(
                 10,
-                (index) => Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 60.0.spMin, horizontal: 10.0.spMin),
-                  child: levelSelectorBuilder(index, context),
-                ),
+                    (index) =>
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 60.0.spMin, horizontal: 10.0.spMin),
+                      child: levelSelectorBuilder(index, context),
+                    ),
               ),
             ),
           ),
+
+          Positioned(
+            top: -3.spMax,
+            right: 10.spMax,
+            child: IconButton(
+              onPressed: () async {
+                exit(0);
+              },
+              icon: const Icon(
+                  Icons.power_settings_new_outlined, color: Colors.black),
+            ),
+          ),
+
+          Positioned(
+            top: 1.spMax,
+            right: 50.spMax,
+            child: Text(
+              "Score = ${score}",
+              style: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w900,
+                color: Colors.black,
+              ),
+            ),
+          ),
+
+          Positioned(
+            top: 5.spMax,
+            left: 15.spMax,
+            child: Text(
+              'Level Selector',
+              style: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w900,
+                color: Colors.black,
+              ),
+            ),
+          ),
+
           Positioned(
             bottom: 10.spMax,
             right: 10.spMax,
@@ -170,7 +219,6 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
     String? value = await DataReader.getData(levelKey);
     return value == 'Yes';
   }
-
   // Check if all levels are completed
   bool allLevelsCompleted = true;
   for (int i = 1; i <= 10; i++) {
@@ -180,10 +228,9 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
       break;
     }
   }
-
   // If all levels are completed, go to the final page
   if (allLevelsCompleted) {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const FinalPage()),
     );

@@ -3,10 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/final_page.dart';
 import '../pages/level_selector.dart';
+
 class DataWriter {
   static Future<void> addData(String key, String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(key, value);
+  }
+
+  static Future<void> addDataScore(String key, value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(key, value);
   }
 }
 
@@ -17,12 +23,12 @@ class RightAnswerPage extends StatefulWidget {
   final int level;
 
   const RightAnswerPage({
-    Key? key,
+    super.key,
     required this.correctAnswer,
     required this.reason,
     required this.details,
     required this.level,
-  }) : super(key: key);
+  });
 
   @override
   _RightAnswerPageState createState() => _RightAnswerPageState();
@@ -73,7 +79,6 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
       );
     }
   }
-
 
   Future<bool> isLevelCompleted(String levelKey) async {
     String? value = await DataReader.getData(levelKey);
@@ -143,12 +148,39 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+
                         ElevatedButton(
                           onPressed: () async {
-                            await DataWriter.addData('level${widget.level}', 'Yes');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LevelSelector(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 32.w),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            'Home',
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: 16.w),
+
+                        ElevatedButton(
+                          onPressed: () async {
                             // Check if all levels are completed
                             bool allLevelsCompleted = true;
-                            for (int i = 1; i <= 10; i++) {
+                            for (int i = 1; i <= 11; i++) {
                               bool completed = await isLevelCompleted('level$i');
                               if (!completed) {
                                 allLevelsCompleted = false;
@@ -158,7 +190,7 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
 
                             // If all levels are completed, go to the final page
                             if (allLevelsCompleted) {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(builder: (context) => const FinalPage()),
                               );
@@ -182,31 +214,7 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 16.w),
-                        ElevatedButton(
-                          onPressed: () async {
-                            await DataWriter.addData('level${widget.level}', 'Yes');                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LevelSelector(),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 32.w),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            'Home',
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
+
                       ],
                     ),
                   ],
