@@ -18,16 +18,15 @@ class _Level10State extends State<Level10> {
           Center(
             child: AssetVideoPlayer(
               asset: 'assets/videos/scenario_10_final.mp4',
-              question: 'The second and third polling officers should '
-                  'remain with the presiding officer and the first polling officer till',
-              crt_ans: 'The materials and forms are returned at the collection center ',
-              wrg_ans1: 'The end of voting',
-              wrg_ans2: 'The materials and forms are packed',
-              reason: 'Responsibilities of Polling Officers',
-              details: 'The second and third polling officers should stay with the presiding '
-                  'officer and the first polling officer until the materials and forms are '
-                  'returned at the collection center, ensuring accountability and adherence to '
-                  'procedural requirements in accordance with election protocols',
+              question: 'A voter refuses to vote as soon as he reaches the polling compartment',
+              crt_ans: 'Make a remark in 17A register that the voter refused to vote and allow him/her to leave',
+              option1: 'Force the voter to cast the vote',
+              option2: 'Hand over the voter to the police',
+              option3: 'Make a remark in 17A register that the voter refused to vote and allow him/her to leave',
+              reason: 'Handling Voter Refusal at Polling Compartment',
+              details: 'When a voter declines to vote upon reaching the polling compartment, the appropriate procedure '
+                  'is to allow the voter to leave while documenting the refusal in the remarks column of the register, '
+                  'ensuring transparency and accuracy in the electoral process.',
               level: 10,
             ),
           ),

@@ -20,8 +20,9 @@ class _Level09State extends State<Level09> {
               asset: 'assets/videos/scenario_9_final.mp4',
               question: 'The minimum number of votes to be casted during mock poll is',
               crt_ans: '50',
-              wrg_ans1: '100',
-              wrg_ans2: '10',
+              option1: '100',
+              option3: '10',
+              option2: '50',
               reason: 'Minimum Votes Required for Mock Poll',
               details: 'The minimum number of votes to be casted during a mock poll is 50, ensuring '
                   'comprehensive testing of the electronic voting machines (EVMs) and the Voter Verifiable '

@@ -12,6 +12,11 @@ class DataWriter {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(key, value);
   }
+
+  static Future<void> addDataScore(String key, value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(key, value);
+  }
 }
 
 class FinalPage extends StatelessWidget {
@@ -68,6 +73,8 @@ class FinalPage extends StatelessWidget {
                           onPressed: () async {
                             for (int i = 1; i <= 10; i++) {
                               await DataWriter.addData('level$i', 'No');
+                              await DataWriter.addDataScore('ScoreSP', 0);
+                              score=0;
                             }
                             await Navigator.push(
                               context,

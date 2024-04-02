@@ -67,7 +67,6 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,26 +131,7 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            navigateToLevel(widget.level, context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey,
-                            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 32.w),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            'Try Again',
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 16.w),
+
                         ElevatedButton(
                           onPressed: () async {
                             Navigator.push(
@@ -176,6 +156,29 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
                             ),
                           ),
                         ),
+
+                        SizedBox(width: 16.w),
+
+                        ElevatedButton(
+                          onPressed: () {
+                            navigateToLevel(widget.level, context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueGrey,
+                            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 32.w),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            'Try Again',
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+
                       ],
                     ),
                   ],
