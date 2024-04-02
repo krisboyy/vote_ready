@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/final_page.dart';
 import '../pages/level_selector.dart';
-import '../widgets/custom_button.dart';
-
 class DataWriter {
   static Future<void> addData(String key, String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "748795669195-apnqfjtt76hki0k6834k1v0ovpqhlv7f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.RIT.Kottayam.vote_ready",
+            "certificate_hash": "b1073471cca01f428716a7cd713a0d90e1b5ad67"
+          }
+        },
+        {
+          "client_id": "748795669195-jbba3mbhipmsn0b6q146smsfpcgqgpi2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.RIT.Kottayam.vote_ready",
+            "certificate_hash": "891b3def217cc22beb885f5e8ef2ed0cf0bc9544"
+          }
+        },
+        {
           "client_id": "748795669195-vn8tqt90b6o4ov6rfmqlmv6vr1rd6nr5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -37,6 +53,13 @@
             {
               "client_id": "748795669195-9ilvrsf6pgplqprn5nvbu9mu86u4s3ji.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "748795669195-m7mjnguq5jmqqm5cr7ijb2grt5ucsiot.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.voteReady.RunnerTests"
+              }
             }
           ]
         }

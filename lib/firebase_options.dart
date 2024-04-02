@@ -23,9 +23,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -59,27 +65,5 @@ class DefaultFirebaseOptions {
     messagingSenderId: '748795669195',
     projectId: 'vote-ready-93a5f',
     storageBucket: 'vote-ready-93a5f.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAofSLoM8r64-QBbms3uHx77KkjttcYq8w',
-    appId: '1:748795669195:ios:fdc64617cd636dbae7494e',
-    messagingSenderId: '748795669195',
-    projectId: 'vote-ready-93a5f',
-    storageBucket: 'vote-ready-93a5f.appspot.com',
-    androidClientId: '748795669195-vn8tqt90b6o4ov6rfmqlmv6vr1rd6nr5.apps.googleusercontent.com',
-    iosClientId: '748795669195-ntacoupsr8ohjg8394v131dr8qfv40hj.apps.googleusercontent.com',
-    iosBundleId: 'com.example.voteReady',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAofSLoM8r64-QBbms3uHx77KkjttcYq8w',
-    appId: '1:748795669195:ios:94bb465449f99343e7494e',
-    messagingSenderId: '748795669195',
-    projectId: 'vote-ready-93a5f',
-    storageBucket: 'vote-ready-93a5f.appspot.com',
-    androidClientId: '748795669195-vn8tqt90b6o4ov6rfmqlmv6vr1rd6nr5.apps.googleusercontent.com',
-    iosClientId: '748795669195-m7mjnguq5jmqqm5cr7ijb2grt5ucsiot.apps.googleusercontent.com',
-    iosBundleId: 'com.example.voteReady.RunnerTests',
   );
 }

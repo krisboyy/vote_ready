@@ -1,22 +1,46 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vote_ready/components/result_right.dart';
 import 'package:vote_ready/components/result_wrong.dart';
+import 'package:vote_ready/pages/login_page.dart';
 
 import '../widgets/custom_button.dart';
 
 class QuestionPopup {
+  static void pushLevelStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final db = FirebaseFirestore.instance;
+    String? temp;
+    List<bool> levelStatus = List<bool>.generate(
+      10,
+      (_) => false,
+      growable: true,
+    );
+    for (int i = 0; i < 10; i++) {
+      temp = prefs.getString("level${i + 1}");
+      if (temp == "Yes") {
+        levelStatus[i] = true;
+      } else {
+        levelStatus[i] = false;
+      }
+    }
+    db.collection("users").doc(AuthService.user!.email).update({
+      'level': levelStatus
+    });
+  }
+
   static void show(
-      BuildContext context,
-      String question,
-      String crt_ans,
-      String wrg_ans1,
-      String wrg_ans2,
-      String reason,
-      String details,
-      dynamic level,
-      ) {
+    BuildContext context,
+    String question,
+    String crt_ans,
+    String wrg_ans1,
+    String wrg_ans2,
+    String reason,
+    String details,
+    dynamic level,
+  ) {
     List<String> options = [
       crt_ans,
       wrg_ans1,
@@ -30,17 +54,20 @@ class QuestionPopup {
       builder: (BuildContext context) {
         return Scaffold(
           backgroundColor: Colors.white, // Set background color to transparent
-          body: Stack( // Use a Stack to overlay the container and the button
+          body: Stack(
+            // Use a Stack to overlay the container and the button
             children: [
               GestureDetector(
                 onTap: () => Navigator.of(context).pop(), // Close dialog on tap outside
-                child: Container( // This is the container with the dialog content
+                child: Container(
+                  // This is the container with the dialog content
                   padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 70.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: SingleChildScrollView( // Use SingleChildScrollView to enable scrolling if content overflows
+                  child: SingleChildScrollView(
+                    // Use SingleChildScrollView to enable scrolling if content overflows
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -60,6 +87,7 @@ class QuestionPopup {
                             Navigator.of(context).pop();
                             if (options[0] == crt_ans) {
                               await DataWriter.addData('level$level', 'Yes');
+                              pushLevelStatus();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -72,6 +100,7 @@ class QuestionPopup {
                                 ),
                               );
                             } else {
+                              pushLevelStatus();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -107,6 +136,7 @@ class QuestionPopup {
                             Navigator.of(context).pop();
                             if (options[1] == crt_ans) {
                               await DataWriter.addData('level$level', 'Yes');
+                              pushLevelStatus();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -119,6 +149,7 @@ class QuestionPopup {
                                 ),
                               );
                             } else {
+                              pushLevelStatus();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -154,6 +185,7 @@ class QuestionPopup {
                             Navigator.of(context).pop();
                             if (options[2] == crt_ans) {
                               await DataWriter.addData('level$level', 'Yes');
+                              pushLevelStatus();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -166,6 +198,7 @@ class QuestionPopup {
                                 ),
                               );
                             } else {
+                              pushLevelStatus();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -201,7 +234,8 @@ class QuestionPopup {
                   ),
                 ),
               ),
-              Positioned( // Position the button outside the container
+              Positioned(
+                // Position the button outside the container
                 top: 2.spMax,
                 right: 2.spMax,
                 child: const CustomFAB(), // Your custom button here
