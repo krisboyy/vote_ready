@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vote_ready/levels/level_01.dart';
 import 'package:vote_ready/levels/level_02.dart';
 import 'package:vote_ready/levels/level_03.dart';
@@ -33,17 +34,19 @@ class LevelSelector extends StatelessWidget {
     int levelNumber = i + 1;
     i++;
     double smallFontSize = 40.0.spMin;
-    TextStyle levelStyle = TextStyle(
+    TextStyle levelStyle = GoogleFonts.fugazOne(
+      fontWeight: FontWeight.bold,
       fontSize: smallFontSize,
-      color: Colors.black,
     );
     Color borderColor = Colors.black; // Default border color
 
     return FutureBuilder<bool>(
       future: isLevelCompleted('level$levelNumber'),
       builder: (context, snapshot) {
-        bool isCompleted = snapshot.data ?? false; // Default to false if data is null
-        borderColor = isCompleted ? Colors.green : Colors.black; // Set border color
+        bool isCompleted =
+            snapshot.data ?? false; // Default to false if data is null
+        borderColor =
+            isCompleted ? Colors.green : Colors.black; // Set border color
 
         Widget level = Container(
           height: 100.0.spMin,
@@ -64,7 +67,8 @@ class LevelSelector extends StatelessWidget {
             child: Text(
               '$levelNumber',
               style: levelStyle.copyWith(
-                color: isCompleted ? Colors.green : Colors.black, // Set text color
+                color:
+                    isCompleted ? Colors.green : Colors.black, // Set text color
               ),
             ),
           ),
@@ -109,7 +113,7 @@ class LevelSelector extends StatelessWidget {
             child: Row(
               children: List.generate(
                 10,
-                    (index) => Padding(
+                (index) => Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: 60.0.spMin, horizontal: 10.0.spMin),
                   child: levelSelectorBuilder(index, context),
@@ -131,7 +135,8 @@ class LevelSelector extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const FinalPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const FinalPage()),
                         );
                       },
                       icon: const Icon(Icons.exit_to_app, color: Colors.red),
@@ -162,12 +167,10 @@ class LevelSelector extends StatelessWidget {
 }
 
 Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
-
   Future<bool> isLevelCompleted(String levelKey) async {
     String? value = await DataReader.getData(levelKey);
     return value == 'Yes';
   }
-
 
   // Check if all levels are completed
   bool allLevelsCompleted = true;
