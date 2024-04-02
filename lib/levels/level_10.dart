@@ -24,7 +24,7 @@ class _Level10State extends State<Level10> {
               option2: 'Hand over the voter to the police',
               option3: 'Make a remark in 17A register that the voter refused to vote and allow him/her to leave',
               reason: 'Handling Voter Refusal at Polling Compartment',
-              details: 'When a voter declines to vote upon reaching the polling compartment, the appropriate procedure '
+              details: 'As per Rule 49 O of the Conduct Of Election Rules,1961, when a voter declines to vote upon reaching the polling compartment, the appropriate procedure '
                   'is to allow the voter to leave while documenting the refusal in the remarks column of the register, '
                   'ensuring transparency and accuracy in the electoral process.',
               level: 10,
