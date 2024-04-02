@@ -33,9 +33,7 @@ class VoteReadyGame extends StatelessWidget {
         home: StreamBuilder(
           stream: AuthService.userStream,
           builder: (context, snapshot) {
-            return snapshot.hasData && AuthService.isEmailVerified
-                ? const HomePage()
-                : const LoginPage();
+            return snapshot.hasData ? const HomePage() : const LoginPage();
           },
         ),
       ),
