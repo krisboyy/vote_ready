@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBMUxdaOwRoSaPeHZycb1s5UJcg_kyvh9w',
-    appId: '1:748795669195:web:01196e29c3e0b2c3e7494e',
-    messagingSenderId: '748795669195',
-    projectId: 'vote-ready-93a5f',
-    authDomain: 'vote-ready-93a5f.firebaseapp.com',
-    storageBucket: 'vote-ready-93a5f.appspot.com',
-    measurementId: 'G-X84CHP6PB4',
+    apiKey: 'AIzaSyAzz6h_UPTPC3SiIIbZMmc2b7_Xne9CLXo',
+    appId: '1:915868952405:web:57397552c05c90aa04f1dc',
+    messagingSenderId: '915868952405',
+    projectId: 'vote-ready-cb313',
+    authDomain: 'vote-ready-cb313.firebaseapp.com',
+    storageBucket: 'vote-ready-cb313.appspot.com',
+    measurementId: 'G-RSRF633GZ2',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDMZ3Ya0hcxKeObCR9HSNYEvV-Je-zYekw',
-    appId: '1:748795669195:android:ec2e80d42063cb4de7494e',
-    messagingSenderId: '748795669195',
-    projectId: 'vote-ready-93a5f',
-    storageBucket: 'vote-ready-93a5f.appspot.com',
+    apiKey: 'AIzaSyDmTlp6CqHR8LaoVOvmuDHyDrAfG_0HTQE',
+    appId: '1:915868952405:android:0e357f9047952f6a04f1dc',
+    messagingSenderId: '915868952405',
+    projectId: 'vote-ready-cb313',
+    storageBucket: 'vote-ready-cb313.appspot.com',
   );
 }

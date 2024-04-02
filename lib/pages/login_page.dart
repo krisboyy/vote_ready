@@ -146,7 +146,8 @@ Future<void> authenticateWithGoogle({required BuildContext context}) async {
       "username": AuthService.user!.displayName!,
       "email": AuthService.user!.email!,
     };
-    db.collection("users").doc(AuthService.user!.email).update(user);
+    await db.collection("users").doc(AuthService.user!.email).set(user, SetOptions(merge: true));
+    // db.collection("users").doc(AuthService.user!.email).update(user);
   } on NoGoogleAccountChosenException {
     return;
   } catch (e) {
