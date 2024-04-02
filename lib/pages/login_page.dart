@@ -1,14 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vote_ready/pages/verify_otp.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/page_fonts.dart';
-import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,8 +14,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeInAnimation;
 
@@ -43,9 +39,6 @@ class _LoginPageState extends State<LoginPage>
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController userNameController = TextEditingController();
-    TextEditingController passkeyController = TextEditingController();
-
     TextStyle headerStyle = GoogleFonts.fugazOne(
       fontWeight: FontWeight.bold,
       fontSize: 100.spMin,
@@ -93,9 +86,7 @@ class _LoginPageState extends State<LoginPage>
               Container(
                 width: 5,
                 height: 200,
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(1.sh)),
+                decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(1.sh)),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -150,6 +141,12 @@ class _LoginPageState extends State<LoginPage>
 Future<void> authenticateWithGoogle({required BuildContext context}) async {
   try {
     await AuthService.signInWithGoogle();
+    final db = FirebaseFirestore.instance;
+    final user = <String, dynamic>{
+      "username": AuthService.user!.displayName!,
+      "email": AuthService.user!.email!,
+    };
+    db.collection("users").doc(AuthService.user!.email).update(user);
   } on NoGoogleAccountChosenException {
     return;
   } catch (e) {
@@ -171,7 +168,6 @@ class AuthService {
   static final _auth = FirebaseAuth.instance;
   static User? get user => _auth.currentUser;
   static Stream<User?> get userStream => _auth.userChanges();
-  static bool get isEmailVerified => user?.emailVerified ?? false;
 
   static Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
@@ -182,8 +178,7 @@ class AuthService {
     }
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
