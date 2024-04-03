@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:vote_ready/pages/home_page.dart';
 import 'package:vote_ready/pages/login_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:vote_ready/pages/home_page.dart';
-
 import 'firebase_options.dart';
 
 void main() async {
@@ -27,7 +25,7 @@ class VoteReadyGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
+    Widget ret_val = ScreenUtilInit(
       minTextAdapt: true,
       child: MaterialApp(
         home: StreamBuilder(
@@ -38,5 +36,6 @@ class VoteReadyGame extends StatelessWidget {
         ),
       ),
     );
+    return ret_val;
   }
 }

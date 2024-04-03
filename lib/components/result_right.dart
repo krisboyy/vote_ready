@@ -190,9 +190,10 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
 
                             // If all levels are completed, go to the final page
                             if (allLevelsCompleted) {
-                              Navigator.pushReplacement(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(builder: (context) => const FinalPage()),
+                                ModalRoute.withName('/vote ready'),
                               );
                               return;
                             }else{

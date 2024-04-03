@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vote_ready/pages/level_selector.dart';
 import 'package:vote_ready/pages/login_page.dart';
 import 'package:vote_ready/widgets/page_fonts.dart';
+import '../components/timer_popup.dart';
 import '../widgets/custom_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key});
 
+  static Future<String?> getLockData() async {
+    String? retval = null;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if(prefs.containsKey('unlockTime')) {
+      retval = prefs.getString('unlockTime');
+    }
+    return retval;
+  }
+
   @override
   Widget build(BuildContext context) {
+    String? value;
     TextStyle headerStyle = GoogleFonts.fugazOne(
       fontWeight: FontWeight.bold,
       fontSize: 130.spMin,
@@ -19,7 +32,6 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F3ED),
       body: Center(
-        // child: SingleChildScrollView(
         child: Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
@@ -55,13 +67,31 @@ class HomePage extends StatelessWidget {
                 ),
                 CustomButton(
                   onPressed: () async {
-                    score = (await DataReader.getScoreSP('ScoreSP')) ?? 0;
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => const LevelSelector()),
-                      ),
-                    );
+                    value = await getLockData();
+                    if(null != value) {
+                      final diff = DateTime.now().difference(DateTime.parse(value!));
+                      if(diff <= Duration.zero){
+                        TwoHourDialog.showTwoHourDialog(context,diff);
+                      }else{
+                        score = (await DataReader.getScoreSP('ScoreSP')) ?? 0;
+                        await Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => const LevelSelector()),
+                          ),
+                          ModalRoute.withName('/vote ready'),
+                        );
+                      }
+                    }else{
+                      await Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => const LevelSelector()),
+                        ),
+                        ModalRoute.withName('/vote ready'),
+                      );
+                    }
+
                   },
                   buttonSize: 15,
                   backgroundColor: const Color(0xFF128807),
@@ -87,7 +117,6 @@ class HomePage extends StatelessWidget {
                 child: IconButton(
                   onPressed: () {},
                   icon: SizedBox(),
-
                 ),
               ),
             ),
@@ -95,6 +124,5 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
-    // );
   }
 }

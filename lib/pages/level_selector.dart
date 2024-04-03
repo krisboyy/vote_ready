@@ -109,10 +109,10 @@ class LevelSelector extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Transform.scale(
-            scale: 0.5.spMax,
+            scale: 1.1,
             child: Image.asset(
               'assets/images/bg_image.png',
-              fit: BoxFit.contain,
+              fit: BoxFit.cover,
             ),
           ),
           SingleChildScrollView(
@@ -181,10 +181,11 @@ class LevelSelector extends StatelessWidget {
                     backgroundColor: Colors.white,
                     child: IconButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const FinalPage()),
+                          ModalRoute.withName('/vote ready'),
                         );
                       },
                       icon: const Icon(Icons.exit_to_app, color: Colors.red),
@@ -230,9 +231,10 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
   }
   // If all levels are completed, go to the final page
   if (allLevelsCompleted) {
-    Navigator.pushReplacement(
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => const FinalPage()),
+      ModalRoute.withName('/vote ready'),
     );
     return;
   }
@@ -240,69 +242,80 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
   // If not, navigate to the corresponding level
   switch (levelNumber) {
     case 1:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level01()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     case 2:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level02()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     case 3:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level03()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     case 4:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level04()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     case 5:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level05()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     case 6:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level06()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     case 7:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level07()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     case 8:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level08()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     case 9:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level09()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     case 10:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level10()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     case 11:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const LevelSelector()),
+        ModalRoute.withName('/vote ready'),
       );
       break;
     default:

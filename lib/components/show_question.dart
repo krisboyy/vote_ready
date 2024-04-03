@@ -102,7 +102,7 @@ class QuestionPopup {
                               await DataWriter.addData('level$level', 'Yes');
                               pushLevelStatus();
                               await DataWriter.addDataScore('ScoreSP', score);
-                              Navigator.pushReplacement(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RightAnswerPage(
@@ -112,11 +112,12 @@ class QuestionPopup {
                                     level: level,
                                   ),
                                 ),
+                                ModalRoute.withName('/vote ready'),
                               );
                             } else {
 
                               pushLevelStatus();
-                              Navigator.pushReplacement(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => WrongAnswerPage(
@@ -126,6 +127,7 @@ class QuestionPopup {
                                     level: level,
                                   ),
                                 ),
+                                ModalRoute.withName('/vote ready'),
                               );
                             }
                           },
@@ -157,7 +159,7 @@ class QuestionPopup {
                               await DataWriter.addData('level$level', 'Yes');
                               pushLevelStatus();
                               await DataWriter.addDataScore('ScoreSP', score);
-                              Navigator.pushReplacement(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RightAnswerPage(
@@ -167,10 +169,11 @@ class QuestionPopup {
                                     level: level,
                                   ),
                                 ),
+                                ModalRoute.withName('/vote ready'),
                               );
                             } else {
                               pushLevelStatus();
-                              Navigator.pushReplacement(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => WrongAnswerPage(
@@ -180,6 +183,7 @@ class QuestionPopup {
                                     level: level,
                                   ),
                                 ),
+                                ModalRoute.withName('/vote ready'),
                               );
                             }
                           },
@@ -211,7 +215,7 @@ class QuestionPopup {
                               await DataWriter.addData('level$level', 'Yes');
                               pushLevelStatus();
                               await DataWriter.addDataScore('ScoreSP', score);
-                              Navigator.pushReplacement(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RightAnswerPage(
@@ -221,10 +225,11 @@ class QuestionPopup {
                                     level: level,
                                   ),
                                 ),
+                                ModalRoute.withName('/vote ready'),
                               );
                             } else {
                               pushLevelStatus();
-                              Navigator.pushReplacement(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => WrongAnswerPage(
@@ -234,6 +239,7 @@ class QuestionPopup {
                                     level: level,
                                   ),
                                 ),
+                                ModalRoute.withName('/vote ready'),
                               );
                             }
                           },
