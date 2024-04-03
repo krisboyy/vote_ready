@@ -40,7 +40,7 @@ class _TwoHourDialogState extends State<TwoHourDialog> {
                 color: Colors.black,
               ),
             ),
-            Text(-RemTime.inMinutes>=60? "Remaining time is ${-RemTime.inHours} hours" : "Remaining time is ${-RemTime.inMinutes+1} minutes" ,
+            Text(-RemTime.inMinutes>=60? "Remaining time is ${-RemTime.inHours+1} hours" : "Remaining time is ${-RemTime.inMinutes+1} minutes" ,
               style: TextStyle(
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w900,
@@ -73,7 +73,6 @@ class _TwoHourDialogState extends State<TwoHourDialog> {
             );
           },
         ),)
-
       ],
     );
   }
