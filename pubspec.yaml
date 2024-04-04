@@ -20,6 +20,7 @@ dependencies:
   firebase_auth: ^4.18.0
   firebase_core: ^2.27.2
   cloud_firestore: ^4.15.10
+  json_theme: ^6.4.1+1
 
 dev_dependencies:
   flutter_test:
@@ -29,5 +30,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/
     - assets/images/
     - assets/videos/

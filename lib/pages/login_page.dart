@@ -39,11 +39,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    double topWP = 0.2.sh;
+    double bottomWP = 0.18.sh;
+
     TextStyle headerStyle = GoogleFonts.fugazOne(
       fontWeight: FontWeight.bold,
       fontSize: 100.spMin,
     );
-    TextStyle bodyStyle = GoogleFonts.inter(
+    TextStyle bodyStyle = GoogleFonts.poppins(
       fontWeight: FontWeight.bold,
       fontSize: 24.spMin,
     );
@@ -65,7 +68,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   alignment: Alignment.center,
                   children: [
                     Positioned(
-                      top: 40.sp,
+                      top: topWP,
                       child: StrokeFont(
                         text: 'Vote',
                         headerStyle: headerStyle,
@@ -73,7 +76,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       ),
                     ),
                     Positioned(
-                      bottom: 40.sp,
+                      top: topWP + bottomWP,
                       child: StrokeFont(
                         text: 'Ready',
                         headerStyle: headerStyle,
