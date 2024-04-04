@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vote_ready/pages/level_selector.dart';
 import 'package:vote_ready/pages/login_page.dart';
+import 'package:vote_ready/pages/profile_page.dart';
 import 'package:vote_ready/widgets/page_fonts.dart';
 import '../widgets/custom_button.dart';
 
@@ -85,9 +86,13 @@ class HomePage extends StatelessWidget {
                     )),
                 clipBehavior: Clip.none,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProfilePage()),
+                    );
+                  },
                   icon: SizedBox(),
-
                 ),
               ),
             ),
