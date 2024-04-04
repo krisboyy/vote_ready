@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:vote_ready/pages/home_page.dart';
 import 'package:vote_ready/pages/login_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vote_ready/pages/profile_page.dart';
+import 'package:vote_ready/widgets/fact_card.dart';
+import 'package:vote_ready/widgets/profile_page_buttons.dart';
 import 'firebase_options.dart';
 
 void main() async {
