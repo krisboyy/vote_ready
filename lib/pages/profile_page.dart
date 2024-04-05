@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vote_ready/pages/login_page.dart';
 import 'package:vote_ready/widgets/fact_card.dart';
+import 'package:vote_ready/widgets/profile_page_buttons.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -69,10 +70,11 @@ class ProfilePage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     right: 0.025.sw,
-                    top: 0.025.sh,
+                    top: 0.075.sh,
                   ),
                   child: IconButton.filledTonal(
                     style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.secondary),
                       fixedSize: MaterialStatePropertyAll(
                         Size(
                           0.05.sw,
@@ -80,7 +82,9 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     icon: const Icon(Icons.close_rounded),
                   ),
                 )
@@ -92,6 +96,7 @@ class ProfilePage extends StatelessWidget {
             height: 0.6.sh,
             // color: Colors.amberAccent,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
@@ -123,8 +128,9 @@ class ProfilePage extends StatelessWidget {
                 Container(
                   width: 0.45.sw,
                   height: 0.6.sw,
+                  // color: Colors.amberAccent,
                   child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       FactCard(
                         num: 5,
@@ -133,12 +139,43 @@ class ProfilePage extends StatelessWidget {
                       ),
                       FactCard(
                         num: 5,
-                        text: "Levels Completed",
+                        text: "Levels Remaining",
                         key: key,
                       ),
                     ],
                   ),
-                )
+                ),
+                Expanded(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: 0.5.sh,
+                      width: 0.004.sw,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(0.5.sw),
+                        ),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ProfilePageButton(
+                          text: "Development Credits",
+                          icon: "rit.png",
+                          key: key,
+                        ),
+                        ProfilePageButton(
+                          text: "Logout",
+                          icon: "logout.png",
+                          key: key,
+                        ),
+                      ],
+                    ),
+                  ],
+                ))
               ],
             ),
           )

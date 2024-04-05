@@ -154,11 +154,14 @@ Future<void> authenticateWithGoogle({required BuildContext context}) async {
   } on NoGoogleAccountChosenException {
     return;
   } catch (e) {
-    print(e);
-    showMessageDialog(
-      message: "An unknown error has occurred. Please try again.",
-      context: context,
-    );
+    if (context.mounted) {
+      //BuildContext should not be passed across async gaps. So we ensure that the context is still mounted before passing the context as a parameter out of this function.
+      print(e);
+      showMessageDialog(
+        message: "An unknown error has occurred. Please try again.",
+        context: context,
+      );
+    }
   }
 }
 

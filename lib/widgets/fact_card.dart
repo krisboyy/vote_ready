@@ -20,29 +20,28 @@ class FactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: 0.2.sw,
-        height: 0.2.sw,
-        decoration: BoxDecoration(
-          color: materialColor,
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-        child: Column(
-          children: [
-            Text(
-              num.toString(),
-              style: boldStyle.copyWith(height: 1),
+    return Container(
+      width: 0.2.sw,
+      height: 0.2.sw,
+      decoration: BoxDecoration(
+        color: materialColor,
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      padding: EdgeInsets.all(0.02.sw),
+      child: Column(
+        children: [
+          Text(
+            num.toString(),
+            style: boldStyle.copyWith(height: 1),
+          ),
+          Text(
+            text,
+            textAlign: TextAlign.center,
+            style: boldStyle.copyWith(
+              fontSize: 20.spMin,
             ),
-            Text(
-              text,
-              textAlign: TextAlign.center,
-              style: boldStyle.copyWith(
-                fontSize: 20.spMin,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

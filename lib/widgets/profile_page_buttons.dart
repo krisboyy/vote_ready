@@ -21,38 +21,54 @@ class ProfilePageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String temp = 'assets/images/$icon';
-    return Scaffold(
-      body: Container(
-        width: 0.3.sw,
-        height: 0.1.sw,
-        decoration: BoxDecoration(
-          color: materialColor,
+    return Container(
+      width: 0.3.sw,
+      height: 0.08.sw,
+      decoration: BoxDecoration(
+        color: materialColor,
+        boxShadow: [
+          BoxShadow(
+              color: Theme.of(context).shadowColor.withOpacity(0.1),
+              offset: Offset.fromDirection(
+                1.1,
+                7,
+              ))
+        ],
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {},
           borderRadius: BorderRadius.circular(borderRadius),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 0.2.sw,
-              alignment: Alignment.center,
-              child: Text(
-                text,
-                style: boldStyle.copyWith(fontSize: 20.spMin),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Container(
-              width: 0.1.sw,
-              height: 0.1.sw,
-              padding: EdgeInsets.all(0.01.sw),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    temp,
-                  ),
+          splashColor: Theme.of(context).splashColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                width: 0.2.sw,
+                alignment: Alignment.center,
+                child: Text(
+                  text,
+                  style: boldStyle.copyWith(fontSize: 20.spMin),
+                  textAlign: TextAlign.center,
                 ),
               ),
-            )
-          ],
+              Container(
+                width: 0.05.sw,
+                height: 0.05.sw,
+                padding: EdgeInsets.all(0.05.sw),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      temp,
+                    ),
+                    scale: 0.5,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

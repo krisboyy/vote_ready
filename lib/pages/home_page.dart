@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
     String? retval = null;
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if(prefs.containsKey('unlockTime')) {
+    if (prefs.containsKey('unlockTime')) {
       retval = prefs.getString('unlockTime');
     }
     return retval;
@@ -69,11 +69,11 @@ class HomePage extends StatelessWidget {
                 CustomButton(
                   onPressed: () async {
                     value = await getLockData();
-                    if(null != value) {
+                    if (null != value) {
                       final diff = DateTime.now().difference(DateTime.parse(value!));
-                      if(diff <= Duration.zero){
-                        TwoHourDialog.showTwoHourDialog(context,diff);
-                      }else{
+                      if (diff <= Duration.zero) {
+                        TwoHourDialog.showTwoHourDialog(context, diff);
+                      } else {
                         score = (await DataReader.getScoreSP('ScoreSP')) ?? 0;
                         await Navigator.pushAndRemoveUntil(
                           context,
@@ -83,22 +83,20 @@ class HomePage extends StatelessWidget {
                           ModalRoute.withName('/vote ready'),
                         );
                       }
-                    }else{
-                      await Navigator.pushAndRemoveUntil(
+                    } else {
+                      await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: ((context) => const LevelSelector()),
                         ),
-                        ModalRoute.withName('/vote ready'),
                       );
                     }
-
                   },
                   buttonSize: 15,
-                  backgroundColor: const Color(0xFF128807),
-                  fontColor: Colors.white,
-                  strokeColor: const Color(0xFFFF9933),
+                  backgroundColor: Theme.of(context).colorScheme.inversePrimary.withAlpha(180),
+                  fontColor: Theme.of(context).colorScheme.onInverseSurface,
                   text: 'Start',
+                  strokeColor: Colors.transparent,
                   headerStyle: headerStyle,
                 ),
               ],
@@ -111,6 +109,11 @@ class HomePage extends StatelessWidget {
                 height: 20.spMax,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      width: 0.0025.sw,
+                      strokeAlign: BorderSide.strokeAlignOutside,
+                    ),
                     image: DecorationImage(
                       image: NetworkImage(AuthService.user!.photoURL!),
                     )),
