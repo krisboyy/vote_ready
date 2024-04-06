@@ -13,12 +13,22 @@ import 'package:vote_ready/levels/level_08.dart';
 import 'package:vote_ready/levels/level_09.dart';
 import 'package:vote_ready/levels/level_10.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vote_ready/levels/level_11.dart';
+import 'package:vote_ready/levels/level_12.dart';
+import 'package:vote_ready/levels/level_13.dart';
+import 'package:vote_ready/levels/level_14.dart';
+import 'package:vote_ready/levels/level_15.dart';
+import 'package:vote_ready/levels/level_16.dart';
+import 'package:vote_ready/levels/level_17.dart';
+import 'package:vote_ready/levels/level_18.dart';
+import 'package:vote_ready/levels/level_19.dart';
+import 'package:vote_ready/levels/level_20.dart';
 import 'package:vote_ready/pages/final_page.dart';
-
-import '../widgets/custom_button.dart';
+import '../components/tips_popup.dart';
 
 int score=0;
 class DataReader {
+
   static Future<String?> getData(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
@@ -35,8 +45,42 @@ Future<bool> isLevelCompleted(String levelKey) async {
   return value == 'Yes';
 }
 
-class LevelSelector extends StatelessWidget {
+class LevelSelector extends StatefulWidget {
   const LevelSelector({Key? key}) : super(key: key);
+
+  @override
+  State<LevelSelector> createState() => _LevelSelectorState();
+}
+
+class _LevelSelectorState extends State<LevelSelector> {
+
+  Future<bool> isTipsOpened(String levelKey) async {
+    String? Open = await DataReader.getData(levelKey);
+    return Open == 'Yes';
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    String? opened = await DataReader.getData('TipsOpened');
+    if (opened != 'Yes') {
+      // Show tips popup when the level selector page appears
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const TipsPopup();
+          },
+        );
+      });
+    }
+  }
+
+
 
   Widget levelSelectorBuilder(int i, BuildContext context) {
     int levelNumber = i + 1;
@@ -120,7 +164,7 @@ class LevelSelector extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: List.generate(
-                10,
+                20,
                     (index) =>
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -147,7 +191,7 @@ class LevelSelector extends StatelessWidget {
             top: 1.spMax,
             right: 50.spMax,
             child: Text(
-              "Score = ${score}",
+              "Score = $score",
               style: TextStyle(
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w900,
@@ -192,7 +236,7 @@ class LevelSelector extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return SizedBox(); // Return an empty SizedBox if not all levels are completed
+                  return const SizedBox(); // Return an empty SizedBox if not all levels are completed
                 }
               },
             ),
@@ -204,7 +248,7 @@ class LevelSelector extends StatelessWidget {
 
   Future<bool> areAllLevelsCompleted() async {
     bool allLevelsCompleted = true;
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 20; i++) {
       bool completed = await isLevelCompleted('level$i');
       if (!completed) {
         allLevelsCompleted = false;
@@ -222,7 +266,7 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
   }
   // Check if all levels are completed
   bool allLevelsCompleted = true;
-  for (int i = 1; i <= 10; i++) {
+  for (int i = 1; i <= 20; i++) {
     bool completed = await isLevelCompleted('level$i');
     if (!completed) {
       allLevelsCompleted = false;
@@ -312,6 +356,76 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
       );
       break;
     case 11:
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Level11()),
+        ModalRoute.withName('/vote ready'),
+      );
+      break;
+    case 12:
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Level12()),
+        ModalRoute.withName('/vote ready'),
+      );
+      break;
+    case 13:
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Level13()),
+        ModalRoute.withName('/vote ready'),
+      );
+      break;
+    case 14:
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Level14()),
+        ModalRoute.withName('/vote ready'),
+      );
+      break;
+    case 15:
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Level15()),
+        ModalRoute.withName('/vote ready'),
+      );
+      break;
+    case 16:
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Level16()),
+        ModalRoute.withName('/vote ready'),
+      );
+      break;
+    case 17:
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Level17()),
+        ModalRoute.withName('/vote ready'),
+      );
+      break;
+    case 18:
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Level18()),
+        ModalRoute.withName('/vote ready'),
+      );
+      break;
+    case 19:
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Level19()),
+        ModalRoute.withName('/vote ready'),
+      );
+      break;
+    case 20:
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Level20()),
+        ModalRoute.withName('/vote ready'),
+      );
+      break;
+    case 21:
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const LevelSelector()),

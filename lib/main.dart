@@ -25,7 +25,7 @@ class VoteReadyGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget ret_val = ScreenUtilInit(
+    Widget retVal = ScreenUtilInit(
       minTextAdapt: true,
       child: MaterialApp(
         home: StreamBuilder(
@@ -36,6 +36,6 @@ class VoteReadyGame extends StatelessWidget {
         ),
       ),
     );
-    return ret_val;
+    return retVal;
   }
 }

@@ -72,7 +72,8 @@ class _TwoHourDialogState extends State<TwoHourDialog> {
               ModalRoute.withName('/vote ready'),
             );
           },
-        ),)
+        ),
+        )
       ],
     );
   }

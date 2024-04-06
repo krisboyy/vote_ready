@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../widgets/dialogs.dart';
+import '../components/error_pop.dart';
 import '../widgets/page_fonts.dart';
+import 'package:vote_ready/pages/register_page.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -51,7 +53,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     return Scaffold(
       body: FadeTransition(
         opacity: _fadeInAnimation,
-        child: Container(
+        child: SizedBox(
           height: 1.sh,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -103,6 +105,13 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   ),
                   ElevatedButton(
                       onPressed: () async {
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Register()),
+                          ModalRoute.withName('/vote ready'),
+                        );
+
                         await authenticateWithGoogle(context: context);
                       },
                       child: Row(
@@ -145,17 +154,21 @@ Future<void> authenticateWithGoogle({required BuildContext context}) async {
     final user = <String, dynamic>{
       "username": AuthService.user!.displayName!,
       "email": AuthService.user!.email!,
+
     };
     await db.collection("users").doc(AuthService.user!.email).set(user, SetOptions(merge: true));
     // db.collection("users").doc(AuthService.user!.email).update(user);
+
   } on NoGoogleAccountChosenException {
+
     return;
   } catch (e) {
     print(e);
-    showMessageDialog(
-      message: "An unknown error has occurred. Please try again.",
-      context: context,
-    );
+    // showMessageDialog(
+    //   message: "An unknown error has occurred. Please try again.",
+    //   context: context,
+    // );
+    const ErrorPopUp();
   }
 }
 
