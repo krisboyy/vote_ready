@@ -18,9 +18,9 @@ class _Level13State extends State<Level13> {
           Center(
             child: AssetVideoPlayer(
               asset: 'assets/videos/scenario_13_final.mp4',
-              question: 'As a presiding officer, what should I do if an polling agent brings mobile phones to the polling booth?',
-              crt_ans: 'Polling agent shall not bring mobile phone. If brought , it should be switched off and handover to presiding officer',
-              option1: 'Polling agent shall not bring mobile phone. If brought , it should be switched off and handover to presiding officer',
+              question: 'As the Presiding Officer, what should I do if a Polling Agent brings a mobile phone to the polling booth?',
+              crt_ans: 'Polling Agent should not bring a mobile phone. If brought, it should be switched off and handed over to the Presiding Officer',
+              option1: 'Polling Agent should not bring a mobile phone. If brought, it should be switched off and handed over to the Presiding Officer',
               option2: 'Report the incident to the police',
               option3: 'Do nothing',
               reason: 'Handling Polling Agents Bringing Mobile Phones',

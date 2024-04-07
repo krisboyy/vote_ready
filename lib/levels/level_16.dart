@@ -18,10 +18,10 @@ class _Level16State extends State<Level16> {
           Center(
             child: AssetVideoPlayer(
               asset: 'assets/videos/scenario_16_final.mp4',
-              question: 'Among the following uniformed personals, who can enter the pooling booth?',
+              question: 'Among the following uniformed personnel, who can enter the polling booth?',
               crt_ans: 'None',
               option2: 'Any policeman directed for the law-and-order maintenance of polling',
-              option1: 'Any officer above the rank of superintendent police',
+              option1: 'Any officer above the rank of Superintendent of Police',
               option3: 'None',
               reason: 'Access to Polling Booth for Uniformed Personnel',
               details: 'No uniformed personnel are permitted to enter the polling booth, ensuring the '

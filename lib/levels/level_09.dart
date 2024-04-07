@@ -18,7 +18,7 @@ class _Level09State extends State<Level09> {
           Center(
             child: AssetVideoPlayer(
               asset: 'assets/videos/scenario_9_final.mp4',
-              question: 'The minimum number of votes to be casted during mock poll is',
+              question: 'What is the minimum number of votes to be cast during the mock poll?',
               crt_ans: '50',
               option1: '100',
               option3: '10',

@@ -18,7 +18,7 @@ class _Level08State extends State<Level08> {
           Center(
             child: AssetVideoPlayer(
               asset: 'assets/videos/scenario_8_final.mp4',
-              question: 'The custodian of the marked copy of electoral roll is',
+              question: 'Who is the custodian of the marked copy of the electoral roll?',
               crt_ans: 'First Polling officer ',
               option1: 'Presiding officer',
               option2: 'Second Polling officer',

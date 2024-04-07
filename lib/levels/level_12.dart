@@ -18,7 +18,7 @@ class _Level12State extends State<Level12> {
           Center(
             child: AssetVideoPlayer(
               asset: 'assets/videos/scenario_12_final.mp4',
-              question: 'When should I remove slips from the VVPAT',
+              question: 'As the Presiding Officer, when should I remove the slips from the VVPAT?',
               crt_ans: 'After mock poll',
               option2: 'After the end of the polling',
               option1: 'They should not be removed at all',

@@ -18,9 +18,9 @@ class _Level20State extends State<Level20> {
           Center(
             child: AssetVideoPlayer(
               asset: 'assets/videos/scenario_20_final.mp4',
-              question: 'Who among the following are not allowed inside the polling station?',
-              crt_ans: 'Media persons accompanying the candidate or VIP’s',
-              option2: 'Media persons accompanying the candidate or VIP’s',
+              question: 'Who among the following should not be allowed inside the polling station?',
+              crt_ans: 'Media persons accompanying the candidate or VIPs',
+              option2: 'Media persons accompanying the candidate or VIPs',
               option1: 'Media persons authorized by the commission',
               option3: 'Staff of web casting team in case of a critical/sensitive polling station',
               reason: 'Restricted Access to Polling Station',

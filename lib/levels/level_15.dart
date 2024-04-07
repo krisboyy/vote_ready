@@ -18,7 +18,7 @@ class _Level15State extends State<Level15> {
           Center(
             child: AssetVideoPlayer(
               asset: 'assets/videos/scenario_15_final.mp4',
-              question: 'The order of seating of polling agents in the booth is',
+              question: 'In what order should the polling agents be seated in the booth?',
               crt_ans: 'In the order of their candidates in the ballot paper ',
               option2: 'In the order of their candidates in the ballot paper ',
               option1: 'In the alphabetical order of their names',
