@@ -11,7 +11,8 @@ class CustomButton extends StatelessWidget {
     required this.backgroundColor,
     required this.text,
     required this.strokeColor,
-    this.onPressed, required this.buttonSize,
+    this.onPressed,
+    required this.buttonSize,
   });
 
   final TextStyle headerStyle;
@@ -51,21 +52,82 @@ class CustomFAB extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 2.spMax,
-      right: 2.spMax,
-        child: IconButton(
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LevelSelector(),
+    double borderRadius = 0.05.sh;
+    return Container(
+      // margin: EdgeInsets.only(
+      //   right: 0.025.sw,
+      //   top: 0.075.sh,
+      // ),
+      child: Positioned(
+        top: 0,
+        right: 0,
+        child: Container(
+          width: 0.15.sw,
+          height: 0.15.sh,
+          // color: Colors.blueAccent,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.only(
+              // bottomLeft: Radius.circular(borderRadius),
+              bottomRight: Radius.circular(borderRadius),
+            ),
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.01.sw,
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(0.01.sw),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black54,
+                    offset: Offset(2.5.spMin, 2.5.spMin),
+                  ),
+                ]),
+            child: IconButton.filledTonal(
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.surface),
+                fixedSize: MaterialStatePropertyAll(
+                  Size(
+                    0.025.sw,
+                    0.025.sw,
+                  ),
+                ),
+                shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(
+                      0.01.sw,
+                    )),
+                  ),
+                ),
               ),
-              ModalRoute.withName('/vote ready'),
-            );
-          },
-          icon: const Icon(Icons.disabled_by_default, color: Colors.black),
+              onPressed: () {
+                Navigator.popUntil(
+                  context,
+                  ModalRoute.withName("LevelSelector"),
+                );
+              },
+              icon: Image.asset("assets/images/back.png"),
+            ),
+          ),
         ),
+      ),
     );
+    //   top: 2.spMax,
+    //   right: 2.spMax,
+    //   child: IconButton(
+    //     onPressed: () {
+    //       Navigator.popUntil(
+    //         context,
+    //         ModalRoute.withName("LevelSelector"),
+    //       );
+    //     },
+    //     icon: const Icon(Icons.disabled_by_default, color: Colors.black),
+    //   ),
+    // );
   }
 }

@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vote_ready/components/level_status_notifier.dart';
 import 'package:vote_ready/components/result_right.dart';
 import 'package:vote_ready/components/result_wrong.dart';
+import 'package:vote_ready/components/score_notifier.dart';
 import 'package:vote_ready/pages/login_page.dart';
-
 import '../pages/level_selector.dart';
 import '../widgets/custom_button.dart';
 
@@ -16,9 +19,29 @@ class DataReader {
   }
 }
 
-// If you add a level increment the n value to the levels now have
-class QuestionPopup {
+// If you add a level increment the value of n
+class QuestionPopup extends StatefulWidget {
   static int n = 20;
+  final String crt_ans;
+  final String question;
+  final String option1;
+  final String option2;
+  final String option3;
+  final String reason;
+  final String details;
+  final dynamic level;
+
+  const QuestionPopup({
+    super.key,
+    required this.crt_ans,
+    required this.question,
+    required this.option1,
+    required this.option2,
+    required this.option3,
+    required this.reason,
+    required this.details,
+    this.level,
+  });
   static void pushLevelStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final db = FirebaseFirestore.instance;
@@ -41,241 +64,238 @@ class QuestionPopup {
     });
   }
 
-  static void show(
-      BuildContext context,
-      String question,
-      String crt_ans,
-      String option1,
-      String option2,
-      String option3,
-      String reason,
-      String details,
-      dynamic level,
-      ) {
-    List<String> options = [
-      option1,
-      option2,
-      option3,
+  static void show() {}
+
+  @override
+  State<QuestionPopup> createState() => _QuestionPopupState();
+}
+
+class _QuestionPopupState extends State<QuestionPopup> {
+  // options.shuffle();
+  @override
+  Widget build(BuildContext context) {
+    final scoreProvider = Provider.of<ScoreProvider>(context, listen: false);
+    final levelProvider = Provider.of<LevelCompletionNotifier>(context, listen: false);
+    int score = scoreProvider.score;
+    final List<String> options = [
+      widget.option1,
+      widget.option2,
+      widget.option3,
     ];
-
-    // options.shuffle();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Scaffold(
-          backgroundColor: Colors.white, // Set background color to transparent
-          body: Stack(
-            // Use a Stack to overlay the container and the button
-            children: [
-              GestureDetector(
-                onTap: () => Navigator.of(context).pop(), // Close dialog on tap outside
-                child: Container(
-                  // This is the container with the dialog content
-                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 70.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: SingleChildScrollView(
-                    // Use SingleChildScrollView to enable scrolling if content overflows
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const SizedBox(height: 25.0),
-                        Text(
-                          question,
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 20.0),
-                        ElevatedButton(
-                          onPressed: () async {
-                            Navigator.of(context).pop();
-                            if (options[0] == crt_ans) {
-                              bool completed = await isLevelCompleted('level$level');
-                              if(!completed) {
-                                score += 10;
-                              }
-                              await DataWriter.addData('level$level', 'Yes');
-                              pushLevelStatus();
-                              await DataWriter.addDataScore('ScoreSP', score);
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RightAnswerPage(
-                                    correctAnswer: crt_ans,
-                                    reason: reason,
-                                    details: details,
-                                    level: level,
-                                  ),
-                                ),
-                                ModalRoute.withName('/vote ready'),
-                              );
-                            } else {
-                              pushLevelStatus();
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => WrongAnswerPage(
-                                    correctAnswer: crt_ans,
-                                    reason: reason,
-                                    details: details,
-                                    level: level,
-                                  ),
-                                ),
-                                ModalRoute.withName('/vote ready'),
-                              );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepOrangeAccent,
-                            padding: const EdgeInsets.all(16.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          child: Text(
-                            options[0],
-                            style: const TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        const SizedBox(height: 18.0),
-                        ElevatedButton(
-                          onPressed: () async {
-                            Navigator.of(context).pop();
-                            if (options[1] == crt_ans) {
-                              bool completed = await isLevelCompleted('level$level');
-                              if(!completed) {
-                                score += 10;
-                              }
-                              await DataWriter.addData('level$level', 'Yes');
-                              pushLevelStatus();
-                              await DataWriter.addDataScore('ScoreSP', score);
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RightAnswerPage(
-                                    correctAnswer: crt_ans,
-                                    reason: reason,
-                                    details: details,
-                                    level: level,
-                                  ),
-                                ),
-                                ModalRoute.withName('/vote ready'),
-                              );
-                            } else {
-                              pushLevelStatus();
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => WrongAnswerPage(
-                                    correctAnswer: crt_ans,
-                                    reason: reason,
-                                    details: details,
-                                    level: level,
-                                  ),
-                                ),
-                                ModalRoute.withName('/vote ready'),
-                              );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepOrangeAccent,
-                            padding: const EdgeInsets.all(16.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          child: Text(
-                            options[1],
-                            style: const TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        const SizedBox(height: 18.0),
-                        ElevatedButton(
-                          onPressed: () async {
-                            Navigator.of(context).pop();
-                            if (options[2] == crt_ans) {
-                              bool completed = await isLevelCompleted('level$level');
-                              if(!completed) {
-                                score += 10;
-                              }
-                              await DataWriter.addData('level$level', 'Yes');
-                              pushLevelStatus();
-                              await DataWriter.addDataScore('ScoreSP', score);
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RightAnswerPage(
-                                    correctAnswer: crt_ans,
-                                    reason: reason,
-                                    details: details,
-                                    level: level,
-                                  ),
-                                ),
-                                ModalRoute.withName('/vote ready'),
-                              );
-                            } else {
-                              pushLevelStatus();
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => WrongAnswerPage(
-                                    correctAnswer: crt_ans,
-                                    reason: reason,
-                                    details: details,
-                                    level: level,
-                                  ),
-                                ),
-                                ModalRoute.withName('/vote ready'),
-                              );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepOrangeAccent,
-                            padding: const EdgeInsets.all(16.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          child: Text(
-                            options[2],
-                            style: const TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        const SizedBox(height: 18.0),
-                      ],
+    TextStyle questionStyle = GoogleFonts.poppins(
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+    );
+    TextStyle answerStyle = GoogleFonts.poppins(
+      fontSize: 18.0,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    );
+    return Scaffold(
+      backgroundColor: Colors.white, // Set background color to transparent
+      body: Stack(
+        // Use a Stack to overlay the container and the button
+        children: [
+          GestureDetector(
+            onTap: () => Navigator.of(context).pop(), // Close dialog on tap outside
+            child: Container(
+              // This is the container with the dialog content
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 70.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: SingleChildScrollView(
+                // Use SingleChildScrollView to enable scrolling if content overflows
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(height: 25.0),
+                    Text(
+                      widget.question,
+                      style: questionStyle,
+                      textAlign: TextAlign.center,
                     ),
-                  ),
+                    const SizedBox(height: 20.0),
+                    ElevatedButton(
+                      onPressed: () async {
+                        Navigator.of(context).pop();
+                        if (options[0] == widget.crt_ans) {
+                          bool completed = await isLevelCompleted('level${widget.level}');
+                          if (!completed) {
+                            scoreProvider.incrementScore(10);
+                            score = scoreProvider.score;
+                            await DataWriter.addDataScore('ScoreSP', score);
+                          }
+                          await DataWriter.addData('level${widget.level}', 'Yes');
+                          levelProvider.setLevelCompleted('level${widget.level}', 'Yes');
+                          QuestionPopup.pushLevelStatus();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RightAnswerPage(
+                                correctAnswer: widget.crt_ans,
+                                reason: widget.reason,
+                                details: widget.details,
+                                level: widget.level,
+                              ),
+                            ),
+                            ModalRoute.withName('LevelSelector'),
+                          );
+                        } else {
+                          QuestionPopup.pushLevelStatus();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WrongAnswerPage(
+                                correctAnswer: widget.crt_ans,
+                                reason: widget.reason,
+                                details: widget.details,
+                                level: widget.level,
+                              ),
+                            ),
+                            ModalRoute.withName('LevelSelector'),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        // backgroundColor: Colors.deepOrangeAccent,
+                        padding: const EdgeInsets.all(16.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      child: Text(
+                        options[0],
+                        style: answerStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 18.0),
+                    ElevatedButton(
+                      onPressed: () async {
+                        Navigator.of(context).pop();
+                        if (options[1] == widget.crt_ans) {
+                          bool completed = await isLevelCompleted('level${widget.level}');
+                          if (!completed) {
+                            scoreProvider.incrementScore(10);
+                            score = scoreProvider.score;
+                            await DataWriter.addDataScore('ScoreSP', score);
+                          }
+                          await DataWriter.addData('level${widget.level}', 'Yes');
+                          levelProvider.setLevelCompleted('level${widget.level}', 'Yes');
+                          QuestionPopup.pushLevelStatus();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RightAnswerPage(
+                                correctAnswer: widget.crt_ans,
+                                reason: widget.reason,
+                                details: widget.details,
+                                level: widget.level,
+                              ),
+                            ),
+                            ModalRoute.withName('LevelSelector'),
+                          );
+                        } else {
+                          QuestionPopup.pushLevelStatus();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WrongAnswerPage(
+                                correctAnswer: widget.crt_ans,
+                                reason: widget.reason,
+                                details: widget.details,
+                                level: widget.level,
+                              ),
+                            ),
+                            ModalRoute.withName('LevelSelector'),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        // backgroundColor: Colors.deepOrangeAccent,
+                        padding: const EdgeInsets.all(16.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      child: Text(
+                        options[1],
+                        style: answerStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 18.0),
+                    ElevatedButton(
+                      onPressed: () async {
+                        Navigator.of(context).pop();
+                        if (options[2] == widget.crt_ans) {
+                          bool completed = await isLevelCompleted('level${widget.level}');
+                          if (!completed) {
+                            scoreProvider.incrementScore(10);
+                            score = scoreProvider.score;
+                            await DataWriter.addDataScore('ScoreSP', score);
+                          }
+                          await DataWriter.addData('level${widget.level}', 'Yes');
+                          levelProvider.setLevelCompleted('level${widget.level}', 'Yes');
+                          QuestionPopup.pushLevelStatus();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RightAnswerPage(
+                                correctAnswer: widget.crt_ans,
+                                reason: widget.reason,
+                                details: widget.details,
+                                level: widget.level,
+                              ),
+                            ),
+                            ModalRoute.withName('LevelSelector'),
+                          );
+                        } else {
+                          QuestionPopup.pushLevelStatus();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WrongAnswerPage(
+                                correctAnswer: widget.crt_ans,
+                                reason: widget.reason,
+                                details: widget.details,
+                                level: widget.level,
+                              ),
+                            ),
+                            ModalRoute.withName('LevelSelector'),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        // backgroundColor: Colors.deepOrangeAccent,
+                        padding: const EdgeInsets.all(16.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      child: Text(
+                        options[2],
+                        style: answerStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 18.0),
+                  ],
                 ),
               ),
-              Positioned(
-                // Position the button outside the container
-                top: 2.spMax,
-                right: 2.spMax,
-                child: const CustomFAB(), // Your custom button here
-              ),
-            ],
+            ),
           ),
-        );
-      },
+          Positioned(
+            // Position the button outside the container
+            top: 2.spMax,
+            right: 2.spMax,
+            child: const CustomFAB(), // Your custom button here
+          ),
+        ],
+      ),
     );
   }
 }

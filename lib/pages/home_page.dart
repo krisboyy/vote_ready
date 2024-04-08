@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vote_ready/components/score_notifier.dart';
+import 'package:vote_ready/pages/final_page.dart';
 import 'package:vote_ready/pages/level_selector.dart';
 import 'package:vote_ready/pages/login_page.dart';
 import 'package:vote_ready/pages/profile_page.dart';
@@ -25,6 +28,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? value;
+    final scoreProvider = Provider.of<ScoreProvider>(context);
+    int score;
     TextStyle headerStyle = GoogleFonts.fugazOne(
       fontWeight: FontWeight.bold,
       fontSize: 130.spMin,
@@ -76,26 +81,30 @@ class HomePage extends StatelessWidget {
                         TwoHourDialog.showTwoHourDialog(context, diff);
                       } else {
                         score = (await DataReader.getScoreSP('ScoreSP')) ?? 0;
-                        await Navigator.pushAndRemoveUntil(
+                        scoreProvider.updateScore(score);
+                        await Navigator.push(
                           context,
                           MaterialPageRoute(
+                            settings: const RouteSettings(name: "LevelSelector"),
                             builder: ((context) => const LevelSelector()),
                           ),
-                          ModalRoute.withName('/vote ready'),
                         );
                       }
                     } else {
+                      score = (await DataReader.getScoreSP('ScoreSP')) ?? 0;
+                      scoreProvider.updateScore(score);
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
+                          settings: const RouteSettings(name: "LevelSelector"),
                           builder: ((context) => const LevelSelector()),
                         ),
                       );
                     }
                   },
                   buttonSize: 15,
-                  backgroundColor: Theme.of(context).colorScheme.inversePrimary.withAlpha(180),
-                  fontColor: Theme.of(context).colorScheme.onInverseSurface,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  fontColor: Theme.of(context).primaryColor,
                   text: 'Start',
                   strokeColor: Colors.transparent,
                   headerStyle: headerStyle,
@@ -126,7 +135,7 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const ProfilePage()),
                     );
                   },
-                  icon: SizedBox(),
+                  icon: const SizedBox(),
                 ),
               ),
             ),

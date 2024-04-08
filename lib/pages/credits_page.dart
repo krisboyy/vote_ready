@@ -10,142 +10,204 @@ class CreditsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextStyle titleStyle = GoogleFonts.poppins(
       fontWeight: FontWeight.bold,
-      fontSize: 18.spMin,
+      fontSize: 24.spMin,
     );
     final TextStyle bodyStyle = GoogleFonts.poppins(
       fontWeight: FontWeight.w500,
-      fontSize: 16.spMin,
+      fontSize: 20.spMin,
     );
+
+    double borderRadius = 0.05.sh;
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0.1.sh),
-        child: AppBar(
-          clipBehavior: Clip.none,
-          primary: true,
-          title: null,
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          actions: [
-            Container(
-              // margin: EdgeInsets.only(
-              //   right: 0.025.sw,
-              //   top: 0.075.sh,
-              // ),
-              child: IconButton.filledTonal(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.secondary),
-                    fixedSize: MaterialStatePropertyAll(
-                      Size(
-                        0.025.sw,
-                        0.025.sw,
-                      ),
-                    ),
-                    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(
-                          0.01.sw,
-                        )),
-                      ),
-                    )),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.close_rounded),
-              ),
-            ),
-            SizedBox(
-              width: 0.025.sw,
-            )
-          ],
-        ),
-      ),
+      // extendBodyBehindAppBar: true,
       body: Container(
         height: 1.sh,
         width: 1.sw,
-        child: Column(
+        child: Stack(
           children: [
-            SizedBox(
-              height: 0.05.sh,
+            Column(
+              children: [
+                SizedBox(
+                  height: 0.05.sh,
+                ),
+                Container(
+                  height: 0.5.sh,
+                  child: SingleChildScrollView(
+                    dragStartBehavior: DragStartBehavior.down,
+                    clipBehavior: Clip.none,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      // mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset("assets/images/rit.png"),
+                        SizedBox(
+                          height: 0.05.sh,
+                        ),
+                        Text(
+                          "Developed by the team from Rajiv Gandhi Institute of Technology, Kottayam",
+                          style: titleStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: 0.05.sh,
+                        ),
+                        Text(
+                          "Advisory Team",
+                          style: titleStyle.copyWith(decoration: TextDecoration.underline),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          "Smt. V. Vigneshwari",
+                          style: bodyStyle.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "District Collector & District Magistrate\nKottayam, Kerala State",
+                          style: bodyStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: 0.05.sh,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              width: 0.5.sw,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "Prof. Shibu Kumar K.B.",
+                                    style: bodyStyle.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Assistant Professor\nRIT, Kottayam",
+                                    style: bodyStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 0.5.sw,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "Prof. Pillai Praveen Thulasidharan",
+                                    style: bodyStyle.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Assistant Professor\nRIT, Kottayam",
+                                    style: bodyStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 0.05.sh,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  "Development Team",
+                                  style: titleStyle.copyWith(decoration: TextDecoration.underline),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "Aby Pious Vinoy\nArjun C Vinod\nAthira Vijayan\nNikhil Krishnan\nSreeraj K",
+                                  style: bodyStyle,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Art Team",
+                                  style: titleStyle.copyWith(decoration: TextDecoration.underline),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "Dona Johnson\nEaswari Nair\nMegha Joy\nRahul K\n",
+                                  style: bodyStyle,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
-            Container(
-              height: 0.5.sh,
-              child: SingleChildScrollView(
-                clipBehavior: Clip.none,
-                dragStartBehavior: DragStartBehavior.down,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  // mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset("assets/images/rit.png"),
-                    Text(
-                      "Developed by the team from Rajiv Gandhi Institute of Technology, Kottayam",
-                      style: titleStyle,
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                width: 0.15.sw,
+                height: 0.15.sh,
+                // color: Colors.blueAccent,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.only(
+                    // bottomLeft: Radius.circular(borderRadius),
+                    bottomRight: Radius.circular(borderRadius),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 0.01.sw,
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(0.01.sw),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black54,
+                          offset: Offset(2.5.spMin, 2.5.spMin),
+                        ),
+                      ]),
+                  child: IconButton.filledTonal(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.surface),
+                      fixedSize: MaterialStatePropertyAll(
+                        Size(
+                          0.025.sw,
+                          0.025.sw,
+                        ),
+                      ),
+                      shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(
+                            0.01.sw,
+                          )),
+                        ),
+                      ),
                     ),
-                    Text(
-                      "Advisory Team",
-                      style: titleStyle.copyWith(decoration: TextDecoration.underline),
-                    ),
-                    Text(
-                      "Smt. V. Vigneshwari, District Collector & District Magistrate, Kottayam, Kerala State",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Prof. Shibu Kumar K.B., Assistant Professor, RIT Kottayam",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Prof. Pillai Praveen Thulasidharan, Assistant Professor, RIT Kottayam",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Development Team",
-                      style: titleStyle.copyWith(decoration: TextDecoration.underline),
-                    ),
-                    Text(
-                      "Aby Pious",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Arjun C Vinod",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Athira Vijayan",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Nikhil Krishnan",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Sreeraj K",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Art Team",
-                      style: titleStyle.copyWith(decoration: TextDecoration.underline),
-                    ),
-                    Text(
-                      "Dona Johnson",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Easwari Nair",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Megha Joy",
-                      style: bodyStyle,
-                    ),
-                    Text(
-                      "Rahul K",
-                      style: bodyStyle,
-                    ),
-                  ],
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Image.asset("assets/images/back.png"),
+                  ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

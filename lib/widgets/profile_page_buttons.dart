@@ -6,7 +6,7 @@ import 'package:vote_ready/pages/login_page.dart';
 
 class ProfilePageButton extends StatelessWidget {
   final String text;
-  final String icon;
+  final AssetImage icon;
   final String navigateTo;
   final Color materialColor = const Color(0xFFFFF1C3);
   final TextStyle boldStyle = GoogleFonts.poppins(
@@ -24,7 +24,6 @@ class ProfilePageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String temp = 'assets/images/$icon';
     return Container(
       width: 0.3.sw,
       height: 0.08.sw,
@@ -82,9 +81,7 @@ class ProfilePageButton extends StatelessWidget {
                 padding: EdgeInsets.all(0.05.sw),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                      temp,
-                    ),
+                    image: icon,
                     scale: 0.5,
                   ),
                 ),

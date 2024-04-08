@@ -1,7 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:vote_ready/components/level_status_notifier.dart';
+import 'package:vote_ready/components/score_notifier.dart';
 import 'package:vote_ready/levels/level_01.dart';
 import 'package:vote_ready/levels/level_02.dart';
 import 'package:vote_ready/levels/level_03.dart';
@@ -25,8 +27,6 @@ import 'package:vote_ready/levels/level_19.dart';
 import 'package:vote_ready/levels/level_20.dart';
 import 'package:vote_ready/pages/final_page.dart';
 import '../components/tips_popup.dart';
-
-int score = 0;
 
 class DataReader {
   static Future<String?> getData(String key) async {
@@ -54,8 +54,8 @@ class LevelSelector extends StatefulWidget {
 
 class _LevelSelectorState extends State<LevelSelector> {
   Future<bool> isTipsOpened(String levelKey) async {
-    String? Open = await DataReader.getData(levelKey);
-    return Open == 'Yes';
+    String? open = await DataReader.getData(levelKey);
+    return open == 'Yes';
   }
 
   @override
@@ -68,7 +68,7 @@ class _LevelSelectorState extends State<LevelSelector> {
     String? opened = await DataReader.getData('TipsOpened');
     if (opened != 'Yes') {
       // Show tips popup when the level selector page appears
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -82,6 +82,7 @@ class _LevelSelectorState extends State<LevelSelector> {
   Widget levelSelectorBuilder(int i, BuildContext context) {
     int levelNumber = i + 1;
     i++;
+    final levelProvider = Provider.of<LevelCompletionNotifier>(context);
     double smallFontSize = 40.0.spMin;
     TextStyle levelStyle = GoogleFonts.fugazOne(
       fontWeight: FontWeight.bold,
@@ -141,6 +142,14 @@ class _LevelSelectorState extends State<LevelSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final scoreProvider = Provider.of<ScoreProvider>(context);
+    int score = scoreProvider.score;
+    Color materialColor = const Color(0xFFFFF1C3);
+    double borderRadius = 0.05.sh;
+    TextStyle boldStyle = GoogleFonts.poppins(
+      fontWeight: FontWeight.bold,
+      fontSize: 50.spMin,
+    );
     return Scaffold(
       backgroundColor: const Color(0xFFc49a75),
       body: Stack(
@@ -152,6 +161,37 @@ class _LevelSelectorState extends State<LevelSelector> {
               'assets/images/bg_image.png',
               width: 1.sw,
               fit: BoxFit.cover,
+            ),
+          ),
+          Positioned(
+            left: 0.35.sw,
+            // right: 0.5.sw,
+            top: 0,
+            child: Container(
+              width: 0.3.sw,
+              height: 0.13.sh,
+              // color: Colors.blueAccent,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: materialColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(borderRadius),
+                  bottomRight: Radius.circular(borderRadius),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: 0.01.sw,
+              ),
+              child: RotatedBox(
+                quarterTurns: 0,
+                child: Text(
+                  "Level Selector",
+                  textAlign: TextAlign.center,
+                  style: boldStyle.copyWith(fontSize: 24),
+                  maxLines: 1,
+                  softWrap: false,
+                ),
+              ),
             ),
           ),
           SingleChildScrollView(
@@ -167,40 +207,61 @@ class _LevelSelectorState extends State<LevelSelector> {
               ),
             ),
           ),
+
           Positioned(
-            top: -3.spMax,
-            right: 10.spMax,
-            child: IconButton(
-              onPressed: () async {
-                exit(0);
-              },
-              icon: const Icon(Icons.power_settings_new_outlined, color: Colors.black),
-            ),
-          ),
-          Positioned(
-            top: 1.spMax,
-            right: 50.spMax,
-            child: Text(
-              "Score = $score",
-              style: TextStyle(
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w900,
-                color: Colors.black,
+            left: 0.01.sw,
+            top: 0.01.sw,
+            child: Container(
+              width: 0.25.sw,
+              height: 0.1.sh,
+              // color: Colors.blueAccent,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: materialColor,
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  width: 2.5,
+                ),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(borderRadius),
+                  topRight: Radius.circular(borderRadius),
+                  bottomLeft: Radius.circular(borderRadius),
+                  bottomRight: Radius.circular(borderRadius),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: 0.01.sw,
+              ),
+              child: RotatedBox(
+                quarterTurns: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Image.asset("assets/images/star.png"),
+                    Text(
+                      "Score = $score",
+                      textAlign: TextAlign.center,
+                      style: boldStyle.copyWith(fontSize: 24),
+                      maxLines: 1,
+                      softWrap: false,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          Positioned(
-            top: 5.spMax,
-            left: 15.spMax,
-            child: Text(
-              'Level Selector',
-              style: TextStyle(
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w900,
-                color: Colors.black,
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 5.spMax,
+          //   left: 15.spMax,
+          //   child: Text(
+          //     'Level Selector',
+          //     style: TextStyle(
+          //       fontSize: 10.sp,
+          //       fontWeight: FontWeight.w900,
+          //       color: Colors.black,
+          //     ),
+          //   ),
+          // ),
           Positioned(
             bottom: 10.spMax,
             right: 10.spMax,
@@ -213,10 +274,9 @@ class _LevelSelectorState extends State<LevelSelector> {
                     backgroundColor: Colors.white,
                     child: IconButton(
                       onPressed: () {
-                        Navigator.pushAndRemoveUntil(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => const FinalPage()),
-                          ModalRoute.withName('/vote ready'),
                         );
                       },
                       icon: const Icon(Icons.exit_to_app, color: Colors.red),
@@ -226,6 +286,61 @@ class _LevelSelectorState extends State<LevelSelector> {
                   return const SizedBox(); // Return an empty SizedBox if not all levels are completed
                 }
               },
+            ),
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: Container(
+              width: 0.15.sw,
+              height: 0.15.sh,
+              // color: Colors.blueAccent,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.only(
+                  // bottomLeft: Radius.circular(borderRadius),
+                  bottomRight: Radius.circular(borderRadius),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: 0.01.sw,
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(0.01.sw),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        offset: Offset(2.5.spMin, 2.5.spMin),
+                      ),
+                    ]),
+                child: IconButton.filledTonal(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.surface),
+                    fixedSize: MaterialStatePropertyAll(
+                      Size(
+                        0.025.sw,
+                        0.025.sw,
+                      ),
+                    ),
+                    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(
+                          0.01.sw,
+                        )),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Image.asset("assets/images/back.png"),
+                ),
+              ),
             ),
           ),
         ],
@@ -247,10 +362,10 @@ class _LevelSelectorState extends State<LevelSelector> {
 }
 
 Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
-  Future<bool> isLevelCompleted(String levelKey) async {
-    String? value = await DataReader.getData(levelKey);
-    return value == 'Yes';
-  }
+  // Future<bool> isLevelCompleted(String levelKey) async {
+  //   String? value = await DataReader.getData(levelKey);
+  //   return value == 'Yes';
+  // }
 
   // Check if all levels are completed
   bool allLevelsCompleted = true;
@@ -263,10 +378,9 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
   }
   // If all levels are completed, go to the final page
   if (allLevelsCompleted) {
-    Navigator.pushAndRemoveUntil(
+    Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const FinalPage()),
-      ModalRoute.withName('/vote ready'),
     );
     return;
   }
@@ -274,150 +388,129 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
   // If not, navigate to the corresponding level
   switch (levelNumber) {
     case 1:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level01()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 2:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level02()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 3:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level03()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 4:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level04()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 5:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level05()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 6:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level06()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 7:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level07()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 8:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level08()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 9:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level09()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 10:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level10()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 11:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level11()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 12:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level12()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 13:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level13()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 14:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level14()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 15:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level15()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 16:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level16()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 17:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level17()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 18:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level18()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 19:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level19()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 20:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level20()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     case 21:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LevelSelector()),
-        ModalRoute.withName('/vote ready'),
       );
       break;
     default:

@@ -14,7 +14,18 @@ class AssetVideoPlayer extends StatefulWidget {
   final String reason;
   final String details;
   final int level;
-  const AssetVideoPlayer({required this.asset,  super.key, required this.question, required this.crt_ans, required this.reason, required this.details, required this.level, required this.option1, required this.option2, required this.option3,});
+  const AssetVideoPlayer({
+    required this.asset,
+    super.key,
+    required this.question,
+    required this.crt_ans,
+    required this.reason,
+    required this.details,
+    required this.level,
+    required this.option1,
+    required this.option2,
+    required this.option3,
+  });
 
   @override
   State<AssetVideoPlayer> createState() => _AssetVideoPlayerState();
@@ -29,16 +40,20 @@ class _AssetVideoPlayerState extends State<AssetVideoPlayer> {
     controller = VideoPlayerController.asset(widget.asset)
       ..addListener(() => setState(() {
             if (controller.value.isCompleted) {
-              QuestionPopup.show(
-                context,
-                widget.question,
-                widget.crt_ans,
-                widget.option1,
-                widget.option2,
-                widget.option3,
-                widget.reason,
-                widget.details,
-                widget.level,
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return QuestionPopup(
+                    crt_ans: widget.crt_ans,
+                    question: widget.question,
+                    option1: widget.option1,
+                    option2: widget.option2,
+                    option3: widget.option3,
+                    reason: widget.reason,
+                    details: widget.details,
+                    level: widget.level, // level value
+                  );
+                },
               );
             }
           }))

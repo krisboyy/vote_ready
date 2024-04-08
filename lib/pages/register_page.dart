@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vote_ready/pages/home_page.dart';
 import '../components/error_pop.dart';
 import 'login_page.dart';
@@ -40,6 +42,15 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+    TextStyle titleStyle = GoogleFonts.poppins(
+      fontSize: 24.spMin,
+      fontWeight: FontWeight.w900,
+    );
+    TextStyle bodyStyle = GoogleFonts.poppins(
+      fontSize: 16.spMin,
+      fontWeight: FontWeight.w500,
+    );
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -50,13 +61,13 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text(
-                      'VOTE READY REGISTER',
-                      style: TextStyle(
-                        fontSize: 25.0,
+                    SizedBox(
+                      height: 0.02.sh,
+                    ),
+                    Text(
+                      'Register',
+                      style: titleStyle.copyWith(
                         fontWeight: FontWeight.w900,
-                        letterSpacing: 2.0,
-                        color: Colors.black,
                       ),
                     ),
                     Padding(
@@ -70,8 +81,13 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                           children: <Widget>[
                             TextFormField(
                               controller: _userNameController,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 labelText: 'Your registered name',
+                                labelStyle: bodyStyle,
+                              ),
+                              style: bodyStyle.copyWith(
+                                fontSize: 18.spMin,
+                                height: 2,
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty || value.length < 3) {
@@ -82,10 +98,15 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                             ),
                             TextFormField(
                               controller: _userMobileController,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 labelText: 'Registered phone number',
+                                labelStyle: bodyStyle,
                               ),
                               keyboardType: TextInputType.phone,
+                              style: bodyStyle.copyWith(
+                                fontSize: 18.spMin,
+                                height: 2,
+                              ),
                               validator: (value) {
                                 if (value == null || value.isEmpty || value.length != 10) {
                                   return 'Enter a valid 10-digit phone number';
@@ -95,8 +116,13 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                             ),
                             TextFormField(
                               controller: _userIDController,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 labelText: 'Registered ID number',
+                                labelStyle: bodyStyle,
+                              ),
+                              style: bodyStyle.copyWith(
+                                fontSize: 18.spMin,
+                                height: 2,
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty || value.length != 6) {
@@ -117,19 +143,17 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.deepOrangeAccent,
                         minimumSize: const Size(120, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         elevation: 3.0,
                       ),
-                      child: const Text(
+                      child: Text(
                         'Register',
-                        style: TextStyle(
+                        style: bodyStyle.copyWith(
                           fontSize: 18.0,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.bold,
                           letterSpacing: 2.0,
                           color: Colors.black,
                         ),
@@ -156,8 +180,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
         "ID": userid,
         "Phone": mobile
       };
-      await db.collection("users").doc(AuthService.user!.email).set(
-          registerData, SetOptions(merge: true));
+      await db.collection("users").doc(AuthService.user!.email).set(registerData, SetOptions(merge: true));
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),

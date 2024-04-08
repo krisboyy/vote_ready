@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DataWriter {
@@ -51,40 +52,51 @@ class _TipsPopupState extends State<TipsPopup> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle titleText = GoogleFonts.poppins(
+      fontSize: 30,
+      fontWeight: FontWeight.bold,
+    );
+    TextStyle tipText = GoogleFonts.poppins(
+      fontSize: 20,
+      fontWeight: FontWeight.normal,
+      color: Colors.black,
+    );
+    TextStyle buttonText = GoogleFonts.poppins(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    );
     return AlertDialog(
-      content: Container(
-        height: 0.5.sh,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "Tips!",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Tips!",
+            style: titleText,
+          ),
+          // const SizedBox(height: 10),
+          SizedBox(
+            height: 0.3.sh, // Adjust height as needed
+            width: 0.9.sh, // Adjust width as needed
+            child: PageView(
+              controller: _pageController,
+              children: <Widget>[
+                _buildPage(
+                  "Select each level, observe the scenario, and answer the questions correctly",
+                  tipText,
+                ),
+                _buildPage(
+                  "Choosing the correct answer will award you with 10 points",
+                  tipText,
+                ),
+                _buildPage(
+                  "If you answer anything incorrectly, the app will be locked for 2 hours",
+                  tipText,
+                ),
+              ],
             ),
-            // const SizedBox(height: 10),
-            SizedBox(
-              height: 0.3.sh, // Adjust height as needed
-              width: 0.9.sh, // Adjust width as needed
-              child: PageView(
-                controller: _pageController,
-                children: <Widget>[
-                  _buildPage(
-                    "Select each level, observe the scenario, and answer the questions correctly",
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.normal, color: Colors.black),
-                  ),
-                  _buildPage(
-                    "Choosing the correct answer will award you with 10 points",
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.normal, color: Colors.black),
-                  ),
-                  _buildPage(
-                    "If you answer anything incorrectly, the app will be locked for 2 hours",
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.normal, color: Colors.black),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
       actions: <Widget>[
         TextButton(
@@ -98,14 +110,17 @@ class _TipsPopupState extends State<TipsPopup> {
               );
             }
           },
-          child: const Text(
+          child: Text(
             'Previous',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: buttonText,
           ),
         ),
         TextButton(
           onPressed: _handleNextButton,
-          child: Text(isLastPage ? 'Close' : 'Next', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          child: Text(
+            isLastPage ? 'Close' : 'Next',
+            style: buttonText,
+          ),
         ),
       ],
     );

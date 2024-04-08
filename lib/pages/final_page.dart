@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vote_ready/components/score_notifier.dart';
 import 'package:vote_ready/pages/level_selector.dart';
 import '../widgets/custom_button.dart';
 
@@ -24,91 +26,96 @@ class FinalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle headerStyle = TextStyle(fontSize: 130.0.spMin);
+    TextStyle headerStyle = GoogleFonts.poppins(
+      fontSize: 130.0.spMin,
+      fontWeight: FontWeight.bold,
+    );
     return Scaffold(
       backgroundColor: const Color(0xFFF2F3ED),
       body: Center(
-        child: SingleChildScrollView(
-          child: Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: [
-              Transform.scale(
-                scale: 1.1,
-                child: Image.asset(
-                  'assets/images/bg_image.png',
-                  fit: BoxFit.cover,
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: [
+            Transform.scale(
+              scale: 1.1,
+              child: Image.asset(
+                'assets/images/bg_image.png',
+                width: 1.sw,
+                fit: BoxFit.cover,
+                color: Colors.amber[50],
+                colorBlendMode: BlendMode.hardLight,
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // const SizedBox(height: 50.0),
+                Text(
+                  'Congratulations!',
+                  style: GoogleFonts.fugazOne(
+                    textStyle: Theme.of(context).textTheme.displayLarge,
+                    fontSize: 60,
+                    fontWeight: FontWeight.w900,
+                    fontStyle: FontStyle.normal,
+                    color: Colors.deepOrange,
+                  ),
                 ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const SizedBox(height: 50.0),
-                  Text(
-                    'Congratulations',
-                    style: GoogleFonts.prompt(
-                      textStyle: Theme.of(context).textTheme.displayLarge,
-                      fontSize: 60,
-                      fontWeight: FontWeight.w900,
-                      fontStyle: FontStyle.normal,
-                      color: Colors.deepOrange,
-                    ),
+                Text(
+                  'You have passed all the tests',
+                  style: GoogleFonts.poppins(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 45,
+                    fontWeight: FontWeight.w900,
+                    fontStyle: FontStyle.normal,
                   ),
-                  Text(
-                    'You have passed all the tests',
-                    style: GoogleFonts.ubuntu(
-                      textStyle: Theme.of(context).textTheme.displayLarge,
-                      fontSize: 45,
-                      fontWeight: FontWeight.w900,
-                      fontStyle: FontStyle.normal,
-                      color: Colors.blueAccent,
-                    ),
+                ),
+                // const SizedBox(height: 75.0),
+                Center(
+                  // Center the buttons
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center, // Align buttons to the center
+                    children: [
+                      CustomButton(
+                        onPressed: () async {
+                          for (int i = 1; i <= 20; i++) {
+                            await DataWriter.addData('level$i', 'No');
+                          }
+                          await DataWriter.addDataScore('ScoreSP', 0);
+                          Provider.of<ScoreProvider>(
+                            context,
+                            listen: false,
+                          ).updateScore(0);
+                          Navigator.popUntil(
+                            context,
+                            ModalRoute.withName("LevelSelector"),
+                          );
+                        },
+                        buttonSize: 15,
+                        backgroundColor: Theme.of(context).colorScheme.surface,
+                        fontColor: Theme.of(context).colorScheme.onSurface,
+                        strokeColor: Colors.transparent,
+                        text: 'Restart',
+                        headerStyle: headerStyle,
+                      ),
+                      const SizedBox(width: 20), // Add spacing between buttons
+                      CustomButton(
+                        onPressed: () async {
+                          exit(0);
+                        },
+                        buttonSize: 15,
+                        backgroundColor: Theme.of(context).colorScheme.surface,
+                        fontColor: Theme.of(context).colorScheme.onSurface,
+                        strokeColor: Colors.transparent,
+                        text: 'Exit',
+                        headerStyle: headerStyle,
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 75.0),
-                  Center( // Center the buttons
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center, // Align buttons to the center
-                      children: [
-                        CustomButton(
-                          onPressed: () async {
-                            for (int i = 1; i <= 10; i++) {
-                              await DataWriter.addData('level$i', 'No');
-                              await DataWriter.addDataScore('ScoreSP', 0);
-                              score=0;
-                            }
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: ((context) => const LevelSelector()),
-                              ),
-                            );
-                          },
-                          buttonSize: 15,
-                          backgroundColor: const Color(0xFF128807),
-                          fontColor: Colors.white,
-                          strokeColor: const Color(0xFFFF9933),
-                          text: 'Restart',
-                          headerStyle: headerStyle,
-                        ),
-                        SizedBox(width: 20), // Add spacing between buttons
-                        CustomButton(
-                          onPressed: () async {
-                            exit(0);
-                          },
-                          buttonSize: 15,
-                          backgroundColor: const Color(0xFF128807),
-                          fontColor: Colors.white,
-                          strokeColor: const Color(0xFFFF9933),
-                          text: 'Exit',
-                          headerStyle: headerStyle,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
