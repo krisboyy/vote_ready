@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../components/error_pop.dart';
-import '../widgets/page_fonts.dart';
 import 'package:vote_ready/pages/register_page.dart';
-
+import '../widgets/dialogs.dart';
+import '../widgets/page_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -41,11 +40,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    double topWP = 0.2.sh;
+    double bottomWP = 0.18.sh;
+
     TextStyle headerStyle = GoogleFonts.fugazOne(
       fontWeight: FontWeight.bold,
       fontSize: 100.spMin,
     );
-    TextStyle bodyStyle = GoogleFonts.inter(
+    TextStyle bodyStyle = GoogleFonts.poppins(
       fontWeight: FontWeight.bold,
       fontSize: 24.spMin,
     );
@@ -67,7 +69,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   alignment: Alignment.center,
                   children: [
                     Positioned(
-                      top: 40.sp,
+                      top: topWP,
                       child: StrokeFont(
                         text: 'Vote',
                         headerStyle: headerStyle,
@@ -75,7 +77,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       ),
                     ),
                     Positioned(
-                      bottom: 40.sp,
+                      top: topWP + bottomWP,
                       child: StrokeFont(
                         text: 'Ready',
                         headerStyle: headerStyle,
@@ -105,7 +107,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   ),
                   ElevatedButton(
                       onPressed: () async {
-
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => const Register()),
@@ -154,21 +155,20 @@ Future<void> authenticateWithGoogle({required BuildContext context}) async {
     final user = <String, dynamic>{
       "username": AuthService.user!.displayName!,
       "email": AuthService.user!.email!,
-
     };
     await db.collection("users").doc(AuthService.user!.email).set(user, SetOptions(merge: true));
     // db.collection("users").doc(AuthService.user!.email).update(user);
-
   } on NoGoogleAccountChosenException {
-
     return;
   } catch (e) {
-    print(e);
-    // showMessageDialog(
-    //   message: "An unknown error has occurred. Please try again.",
-    //   context: context,
-    // );
-    const ErrorPopUp();
+    if (context.mounted) {
+      //BuildContext should not be passed across async gaps. So we ensure that the context is still mounted before passing the context as a parameter out of this function.
+      print(e);
+      showMessageDialog(
+        message: "An unknown error has occurred. Please try again.",
+        context: context,
+      );
+    }
   }
 }
 
@@ -202,5 +202,10 @@ class AuthService {
 
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  static Future<void> logout() async {
+    await _auth.signOut();
+    await GoogleSignIn().signOut();
   }
 }

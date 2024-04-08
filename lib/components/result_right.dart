@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/final_page.dart';
 import '../pages/level_selector.dart';
@@ -87,6 +88,25 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle congratsText = GoogleFonts.poppins(
+      fontSize: 24.sp,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    );
+    TextStyle titleText = GoogleFonts.poppins(
+      fontSize: 18.sp,
+      color: Colors.black,
+    );
+    TextStyle reasonText = GoogleFonts.poppins(
+      fontSize: 14.sp,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    );
+    TextStyle detailText = GoogleFonts.poppins(
+      fontSize: 10.sp,
+      color: Colors.black,
+      fontWeight: FontWeight.w500,
+    );
     return Scaffold(
       body: Stack(
         children: [
@@ -102,20 +122,13 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                   children: [
                     Text(
                       'Congratulations!',
-                      style: TextStyle(
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      style: congratsText,
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 12.h),
                     Text(
                       'The answer is correct',
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Colors.white,
-                      ),
+                      style: titleText,
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 24.h),
@@ -128,38 +141,28 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                     SizedBox(height: 24.h),
                     Text(
                       widget.reason,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      style: reasonText,
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 50.h),
                     Text(
                       widget.details,
-                      style: TextStyle(
-                        fontSize: 10.sp,
-                        color: Colors.white,
-                      ),
+                      style: detailText,
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(height: 48.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-
                         ElevatedButton(
                           onPressed: () async {
-                            Navigator.push(
+                            Navigator.popUntil(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) => const LevelSelector(),
-                              ),
+                              ModalRoute.withName("LevelSelector"),
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
+                            // backgroundColor: Colors.green,
                             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 32.w),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -167,20 +170,15 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                           ),
                           child: Text(
                             'Home',
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: Colors.black,
-                            ),
+                            style: detailText,
                           ),
                         ),
-
                         SizedBox(width: 16.w),
-
                         ElevatedButton(
                           onPressed: () async {
                             // Check if all levels are completed
                             bool allLevelsCompleted = true;
-                            for (int i = 1; i <= 11; i++) {
+                            for (int i = 1; i <= 20; i++) {
                               bool completed = await isLevelCompleted('level$i');
                               if (!completed) {
                                 allLevelsCompleted = false;
@@ -193,15 +191,15 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(builder: (context) => const FinalPage()),
-                                ModalRoute.withName('/vote ready'),
+                                ModalRoute.withName('LevelSelector'),
                               );
                               return;
-                            }else{
+                            } else {
                               navigateToLevel(widget.level + 1, context);
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
+                            // backgroundColor: Colors.green,
                             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 32.w),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -209,13 +207,9 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                           ),
                           child: Text(
                             'Next',
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: Colors.black,
-                            ),
+                            style: detailText,
                           ),
                         ),
-
                       ],
                     ),
                   ],
@@ -228,23 +222,23 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
             right: 20.w,
             child: FloatingActionButton(
               onPressed: _scrollToTop,
-              backgroundColor: Colors.blue,
-              child: _showToTopButton ? Icon(Icons.keyboard_arrow_up) : Icon(Icons.keyboard_arrow_down),
+              // backgroundColor: Colors.blue,
+              child: _showToTopButton ? const Icon(Icons.keyboard_arrow_up) : const Icon(Icons.keyboard_arrow_down),
             ),
           ),
           Positioned(
             top: 2.spMax,
             right: 2.spMax,
-              child: IconButton(
-                onPressed: () async {
-                  await DataWriter.addData('level${widget.level}', 'Yes');
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const LevelSelector()),
-                  );
-                },
-                icon: const Icon(Icons.disabled_by_default, color: Colors.black),
-              ),
+            child: IconButton(
+              onPressed: () async {
+                await DataWriter.addData('level${widget.level}', 'Yes');
+                Navigator.of(context).popUntil(
+                  ModalRoute.withName("LevelSelector"),
+                );
+              },
+              icon: const Icon(Icons.disabled_by_default, color: Colors.black),
             ),
+          ),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vote_ready/components/timer_popup.dart';
 
@@ -67,7 +68,7 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
 
   void LockEnabler() async {
     final currentTime = DateTime.now();
-    final unlockTime=currentTime.add(const Duration(minutes: 2));
+    final unlockTime = currentTime.add(const Duration(minutes: 2));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('unlockTime', unlockTime.toString());
   }
@@ -76,7 +77,7 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
     String? retval = null;
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if(prefs.containsKey('unlockTime')) {
+    if (prefs.containsKey('unlockTime')) {
       retval = prefs.getString('unlockTime');
     }
     return retval;
@@ -84,105 +85,107 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle titleText = GoogleFonts.poppins(
+      fontSize: 20.sp,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    );
+    TextStyle rightText = GoogleFonts.poppins(
+      fontSize: 10.sp,
+      color: Colors.white,
+    );
+    TextStyle reasonText = GoogleFonts.poppins(
+      fontSize: 14.sp,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    );
+    TextStyle detailText = GoogleFonts.poppins(
+      fontSize: 10.sp,
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+    );
     String? value;
     LockEnabler();
     return Scaffold(
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              controller: _scrollController,
-              child: Container(
-                color: Colors.redAccent,
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 48.h),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 10.h),
-                      Text(
-                        'Oops! The answer is wrong',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            controller: _scrollController,
+            child: Container(
+              color: Colors.redAccent,
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 48.h),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 10.h),
+                    Text(
+                      'Oops! The answer is wrong',
+                      style: titleText,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 40.h),
+                    Text(
+                      'The right answer is: ${widget.correctAnswer}',
+                      style: rightText,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 40.h),
+                    Text(
+                      '👎',
+                      style: TextStyle(
+                        fontSize: 50.sp,
+                      ),
+                    ),
+                    SizedBox(height: 80.h),
+                    Text(
+                      widget.reason,
+                      style: reasonText,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 24.h),
+                    Text(
+                      widget.details,
+                      style: detailText,
+                      textAlign: TextAlign.justify,
+                    ),
+                    SizedBox(height: 48.h),
+                    ElevatedButton(
+                      onPressed: () async {
+                        value = await getLockData();
+                        final diff = DateTime.now().difference(DateTime.parse(value!));
+                        TwoHourDialog.showTwoHourDialog(context, diff);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 32.w),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Text(
+                        'OK',
+                        style: detailText.copyWith(
+                          fontSize: 10.sp,
                           color: Colors.black,
                         ),
-                        textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 40.h),
-                      Text(
-                        'The right answer is : ${widget.correctAnswer}',
-                        style: TextStyle(
-                          fontSize: 10.sp,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 40.h),
-                      Text(
-                        '👎',
-                        style: TextStyle(
-                          fontSize: 50.sp,
-                        ),
-                      ),
-                      SizedBox(height: 80.h),
-                      Text(
-                        widget.reason,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 24.h),
-                      Text(
-                        widget.details,
-                        style: TextStyle(
-                          fontSize: 10.sp,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.justify,
-                      ),
-                      SizedBox(height: 48.h),
-
-                      ElevatedButton(
-                        onPressed: () async {
-                          value = await getLockData();
-                          final diff = DateTime.now().difference(DateTime.parse(value!));
-                          TwoHourDialog.showTwoHourDialog(context,diff);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueGrey,
-                          padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 32.w),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: Text(
-                          'Ok',
-                          style: TextStyle(
-                            fontSize: 10.sp,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            Positioned(
-              bottom: 20.h,
-              right: 20.w,
-              child: FloatingActionButton(
-                onPressed: _scrollToTop,
-                backgroundColor: Colors.blue,
-                child: _showToTopButton ? const Icon(Icons.keyboard_arrow_up) : const Icon(Icons.keyboard_arrow_down),
-              ),
+          ),
+          Positioned(
+            bottom: 20.h,
+            right: 20.w,
+            child: FloatingActionButton(
+              onPressed: _scrollToTop,
+              child: _showToTopButton ? const Icon(Icons.keyboard_arrow_up) : const Icon(Icons.keyboard_arrow_down),
             ),
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
   }
 }

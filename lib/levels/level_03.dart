@@ -13,6 +13,7 @@ class _Level03State extends State<Level03> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Center(
