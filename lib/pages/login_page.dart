@@ -196,4 +196,9 @@ class AuthService {
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
+
+  static Future<void> logout() async {
+    await _auth.signOut();
+    await GoogleSignIn().signOut();
+  }
 }

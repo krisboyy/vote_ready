@@ -17,7 +17,8 @@ import 'package:vote_ready/pages/final_page.dart';
 
 import '../widgets/custom_button.dart';
 
-int score=0;
+int score = 0;
+
 class DataReader {
   static Future<String?> getData(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -51,10 +52,8 @@ class LevelSelector extends StatelessWidget {
     return FutureBuilder<bool>(
       future: isLevelCompleted('level$levelNumber'),
       builder: (context, snapshot) {
-        bool isCompleted =
-            snapshot.data ?? false; // Default to false if data is null
-        borderColor =
-        isCompleted ? Colors.green : Colors.black; // Set border color
+        bool isCompleted = snapshot.data ?? false; // Default to false if data is null
+        borderColor = isCompleted ? Colors.green : Colors.black; // Set border color
 
         Widget level = Container(
           height: 100.0.spMin,
@@ -62,7 +61,7 @@ class LevelSelector extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primaryContainer,
             border: Border.all(
               color: borderColor, // Use dynamic border color
               width: 0.2 * smallFontSize,
@@ -75,8 +74,7 @@ class LevelSelector extends StatelessWidget {
             child: Text(
               '$levelNumber',
               style: levelStyle.copyWith(
-                color:
-                isCompleted ? Colors.green : Colors.black, // Set text color
+                color: isCompleted ? Colors.green : Colors.black, // Set text color
               ),
             ),
           ),
@@ -104,7 +102,7 @@ class LevelSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F3ED),
+      backgroundColor: const Color(0xFFc49a75),
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -112,6 +110,7 @@ class LevelSelector extends StatelessWidget {
             scale: 1.1,
             child: Image.asset(
               'assets/images/bg_image.png',
+              width: 1.sw,
               fit: BoxFit.cover,
             ),
           ),
@@ -121,16 +120,13 @@ class LevelSelector extends StatelessWidget {
             child: Row(
               children: List.generate(
                 10,
-                    (index) =>
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 60.0.spMin, horizontal: 10.0.spMin),
-                      child: levelSelectorBuilder(index, context),
-                    ),
+                (index) => Padding(
+                  padding: EdgeInsets.symmetric(vertical: 60.0.spMin, horizontal: 10.0.spMin),
+                  child: levelSelectorBuilder(index, context),
+                ),
               ),
             ),
           ),
-
           Positioned(
             top: -3.spMax,
             right: 10.spMax,
@@ -138,11 +134,9 @@ class LevelSelector extends StatelessWidget {
               onPressed: () async {
                 exit(0);
               },
-              icon: const Icon(
-                  Icons.power_settings_new_outlined, color: Colors.black),
+              icon: const Icon(Icons.power_settings_new_outlined, color: Colors.black),
             ),
           ),
-
           Positioned(
             top: 1.spMax,
             right: 50.spMax,
@@ -155,7 +149,6 @@ class LevelSelector extends StatelessWidget {
               ),
             ),
           ),
-
           Positioned(
             top: 5.spMax,
             left: 15.spMax,
@@ -168,7 +161,6 @@ class LevelSelector extends StatelessWidget {
               ),
             ),
           ),
-
           Positioned(
             bottom: 10.spMax,
             right: 10.spMax,
@@ -183,8 +175,7 @@ class LevelSelector extends StatelessWidget {
                       onPressed: () {
                         Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const FinalPage()),
+                          MaterialPageRoute(builder: (context) => const FinalPage()),
                           ModalRoute.withName('/vote ready'),
                         );
                       },
@@ -220,6 +211,7 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
     String? value = await DataReader.getData(levelKey);
     return value == 'Yes';
   }
+
   // Check if all levels are completed
   bool allLevelsCompleted = true;
   for (int i = 1; i <= 10; i++) {

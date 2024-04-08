@@ -15,7 +15,7 @@ class FactCard extends StatelessWidget {
   FactCard({
     required this.num,
     required this.text,
-    required super.key,
+    super.key,
   });
 
   @override

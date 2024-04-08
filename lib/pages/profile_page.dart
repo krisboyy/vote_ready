@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:vote_ready/pages/credits_page.dart';
 import 'package:vote_ready/pages/login_page.dart';
 import 'package:vote_ready/widgets/fact_card.dart';
 import 'package:vote_ready/widgets/profile_page_buttons.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  void goToCredits(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CreditsPage(),
+      ),
+    );
+  }
+
+  void logout() async {
+    await GoogleSignIn().signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +41,49 @@ class ProfilePage extends StatelessWidget {
       fontSize: 18.spMin,
     );
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0.1.sh),
+        child: AppBar(
+          clipBehavior: Clip.none,
+          primary: true,
+          title: null,
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          actions: [
+            Container(
+              // margin: EdgeInsets.only(
+              //   right: 0.025.sw,
+              //   top: 0.075.sh,
+              // ),
+              child: IconButton.filledTonal(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.secondary),
+                    fixedSize: MaterialStatePropertyAll(
+                      Size(
+                        0.025.sw,
+                        0.025.sw,
+                      ),
+                    ),
+                    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(
+                          0.01.sw,
+                        )),
+                      ),
+                    )),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.close_rounded),
+              ),
+            ),
+            SizedBox(
+              width: 0.025.sw,
+            )
+          ],
+        ),
+      ),
+      extendBodyBehindAppBar: true,
       body: Column(
         children: [
           Container(
@@ -66,28 +129,6 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Spacer(),
-                Container(
-                  margin: EdgeInsets.only(
-                    right: 0.025.sw,
-                    top: 0.075.sh,
-                  ),
-                  child: IconButton.filledTonal(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.secondary),
-                      fixedSize: MaterialStatePropertyAll(
-                        Size(
-                          0.05.sw,
-                          0.05.sw,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.close_rounded),
-                  ),
-                )
               ],
             ),
           ),
@@ -135,12 +176,10 @@ class ProfilePage extends StatelessWidget {
                       FactCard(
                         num: 5,
                         text: "Levels Completed",
-                        key: key,
                       ),
                       FactCard(
                         num: 5,
                         text: "Levels Remaining",
-                        key: key,
                       ),
                     ],
                   ),
@@ -165,12 +204,12 @@ class ProfilePage extends StatelessWidget {
                         ProfilePageButton(
                           text: "Development Credits",
                           icon: "rit.png",
-                          key: key,
+                          navigateTo: 'Credits',
                         ),
                         ProfilePageButton(
                           text: "Logout",
                           icon: "logout.png",
-                          key: key,
+                          navigateTo: 'Logout',
                         ),
                       ],
                     ),

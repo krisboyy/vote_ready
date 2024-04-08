@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vote_ready/pages/credits_page.dart';
+import 'package:vote_ready/pages/login_page.dart';
 
 class ProfilePageButton extends StatelessWidget {
-  final String icon;
   final String text;
+  final String icon;
+  final String navigateTo;
   final Color materialColor = const Color(0xFFFFF1C3);
   final TextStyle boldStyle = GoogleFonts.poppins(
     fontWeight: FontWeight.bold,
@@ -15,7 +18,8 @@ class ProfilePageButton extends StatelessWidget {
   ProfilePageButton({
     required this.text,
     required this.icon,
-    required super.key,
+    required this.navigateTo,
+    super.key,
   });
 
   @override
@@ -39,7 +43,25 @@ class ProfilePageButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () async {
+            switch (navigateTo) {
+              case 'Credits':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreditsPage(),
+                  ),
+                );
+                break;
+              case 'Logout':
+                await AuthService.logout();
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
+                break;
+              default:
+            }
+          },
           borderRadius: BorderRadius.circular(borderRadius),
           splashColor: Theme.of(context).splashColor,
           child: Row(

@@ -41,6 +41,7 @@ class HomePage extends StatelessWidget {
               scale: 1.1,
               child: Image.asset(
                 'assets/images/bg_image.png',
+                width: 1.sw,
                 fit: BoxFit.cover,
               ),
             ),
