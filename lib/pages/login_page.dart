@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:vote_ready/pages/register_page.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/page_fonts.dart';
 
@@ -54,7 +55,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     return Scaffold(
       body: FadeTransition(
         opacity: _fadeInAnimation,
-        child: Container(
+        child: SizedBox(
           height: 1.sh,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -106,6 +107,12 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   ),
                   ElevatedButton(
                       onPressed: () async {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Register()),
+                          ModalRoute.withName('/vote ready'),
+                        );
+
                         await authenticateWithGoogle(context: context);
                       },
                       child: Row(

@@ -18,7 +18,7 @@ class _Level07State extends State<Level07> {
           Center(
             child: AssetVideoPlayer(
               asset: 'assets/videos/scenario_7_final.mp4',
-              question: 'A person claims that he/she is blind and needs a companion to vote',
+              question: 'I am a visually impaired individual and I require a companion to assist me in exercising my voting rights',
               crt_ans: 'The presiding officer permits a same-constituency citizen'
                   ' to assist the voter after collecting required affidavits',
               option1: 'The presiding officer casts vote on his / her behalf or allows a '

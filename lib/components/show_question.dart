@@ -16,17 +16,19 @@ class DataReader {
   }
 }
 
+// If you add a level increment the n value to the levels now have
 class QuestionPopup {
+  static int n = 20;
   static void pushLevelStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final db = FirebaseFirestore.instance;
     String? temp;
     List<bool> levelStatus = List<bool>.generate(
-      10,
+      n,
       (_) => false,
       growable: true,
     );
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < n; i++) {
       temp = prefs.getString("level${i + 1}");
       if (temp == "Yes") {
         levelStatus[i] = true;
@@ -115,7 +117,6 @@ class QuestionPopup {
                                 ModalRoute.withName('/vote ready'),
                               );
                             } else {
-
                               pushLevelStatus();
                               Navigator.pushAndRemoveUntil(
                                 context,
