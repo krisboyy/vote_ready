@@ -59,10 +59,7 @@ class _TipsPopupState extends State<TipsPopup> {
           children: [
             const Text(
               "Tips!",
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight:
-                  FontWeight.bold),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             // const SizedBox(height: 10),
             SizedBox(
@@ -72,28 +69,16 @@ class _TipsPopupState extends State<TipsPopup> {
                 controller: _pageController,
                 children: <Widget>[
                   _buildPage(
-                    "Select each level and watch the scenario and answer the questions correctly",
-                    const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black
-                    ),
+                    "Select each level, observe the scenario, and answer the questions correctly",
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.normal, color: Colors.black),
                   ),
                   _buildPage(
-                    "Each correct answer you will awarded with 10 scores",
-                    const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black
-                    ),
+                    "Choosing the correct answer will award you with 10 points",
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.normal, color: Colors.black),
                   ),
                   _buildPage(
-                    "If You answer anything incorrectly the app will be locked for 2 hours",
-                    const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black
-                    ),
+                    "If you answer anything incorrectly, the app will be locked for 2 hours",
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.normal, color: Colors.black),
                   ),
                 ],
               ),
@@ -115,20 +100,12 @@ class _TipsPopupState extends State<TipsPopup> {
           },
           child: const Text(
             'Previous',
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight:
-                FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
         TextButton(
           onPressed: _handleNextButton,
-          child: Text(isLastPage ? 'Close' : 'Next',
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight:
-                  FontWeight.bold
-              )),
+          child: Text(isLastPage ? 'Close' : 'Next', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         ),
       ],
     );
