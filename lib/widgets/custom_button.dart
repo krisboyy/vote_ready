@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:vote_ready/pages/home_page.dart';
-
-import '../pages/level_selector.dart';
 
 //Add more params if required like stroke width, button size
 class CustomButton extends StatelessWidget {
@@ -103,12 +100,9 @@ class CustomFAB extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () async {
-                await Navigator.pushAndRemoveUntil(
+              onPressed: () {
+                Navigator.popUntil(
                   context,
-                  MaterialPageRoute(
-                    builder: ((context) => const LevelSelector()),
-                  ),
                   ModalRoute.withName('LevelSelector'),
                 );
               },
@@ -176,10 +170,8 @@ class BackForLvl extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.pushAndRemoveUntil(
+                Navigator.pop(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                  ModalRoute.withName('LevelSelector'),
                 );
               },
               icon: Image.asset("assets/images/back.png"),

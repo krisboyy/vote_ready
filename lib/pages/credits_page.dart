@@ -13,7 +13,6 @@ class CreditsPage extends StatefulWidget {
 }
 
 class _CreditsPageState extends State<CreditsPage> {
-
   bool _showToTopButton = false;
   final ScrollController _scrollController = ScrollController();
 
@@ -75,8 +74,8 @@ class _CreditsPageState extends State<CreditsPage> {
         children: [
           SingleChildScrollView(
             controller: _scrollController,
-             dragStartBehavior: DragStartBehavior.down,
-             clipBehavior: Clip.none,
+            dragStartBehavior: DragStartBehavior.down,
+            clipBehavior: Clip.none,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               // mainAxisSize: MainAxisSize.min,
@@ -153,6 +152,24 @@ class _CreditsPageState extends State<CreditsPage> {
                           ),
                         ],
                       ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 0.05.sh,
+                ),
+                Column(
+                  children: [
+                    Text(
+                      "Dr. John C John",
+                      style: bodyStyle.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "Associate Professor\nRIT, Kottayam",
+                      style: bodyStyle,
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
