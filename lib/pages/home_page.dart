@@ -10,12 +10,13 @@ import 'package:vote_ready/pages/profile_page.dart';
 import 'package:vote_ready/widgets/page_fonts.dart';
 import '../components/timer_popup.dart';
 import '../widgets/custom_button.dart';
+import 'dart:io';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key});
 
   static Future<String?> getLockData() async {
-    String? retval = null;
+    String? retval;
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (prefs.containsKey('unlockTime')) {
@@ -34,7 +35,11 @@ class HomePage extends StatelessWidget {
       fontSize: 130.spMin,
     );
 
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        exit(0);
+      },
+    child: Scaffold(
       backgroundColor: const Color(0xFFF2F3ED),
       body: Center(
         child: Stack(
@@ -141,6 +146,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }
