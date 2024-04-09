@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/final_page.dart';
-import '../pages/home_page.dart';
 import '../pages/level_selector.dart';
 import '../widgets/custom_button.dart';
 
@@ -109,15 +108,7 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
       color: Colors.black,
       fontWeight: FontWeight.w500,
     );
-    return WillPopScope(
-        onWillPop: () async {
-      // Navigate to the home page when the back button is pressed
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-      return true; // Return true to prevent the default back button behavior
-    },
-    child:Scaffold(
+    return Scaffold(
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -166,16 +157,14 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                       children: [
                         ElevatedButton(
                           onPressed: () async {
-                            await Navigator.pushAndRemoveUntil(
+                            await Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: ((context) => const LevelSelector()),
                               ),
-                              ModalRoute.withName('LevelSelector'),
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            // backgroundColor: Colors.green,
                             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 32.w),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -241,7 +230,6 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
           CustomFAB(),
         ],
       ),
-    ),
     );
   }
 }

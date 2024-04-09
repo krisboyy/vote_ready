@@ -70,7 +70,6 @@ class _ProfilePageState extends State<ProfilePage> {
       fontSize: 18.spMin,
     );
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       body: Container(
         width: 1.sw,
         height: 1.sh,

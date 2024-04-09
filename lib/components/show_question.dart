@@ -8,7 +8,6 @@ import 'package:vote_ready/components/result_right.dart';
 import 'package:vote_ready/components/result_wrong.dart';
 import 'package:vote_ready/components/score_notifier.dart';
 import 'package:vote_ready/pages/login_page.dart';
-import '../pages/home_page.dart';
 import '../pages/level_selector.dart';
 import '../widgets/custom_button.dart';
 
@@ -91,15 +90,7 @@ class _QuestionPopupState extends State<QuestionPopup> {
       fontWeight: FontWeight.bold,
       color: Colors.black,
     );
-    return WillPopScope(
-        onWillPop: () async {
-      // Navigate to the home page when the back button is pressed
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-      return true; // Return true to prevent the default back button behavior
-    },
-    child:Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white, // Set background color to transparent
       body: Stack(
         // Use a Stack to overlay the container and the button
@@ -299,7 +290,6 @@ class _QuestionPopupState extends State<QuestionPopup> {
           CustomFAB()
         ],
       ),
-    ),
     );
   }
 }

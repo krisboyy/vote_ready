@@ -115,6 +115,7 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
+            const CustomClose(),
             Positioned(
               top: 10.spMax,
               right: 10.spMax,

@@ -27,7 +27,6 @@ import 'package:vote_ready/levels/level_20.dart';
 import 'package:vote_ready/pages/final_page.dart';
 import '../components/tips_popup.dart';
 import '../widgets/custom_button.dart';
-import 'home_page.dart';
 
 class DataReader {
   static Future<String?> getData(String key) async {
@@ -145,15 +144,7 @@ class _LevelSelectorState extends State<LevelSelector> {
       fontWeight: FontWeight.bold,
       fontSize: 50.spMin,
     );
-    return WillPopScope(
-      onWillPop: () async {
-        // Navigate to the home page when the back button is pressed
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-        return true; // Return true to prevent the default back button behavior
-      },
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: const Color(0xFFc49a75),
         body: Stack(
           alignment: Alignment.center,
@@ -201,7 +192,7 @@ class _LevelSelectorState extends State<LevelSelector> {
               child: Row(
                 children: List.generate(
                   20,
-                  (index) => Padding(
+                      (index) => Padding(
                     padding: EdgeInsets.symmetric(vertical: 60.0.spMin, horizontal: 10.0.spMin),
                     child: levelSelectorBuilder(index, context),
                   ),
@@ -279,10 +270,9 @@ class _LevelSelectorState extends State<LevelSelector> {
                 },
               ),
             ),
-            BackForLvl(),
+            const BackForLvl(),
           ],
         ),
-      ),
     );
   }
 }

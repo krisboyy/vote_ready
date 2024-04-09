@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vote_ready/pages/home_page.dart';
+import 'package:vote_ready/pages/level_selector.dart';
 
-//Add more params if required like stroke width, button size
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
@@ -101,8 +103,11 @@ class CustomFAB extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.popUntil(
+                Navigator.pushAndRemoveUntil(
                   context,
+                  MaterialPageRoute(
+                    builder: (context) => const LevelSelector(),
+                  ),
                   ModalRoute.withName('LevelSelector'),
                 );
               },
@@ -170,8 +175,12 @@ class BackForLvl extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.pop(
+                Navigator.pushAndRemoveUntil(
                   context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ),
+                  ModalRoute.withName('LevelSelector'),
                 );
               },
               icon: Image.asset("assets/images/back.png"),
@@ -238,10 +247,76 @@ class CustomBack extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(
+                  context,
+                );
               },
               icon: Image.asset("assets/images/back.png"),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomClose extends StatelessWidget {
+  const CustomClose({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double borderRadius = 0.05.sh;
+    return Positioned(
+      bottom: 6,
+      right: -15,
+      child: Container(
+        width: 0.15.sw,
+        height: 0.15.sh,
+        // color: Colors.blueAccent,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.only(
+            // bottomLeft: Radius.circular(borderRadius),
+            bottomRight: Radius.circular(borderRadius),
+          ),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.01.sw,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.all(
+                Radius.circular(0.01.sw),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black54,
+                  offset: Offset(2.5.spMin, 2.5.spMin),
+                ),
+              ]),
+          child: IconButton.filledTonal(
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.surface),
+              fixedSize: MaterialStatePropertyAll(
+                Size(
+                  0.025.sw,
+                  0.025.sw,
+                ),
+              ),
+              shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(
+                    0.01.sw,
+                  )),
+                ),
+              ),
+            ),
+            onPressed: () {
+              exit(0);
+            },
+            icon: Image.asset("assets/images/exit.png"),
           ),
         ),
       ),

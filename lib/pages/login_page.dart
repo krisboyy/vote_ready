@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:vote_ready/pages/register_page.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/page_fonts.dart';
 
@@ -52,7 +53,11 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
       fontSize: 24.spMin,
     );
 
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      exit(0);
+    },
+    child: Scaffold(
       body: FadeTransition(
         opacity: _fadeInAnimation,
         child: SizedBox(
@@ -107,13 +112,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   ),
                   ElevatedButton(
                       onPressed: () async {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Register()),
-                          ModalRoute.withName('/vote ready'),
-                        );
-
-                        await authenticateWithGoogle(context: context);
+                         await authenticateWithGoogle(context: context);
                       },
                       child: Row(
                         children: [
@@ -138,6 +137,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           ),
         ),
       ),
+    ),
     );
   }
 

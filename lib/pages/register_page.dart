@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vote_ready/pages/home_page.dart';
 import '../components/error_pop.dart';
 import 'login_page.dart';
@@ -24,6 +25,8 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
+
+    // _checkIfRegistered();
 
     _animationController = AnimationController(
       vsync: this,
@@ -181,6 +184,8 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
         "Phone": mobile
       };
       await db.collection("users").doc(AuthService.user!.email).set(registerData, SetOptions(merge: true));
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('registered', true);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
