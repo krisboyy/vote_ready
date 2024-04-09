@@ -58,7 +58,7 @@ class _LevelSelectorState extends State<LevelSelector> {
   void initState() {
     super.initState();
     _initializeData();
-    levelSelectorBuilder(0,context);
+    levelSelectorBuilder(0, context);
   }
 
   Future<void> _initializeData() async {
@@ -146,140 +146,143 @@ class _LevelSelectorState extends State<LevelSelector> {
       fontSize: 50.spMin,
     );
     return WillPopScope(
-        onWillPop: () async {
-      // Navigate to the home page when the back button is pressed
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-      return true; // Return true to prevent the default back button behavior
-    },
-    child: Scaffold(
-      backgroundColor: const Color(0xFFc49a75),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Transform.scale(
-            scale: 1.1,
-            child: Image.asset(
-              'assets/images/bg_image.png',
-              width: 1.sw,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Positioned(
-            left: 0.35.sw,
-            top: 0,
-            child: Container(
-              width: 0.3.sw,
-              height: 0.13.sh,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: materialColor,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(borderRadius),
-                  bottomRight: Radius.circular(borderRadius),
-                ),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: 0.01.sw,
-              ),
-              child: RotatedBox(
-                quarterTurns: 0,
-                child: Text(
-                  "Level Selector",
-                  textAlign: TextAlign.center,
-                  style: boldStyle.copyWith(fontSize: 24),
-                  maxLines: 1,
-                  softWrap: false,
-                ),
+      onWillPop: () async {
+        // Navigate to the home page when the back button is pressed
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+        return true; // Return true to prevent the default back button behavior
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFFc49a75),
+        body: Stack(
+          alignment: Alignment.center,
+          children: [
+            Transform.scale(
+              scale: 1.1,
+              child: Image.asset(
+                'assets/images/bg_image.png',
+                width: 1.sw,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(
-                20,
-                    (index) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: 60.0.spMin, horizontal: 10.0.spMin),
-                  child: levelSelectorBuilder(index, context),
+            Positioned(
+              left: 0.35.sw,
+              top: 0,
+              child: Container(
+                width: 0.3.sw,
+                height: 0.13.sh,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: materialColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(borderRadius),
+                    bottomRight: Radius.circular(borderRadius),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 0.01.sw,
+                ),
+                child: RotatedBox(
+                  quarterTurns: 0,
+                  child: Text(
+                    "Level Selector",
+                    textAlign: TextAlign.center,
+                    style: boldStyle.copyWith(fontSize: 24),
+                    maxLines: 1,
+                    softWrap: false,
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            left: 0.01.sw,
-            top: 0.01.sw,
-            child: Container(
-              width: 0.25.sw,
-              height: 0.1.sh,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: materialColor,
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  width: 2.5,
-                ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(borderRadius),
-                  topRight: Radius.circular(borderRadius),
-                  bottomLeft: Radius.circular(borderRadius),
-                  bottomRight: Radius.circular(borderRadius),
-                ),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: 0.01.sw,
-              ),
-              child: RotatedBox(
-                quarterTurns: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset("assets/images/star.png"),
-                    Text(
-                      "Score = $score",
-                      textAlign: TextAlign.center,
-                      style: boldStyle.copyWith(fontSize: 23),
-                      maxLines: 1,
-                      softWrap: false,
-                    ),
-                  ],
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(
+                  20,
+                  (index) => Padding(
+                    padding: EdgeInsets.symmetric(vertical: 60.0.spMin, horizontal: 10.0.spMin),
+                    child: levelSelectorBuilder(index, context),
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 10.spMax,
-            right: 10.spMax,
-            child: FutureBuilder<bool>(
-              future: areAllLevelsCompleted(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data!) {
-                  return CircleAvatar(
-                    radius: 30,
-                    backgroundColor: const Color(0xFFFFF1C3),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => const FinalPage()),
-                          ModalRoute.withName('LevelSelector'),
-                        );
-                      },
-                      icon: const Icon(Icons.exit_to_app, color: Colors.black, size: 30,),
-                    ),
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
+            Positioned(
+              left: 0.01.sw,
+              top: 0.01.sw,
+              child: Container(
+                width: 0.25.sw,
+                height: 0.1.sh,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: materialColor,
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    width: 2.5,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(borderRadius),
+                    topRight: Radius.circular(borderRadius),
+                    bottomLeft: Radius.circular(borderRadius),
+                    bottomRight: Radius.circular(borderRadius),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 0.01.sw,
+                ),
+                child: RotatedBox(
+                  quarterTurns: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.asset("assets/images/star.png"),
+                      Text(
+                        "Score = $score",
+                        textAlign: TextAlign.center,
+                        style: boldStyle.copyWith(fontSize: 23),
+                        maxLines: 1,
+                        softWrap: false,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-          BackForLvl(),
-        ],
+            Positioned(
+              bottom: 10.spMax,
+              right: 10.spMax,
+              child: FutureBuilder<bool>(
+                future: areAllLevelsCompleted(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data!) {
+                    return CircleAvatar(
+                      radius: 30,
+                      backgroundColor: const Color(0xFFFFF1C3),
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const FinalPage()),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.exit_to_app,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
+            ),
+            BackForLvl(),
+          ],
+        ),
       ),
-    ),
     );
   }
 }
@@ -299,160 +302,138 @@ Future<bool> areAllLevelsCompleted() async {
 Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
   bool allLevelsCompleted = await areAllLevelsCompleted();
   if (allLevelsCompleted) {
-    Navigator.pushAndRemoveUntil(
+    Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const FinalPage()),
-      ModalRoute.withName('LevelSelector'),
     );
     return;
   }
 
   switch (levelNumber) {
     case 1:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level01()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 2:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level02()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 3:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level03()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 4:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level04()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 5:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level05()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 6:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level06()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 7:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level07()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 8:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level08()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 9:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level09()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 10:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level10()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 11:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level11()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 12:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level12()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 13:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level13()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 14:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level14()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 15:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level15()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 16:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level16()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 17:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level17()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 18:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level18()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 19:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level19()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 20:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Level20()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 21:
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LevelSelector()),
-        ModalRoute.withName('LevelSelector'),
       );
       break;
     default:
