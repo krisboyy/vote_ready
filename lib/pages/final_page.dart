@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vote_ready/components/score_notifier.dart';
-import 'package:vote_ready/pages/level_selector.dart';
 import '../widgets/custom_button.dart';
+import 'home_page.dart';
 
 class DataWriter {
   static Future<void> addData(String key, String value) async {
@@ -30,7 +30,15 @@ class FinalPage extends StatelessWidget {
       fontSize: 130.0.spMin,
       fontWeight: FontWeight.bold,
     );
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      // Navigate to the home page when the back button is pressed
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      return true; // Return true to prevent the default back button behavior
+    },
+    child:Scaffold(
       backgroundColor: const Color(0xFFF2F3ED),
       body: Center(
         child: Stack(
@@ -118,6 +126,7 @@ class FinalPage extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }

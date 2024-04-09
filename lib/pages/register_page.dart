@@ -181,7 +181,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
         "Phone": mobile
       };
       await db.collection("users").doc(AuthService.user!.email).set(registerData, SetOptions(merge: true));
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );

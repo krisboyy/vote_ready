@@ -20,7 +20,7 @@ class _Level11State extends State<Level11> {
             child: AssetVideoPlayer(
               asset: 'assets/videos/scenario_11_final.mp4',
               question: 'When can the VVPAT be connected to the Ballot Unit',
-              crt_ans: 'At distribution / collection center',
+              crt_ans: 'Just before mock poll',
               option2: 'Just before mock poll',
               option1: 'At distribution / collection center',
               option3: 'Any time after reaching polling booth',

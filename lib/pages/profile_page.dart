@@ -8,6 +8,8 @@ import 'package:vote_ready/pages/login_page.dart';
 import 'package:vote_ready/widgets/fact_card.dart';
 import 'package:vote_ready/widgets/profile_page_buttons.dart';
 
+import '../widgets/custom_button.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -74,61 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
         height: 1.sh,
         child: Stack(
           children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              child: Container(
-                width: 0.15.sw,
-                height: 0.15.sh,
-                // color: Colors.blueAccent,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.only(
-                    // bottomLeft: Radius.circular(borderRadius),
-                    bottomRight: Radius.circular(borderRadius),
-                  ),
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 0.01.sw,
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(0.01.sw),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black54,
-                          offset: Offset(2.5.spMin, 2.5.spMin),
-                        ),
-                      ]),
-                  child: IconButton.filledTonal(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.surface),
-                      fixedSize: MaterialStatePropertyAll(
-                        Size(
-                          0.025.sw,
-                          0.025.sw,
-                        ),
-                      ),
-                      shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(
-                            0.01.sw,
-                          )),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Image.asset("assets/images/back.png"),
-                  ),
-                ),
-              ),
-            ),
+            CustomBack(),
             Column(
               children: [
                 Container(

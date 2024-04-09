@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vote_ready/components/timer_popup.dart';
 
+import '../pages/home_page.dart';
+
 class WrongAnswerPage extends StatefulWidget {
   final String correctAnswer;
   final String reason;
@@ -106,7 +108,15 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
     );
     String? value;
     LockEnabler();
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      // Navigate to the home page when the back button is pressed
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      return true; // Return true to prevent the default back button behavior
+    },
+    child:Scaffold(
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -181,11 +191,13 @@ class _WrongAnswerPageState extends State<WrongAnswerPage> {
             right: 20.w,
             child: FloatingActionButton(
               onPressed: _scrollToTop,
+              // backgroundColor: Colors.blue,
               child: _showToTopButton ? const Icon(Icons.keyboard_arrow_up) : const Icon(Icons.keyboard_arrow_down),
             ),
           ),
         ],
       ),
+    ),
     );
   }
 }

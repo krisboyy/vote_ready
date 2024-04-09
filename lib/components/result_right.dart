@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/final_page.dart';
+import '../pages/home_page.dart';
 import '../pages/level_selector.dart';
+import '../widgets/custom_button.dart';
 
 class DataWriter {
   static Future<void> addData(String key, String value) async {
@@ -107,7 +109,15 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
       color: Colors.black,
       fontWeight: FontWeight.w500,
     );
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      // Navigate to the home page when the back button is pressed
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      return true; // Return true to prevent the default back button behavior
+    },
+    child:Scaffold(
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -156,9 +166,12 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                       children: [
                         ElevatedButton(
                           onPressed: () async {
-                            Navigator.popUntil(
+                            await Navigator.pushAndRemoveUntil(
                               context,
-                              ModalRoute.withName("LevelSelector"),
+                              MaterialPageRoute(
+                                builder: ((context) => const LevelSelector()),
+                              ),
+                              ModalRoute.withName('LevelSelector'),
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -185,7 +198,6 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
                                 break;
                               }
                             }
-
                             // If all levels are completed, go to the final page
                             if (allLevelsCompleted) {
                               Navigator.pushAndRemoveUntil(
@@ -226,21 +238,10 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
               child: _showToTopButton ? const Icon(Icons.keyboard_arrow_up) : const Icon(Icons.keyboard_arrow_down),
             ),
           ),
-          Positioned(
-            top: 2.spMax,
-            right: 2.spMax,
-            child: IconButton(
-              onPressed: () async {
-                await DataWriter.addData('level${widget.level}', 'Yes');
-                Navigator.of(context).popUntil(
-                  ModalRoute.withName("LevelSelector"),
-                );
-              },
-              icon: const Icon(Icons.disabled_by_default, color: Colors.black),
-            ),
-          ),
+          CustomFAB(),
         ],
       ),
+    ),
     );
   }
 }

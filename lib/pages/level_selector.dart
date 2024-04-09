@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:vote_ready/components/level_status_notifier.dart';
 import 'package:vote_ready/components/score_notifier.dart';
 import 'package:vote_ready/levels/level_01.dart';
 import 'package:vote_ready/levels/level_02.dart';
@@ -27,6 +26,8 @@ import 'package:vote_ready/levels/level_19.dart';
 import 'package:vote_ready/levels/level_20.dart';
 import 'package:vote_ready/pages/final_page.dart';
 import '../components/tips_popup.dart';
+import '../widgets/custom_button.dart';
+import 'home_page.dart';
 
 class DataReader {
   static Future<String?> getData(String key) async {
@@ -53,21 +54,16 @@ class LevelSelector extends StatefulWidget {
 }
 
 class _LevelSelectorState extends State<LevelSelector> {
-  Future<bool> isTipsOpened(String levelKey) async {
-    String? open = await DataReader.getData(levelKey);
-    return open == 'Yes';
-  }
-
   @override
   void initState() {
     super.initState();
     _initializeData();
+    levelSelectorBuilder(0,context);
   }
 
   Future<void> _initializeData() async {
     String? opened = await DataReader.getData('TipsOpened');
     if (opened != 'Yes') {
-      // Show tips popup when the level selector page appears
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
@@ -82,19 +78,18 @@ class _LevelSelectorState extends State<LevelSelector> {
   Widget levelSelectorBuilder(int i, BuildContext context) {
     int levelNumber = i + 1;
     i++;
-    final levelProvider = Provider.of<LevelCompletionNotifier>(context);
     double smallFontSize = 40.0.spMin;
     TextStyle levelStyle = GoogleFonts.fugazOne(
       fontWeight: FontWeight.bold,
       fontSize: smallFontSize,
     );
-    Color borderColor = Colors.black; // Default border color
 
     return FutureBuilder<bool>(
       future: isLevelCompleted('level$levelNumber'),
       builder: (context, snapshot) {
-        bool isCompleted = snapshot.data ?? false; // Default to false if data is null
-        borderColor = isCompleted ? Colors.green : Colors.black; // Set border color
+        bool isCompleted = snapshot.data ?? false;
+
+        Color borderColor = isCompleted ? Colors.green : Colors.black;
 
         Widget level = Container(
           height: 100.0.spMin,
@@ -104,18 +99,18 @@ class _LevelSelectorState extends State<LevelSelector> {
             shape: BoxShape.circle,
             color: Theme.of(context).colorScheme.primaryContainer,
             border: Border.all(
-              color: borderColor, // Use dynamic border color
+              color: borderColor,
               width: 0.2 * smallFontSize,
             ),
           ),
           child: InkWell(
             onTap: () {
-              navigateToLevel(levelNumber, context); // Pass context here
+              navigateToLevel(levelNumber, context);
             },
             child: Text(
               '$levelNumber',
               style: levelStyle.copyWith(
-                color: isCompleted ? Colors.green : Colors.black, // Set text color
+                color: isCompleted ? Colors.green : Colors.black,
               ),
             ),
           ),
@@ -150,7 +145,15 @@ class _LevelSelectorState extends State<LevelSelector> {
       fontWeight: FontWeight.bold,
       fontSize: 50.spMin,
     );
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      // Navigate to the home page when the back button is pressed
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      return true; // Return true to prevent the default back button behavior
+    },
+    child: Scaffold(
       backgroundColor: const Color(0xFFc49a75),
       body: Stack(
         alignment: Alignment.center,
@@ -165,12 +168,10 @@ class _LevelSelectorState extends State<LevelSelector> {
           ),
           Positioned(
             left: 0.35.sw,
-            // right: 0.5.sw,
             top: 0,
             child: Container(
               width: 0.3.sw,
               height: 0.13.sh,
-              // color: Colors.blueAccent,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: materialColor,
@@ -200,21 +201,19 @@ class _LevelSelectorState extends State<LevelSelector> {
             child: Row(
               children: List.generate(
                 20,
-                (index) => Padding(
+                    (index) => Padding(
                   padding: EdgeInsets.symmetric(vertical: 60.0.spMin, horizontal: 10.0.spMin),
                   child: levelSelectorBuilder(index, context),
                 ),
               ),
             ),
           ),
-
           Positioned(
             left: 0.01.sw,
             top: 0.01.sw,
             child: Container(
               width: 0.25.sw,
               height: 0.1.sh,
-              // color: Colors.blueAccent,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: materialColor,
@@ -241,7 +240,7 @@ class _LevelSelectorState extends State<LevelSelector> {
                     Text(
                       "Score = $score",
                       textAlign: TextAlign.center,
-                      style: boldStyle.copyWith(fontSize: 24),
+                      style: boldStyle.copyWith(fontSize: 23),
                       maxLines: 1,
                       softWrap: false,
                     ),
@@ -250,18 +249,6 @@ class _LevelSelectorState extends State<LevelSelector> {
               ),
             ),
           ),
-          // Positioned(
-          //   top: 5.spMax,
-          //   left: 15.spMax,
-          //   child: Text(
-          //     'Level Selector',
-          //     style: TextStyle(
-          //       fontSize: 10.sp,
-          //       fontWeight: FontWeight.w900,
-          //       color: Colors.black,
-          //     ),
-          //   ),
-          // ),
           Positioned(
             bottom: 10.spMax,
             right: 10.spMax,
@@ -270,104 +257,34 @@ class _LevelSelectorState extends State<LevelSelector> {
               builder: (context, snapshot) {
                 if (snapshot.hasData && snapshot.data!) {
                   return CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.white,
+                    radius: 30,
+                    backgroundColor: const Color(0xFFFFF1C3),
                     child: IconButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => const FinalPage()),
+                          ModalRoute.withName('LevelSelector'),
                         );
                       },
-                      icon: const Icon(Icons.exit_to_app, color: Colors.red),
+                      icon: const Icon(Icons.exit_to_app, color: Colors.black, size: 30,),
                     ),
                   );
                 } else {
-                  return const SizedBox(); // Return an empty SizedBox if not all levels are completed
+                  return const SizedBox();
                 }
               },
             ),
           ),
-          Positioned(
-            top: 0,
-            right: 0,
-            child: Container(
-              width: 0.15.sw,
-              height: 0.15.sh,
-              // color: Colors.blueAccent,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.only(
-                  // bottomLeft: Radius.circular(borderRadius),
-                  bottomRight: Radius.circular(borderRadius),
-                ),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: 0.01.sw,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(0.01.sw),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black54,
-                        offset: Offset(2.5.spMin, 2.5.spMin),
-                      ),
-                    ]),
-                child: IconButton.filledTonal(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.surface),
-                    fixedSize: MaterialStatePropertyAll(
-                      Size(
-                        0.025.sw,
-                        0.025.sw,
-                      ),
-                    ),
-                    shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(
-                          0.01.sw,
-                        )),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Image.asset("assets/images/back.png"),
-                ),
-              ),
-            ),
-          ),
+          BackForLvl(),
         ],
       ),
+    ),
     );
-  }
-
-  Future<bool> areAllLevelsCompleted() async {
-    bool allLevelsCompleted = true;
-    for (int i = 1; i <= 20; i++) {
-      bool completed = await isLevelCompleted('level$i');
-      if (!completed) {
-        allLevelsCompleted = false;
-        break;
-      }
-    }
-    return allLevelsCompleted;
   }
 }
 
-Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
-  // Future<bool> isLevelCompleted(String levelKey) async {
-  //   String? value = await DataReader.getData(levelKey);
-  //   return value == 'Yes';
-  // }
-
-  // Check if all levels are completed
+Future<bool> areAllLevelsCompleted() async {
   bool allLevelsCompleted = true;
   for (int i = 1; i <= 20; i++) {
     bool completed = await isLevelCompleted('level$i');
@@ -376,141 +293,166 @@ Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
       break;
     }
   }
-  // If all levels are completed, go to the final page
+  return allLevelsCompleted;
+}
+
+Future<void> navigateToLevel(int levelNumber, BuildContext context) async {
+  bool allLevelsCompleted = await areAllLevelsCompleted();
   if (allLevelsCompleted) {
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => const FinalPage()),
+      ModalRoute.withName('LevelSelector'),
     );
     return;
   }
 
-  // If not, navigate to the corresponding level
   switch (levelNumber) {
     case 1:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level01()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 2:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level02()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 3:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level03()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 4:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level04()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 5:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level05()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 6:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level06()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 7:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level07()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 8:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level08()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 9:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level09()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 10:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level10()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 11:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level11()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 12:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level12()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 13:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level13()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 14:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level14()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 15:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level15()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 16:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level16()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 17:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level17()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 18:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level18()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 19:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level19()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 20:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const Level20()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     case 21:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const LevelSelector()),
+        ModalRoute.withName('LevelSelector'),
       );
       break;
     default:

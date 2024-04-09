@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vote_ready/components/score_notifier.dart';
-import 'package:vote_ready/pages/final_page.dart';
 import 'package:vote_ready/pages/level_selector.dart';
 import 'package:vote_ready/pages/login_page.dart';
 import 'package:vote_ready/pages/profile_page.dart';

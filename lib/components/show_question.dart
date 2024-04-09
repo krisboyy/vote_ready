@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +8,7 @@ import 'package:vote_ready/components/result_right.dart';
 import 'package:vote_ready/components/result_wrong.dart';
 import 'package:vote_ready/components/score_notifier.dart';
 import 'package:vote_ready/pages/login_page.dart';
+import '../pages/home_page.dart';
 import '../pages/level_selector.dart';
 import '../widgets/custom_button.dart';
 
@@ -91,7 +91,15 @@ class _QuestionPopupState extends State<QuestionPopup> {
       fontWeight: FontWeight.bold,
       color: Colors.black,
     );
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      // Navigate to the home page when the back button is pressed
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      return true; // Return true to prevent the default back button behavior
+    },
+    child:Scaffold(
       backgroundColor: Colors.white, // Set background color to transparent
       body: Stack(
         // Use a Stack to overlay the container and the button
@@ -288,14 +296,10 @@ class _QuestionPopupState extends State<QuestionPopup> {
               ),
             ),
           ),
-          Positioned(
-            // Position the button outside the container
-            top: 2.spMax,
-            right: 2.spMax,
-            child: const CustomFAB(), // Your custom button here
-          ),
+          CustomFAB()
         ],
       ),
+    ),
     );
   }
 }
