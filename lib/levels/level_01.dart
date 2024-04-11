@@ -26,7 +26,7 @@ class _Level01State extends State<Level01> {
               option1: 'Perform Test Vote',
               reason: 'Upholding Electoral Integrity',
               details: 'As per Rule 49MA of the Conduct Of Election Rules,1961, conducting a test vote addresses the voter'
-                  "'s"
+                  "'s "
                   "concern regarding the accuracy of the VVPAT, "
                   "ensuring adherence 'to established electoral protocols'",
               level: 1,

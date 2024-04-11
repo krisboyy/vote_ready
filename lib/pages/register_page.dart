@@ -20,13 +20,23 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _userMobileController = TextEditingController();
-  final TextEditingController _userIDController = TextEditingController();
+  final TextEditingController _userIDController = TextEditingController(); // Adding TextEditingController for ID
+  String? _selectedConstituency;
+  final List<String> _constituencies = [
+    'Changanassery'
+    'Ettumanoor'
+    'Kaduthuruthy'
+    'Kanjirappally'
+    'Kottayam'
+    'Pala'
+    'Poonjar'
+    'Puthuppally'
+    'Vaikom'
+  ];
 
   @override
   void initState() {
     super.initState();
-
-    // _checkIfRegistered();
 
     _animationController = AnimationController(
       vsync: this,
@@ -64,9 +74,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                      height: 0.02.sh,
-                    ),
+                    const SizedBox(height: 16.0),
                     Text(
                       'Register',
                       style: titleStyle.copyWith(
@@ -117,19 +125,49 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                                 return null;
                               },
                             ),
-                            TextFormField(
+                            TextFormField( // Text field for ID
                               controller: _userIDController,
                               decoration: InputDecoration(
-                                labelText: 'Registered ID number',
+                                labelText: 'Registered ID',
                                 labelStyle: bodyStyle,
                               ),
                               style: bodyStyle.copyWith(
                                 fontSize: 18.spMin,
                                 height: 2,
                               ),
+                              maxLength: 6,
                               validator: (value) {
                                 if (value == null || value.isEmpty || value.length != 6) {
-                                  return 'ID must be 6 characters';
+                                  return 'Enter a valid IDdf';
+                                }
+                                return null;
+                              },
+                            ),
+                            DropdownButtonFormField<String>(
+                              value: _selectedConstituency,
+                              decoration: InputDecoration(
+                                labelText: 'Registered constituency',
+                                labelStyle: bodyStyle,
+                              ),
+                              style: bodyStyle.copyWith(
+                                fontSize: 18.spMin,
+                                height: 1.5,
+                                color: Colors.black,
+                              ),
+                              items: _constituencies.map((String constituency) {
+                                return DropdownMenuItem<String>(
+                                  value: constituency,
+                                  child: Text(constituency),
+                                );
+                              }).toList(),
+                              onChanged: (String? value) {
+                                setState(() {
+                                  _selectedConstituency = value;
+                                });
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please select a constituency';
                                 }
                                 return null;
                               },
@@ -162,6 +200,7 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                         ),
                       ),
                     ),
+                    const SizedBox(height: 25.0),
                   ],
                 ),
               ),
@@ -175,12 +214,14 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
   void _register() async {
     String username = _userNameController.text;
     String mobile = _userMobileController.text;
-    String userid = _userIDController.text;
+    String id = _userIDController.text; // Getting ID from text field
+    String? constituency = _selectedConstituency;
     try {
       final db = FirebaseFirestore.instance;
       final registerData = <String, dynamic>{
         "Name": username,
-        "ID": userid,
+        "ID": id,
+        "Constituency": constituency,
         "Phone": mobile
       };
       await db.collection("users").doc(AuthService.user!.email).set(registerData, SetOptions(merge: true));
