@@ -25,6 +25,7 @@ import 'package:vote_ready/levels/level_18.dart';
 import 'package:vote_ready/levels/level_19.dart';
 import 'package:vote_ready/levels/level_20.dart';
 import 'package:vote_ready/pages/final_page.dart';
+import 'package:vote_ready/pages/home_page.dart';
 import '../components/tips_popup.dart';
 import '../widgets/custom_button.dart';
 
@@ -144,7 +145,14 @@ class _LevelSelectorState extends State<LevelSelector> {
       fontWeight: FontWeight.bold,
       fontSize: 50.spMin,
     );
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      return true;
+    },
+    child: Scaffold(
         backgroundColor: const Color(0xFFc49a75),
         body: Stack(
           alignment: Alignment.center,
@@ -273,6 +281,7 @@ class _LevelSelectorState extends State<LevelSelector> {
             const BackForLvl(),
           ],
         ),
+    ),
     );
   }
 }
