@@ -109,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         // color: Colors.greenAccent,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: [ 
                             Text(
                               AuthService.user!.displayName!,
                               style: boldStyle,

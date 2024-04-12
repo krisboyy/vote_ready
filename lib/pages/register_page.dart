@@ -20,18 +20,17 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _userMobileController = TextEditingController();
-  final TextEditingController _userIDController = TextEditingController(); // Adding TextEditingController for ID
   String? _selectedConstituency;
   final List<String> _constituencies = [
-    'Changanassery'
-    'Ettumanoor'
-    'Kaduthuruthy'
-    'Kanjirappally'
-    'Kottayam'
-    'Pala'
-    'Poonjar'
-    'Puthuppally'
-    'Vaikom'
+    'Changanassery',
+    'Ettumanoor',
+    'Kaduthuruthy',
+    'Kanjirappally',
+    'Kottayam',
+    'Pala',
+    'Poonjar',
+    'Puthuppally',
+    'Vaikom',
   ];
 
   @override
@@ -125,24 +124,6 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
                                 return null;
                               },
                             ),
-                            TextFormField( // Text field for ID
-                              controller: _userIDController,
-                              decoration: InputDecoration(
-                                labelText: 'Registered ID',
-                                labelStyle: bodyStyle,
-                              ),
-                              style: bodyStyle.copyWith(
-                                fontSize: 18.spMin,
-                                height: 2,
-                              ),
-                              maxLength: 6,
-                              validator: (value) {
-                                if (value == null || value.isEmpty || value.length != 6) {
-                                  return 'Enter a valid IDdf';
-                                }
-                                return null;
-                              },
-                            ),
                             DropdownButtonFormField<String>(
                               value: _selectedConstituency,
                               decoration: InputDecoration(
@@ -214,13 +195,11 @@ class _RegisterState extends State<Register> with SingleTickerProviderStateMixin
   void _register() async {
     String username = _userNameController.text;
     String mobile = _userMobileController.text;
-    String id = _userIDController.text; // Getting ID from text field
     String? constituency = _selectedConstituency;
     try {
       final db = FirebaseFirestore.instance;
       final registerData = <String, dynamic>{
         "Name": username,
-        "ID": id,
         "Constituency": constituency,
         "Phone": mobile
       };

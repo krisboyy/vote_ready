@@ -37,7 +37,7 @@ class _TwoHourDialogState extends State<TwoHourDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              "You can attempt the questions after waiting for two hours",
+              "You can attempt the questions after waiting for two minutes",
               style: bodyStyle,
             ),
             Text(

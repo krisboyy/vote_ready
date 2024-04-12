@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -108,7 +109,14 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
       color: Colors.black,
       fontWeight: FontWeight.w500,
     );
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LevelSelector()),
+      );
+      return true;
+    },
+    child: Scaffold(
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -227,9 +235,10 @@ class _RightAnswerPageState extends State<RightAnswerPage> {
               child: _showToTopButton ? const Icon(Icons.keyboard_arrow_up) : const Icon(Icons.keyboard_arrow_down),
             ),
           ),
-          CustomFAB(),
+          const CustomFAB(),
         ],
       ),
+    ),
     );
   }
 }
