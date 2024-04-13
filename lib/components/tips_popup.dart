@@ -90,7 +90,7 @@ class _TipsPopupState extends State<TipsPopup> {
                   tipText,
                 ),
                 _buildPage(
-                  "If you answer anything incorrectly, the app will be locked for 2 hours",
+                  "If you answer anything incorrectly, the app will be locked for 2 minutes",
                   tipText,
                 ),
               ],
